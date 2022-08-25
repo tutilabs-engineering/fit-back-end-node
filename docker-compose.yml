@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  api:
+    container_name: api-container-fit
+    image: node:12
+    working_dir: /usr/src/api-node-fit
+    restart: always
+    command: bash -c "npm install --only=prod && npm run debug"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/clean-node-api
+    volumes:
+      - ./dist/:/usr/src/clean-node-api/dist/
+      - ./package.json:/usr/src/clean-node-api/package.json
+    ports:
+      - '5050:5050'
+      - '9222:9222'
