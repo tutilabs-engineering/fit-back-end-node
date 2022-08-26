@@ -1,10 +1,36 @@
 version: '3.8'
 services:
+  redis-compose:
+    image: redis
+    command: redis-server --requirepass SUASENHA --appendonly yes
+    hostname: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - /home/duducp/Redis:/var/lib/postgresql/data
+    networks:
+      - fit
+  db-mysql-fit:
+    container_name: db-mysql-fit-container
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $2y$10$P41ktxaGMXmVlGIY1kthDeXyyiDx7IdCE3iBbN/Mpe1dDv4GOVMdC
+      MYSQL_DATABASE: tutilabs-fit
+      MYSQL_PASSWORD: $2y$10$P41ktxaGMXmVlGIY1kthDeXyyiDx7IdCE3iBbN/Mpe1dDv4GOVMdC
+    ports:
+      - '3301:3306'
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - fit
   api:
     container_name: api-container-fit
     image: node:12
     working_dir: /usr/src/api-node-fit
     restart: always
+    depends_on:
+      - db-mysql-fit
     command: bash -c "npm install --only=prod && npm run debug"
     environment:
       - MONGO_URL=mongodb://mongo:27017/clean-node-api
@@ -12,5 +38,9 @@ services:
       - ./dist/:/usr/src/clean-node-api/dist/
       - ./package.json:/usr/src/clean-node-api/package.json
     ports:
-      - '5050:5050'
-      - '9222:9222'
+      - '6001:6001'
+    networks:
+      - fit
+networks:
+  fit:
+    driver: bridge
