@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@prisma/client": "^4.2.1",
+    "prisma": "^4.2.1"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "eslint": "8.0.1",
@@ -19,6 +22,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
+    "up": "tsc && docker-compose up -d",
     "prepare": "husky install"
   }
 }
