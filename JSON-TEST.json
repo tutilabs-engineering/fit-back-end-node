@@ -2,10 +2,11 @@
   "header": {
     "mold": "string",
     "product_code": "string",
+    "product_description": "string", 
     "client": "string",
-    "date": "date",
     "process": "string",
-    "controller_attention_point": {
+    "date": "date",
+    "common_informations": { 
       "technician": "string",
       "control_method": "string",
       "sample": "string",
@@ -21,9 +22,30 @@
             "specifications": "string"
           }
         ],
-        "specifics_requirements_client": [
+        "safety_and_used_tools": {
+          "helmet": "boolean",
+          "earplug": "boolean",
+          "safety_goggles": "boolean",
+          "safety_gloves": "boolean",
+          "safety_mask": "boolean",
+          "safety_boot": "boolean",
+          "pliers": "boolean",
+          "box_cutter": "boolean",
+          "screen_printing": "boolean",
+          "outros": "string"
+        },
+        "img_and_description": [
           {
-            "requirements": "string"
+            "img": "string",
+            "description": "string",
+            "type": "number"
+          }
+        ],
+        "materials": [
+          {
+            "sap_code": "string",
+            "description": "string",
+            "quantity": "number"
           }
         ],
         "devices": [
@@ -33,40 +55,12 @@
             "quantity": "number"
           }
         ],
-        "used_tools": {
-          "pliers": "boolean",
-          "box_cutter": "boolean",
-          "scree_printing": "boolean",
-          "outros": "string"
-        },
         "img_layout_path": {
           "img": "string"
         },
-        "safety": {
-          "helmet": "boolean",
-          "earplug": "boolean",
-          "safety_goggles": "boolean",
-          "safety_gloves": "boolean",
-          "safety_mask": "boolean",
-          "safety_boot": "boolean",
-          "outros": "string"
-        },
-        "operation": [
+        "specifics_requirements_client": [
           {
-            "img": "string",
-            "description": "string"
-          }
-        ],
-        "final_product": [
-          {
-            "img": "string",
-            "description": "string"
-          }
-        ],
-        "package_description": [
-          {
-            "img": "string",
-            "description": "string"
+            "requirements": "string"
           }
         ]
       }

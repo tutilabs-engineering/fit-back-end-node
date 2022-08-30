@@ -8,18 +8,19 @@ datasource db {
 }
 
 model Fit {
-  id                         Int                          @id @default(autoincrement())
-  mold                       String
-  product_code               String
-  client                     String
-  date                       DateTime
-  process                    String
-  Controller_attention_point Controller_attention_point[]
-  Workstation                Workstation[]
-  Image_and_description      Image_and_description[]
+  id                    Int                     @id @default(autoincrement())
+  mold                  String
+  product_code          String
+  product_description   String
+  client                String
+  process               String
+  date                  DateTime
+  Common_informations   Common_informations[]
+  Workstation           Workstation[]
+  Image_and_description Image_and_description[]
 }
 
-model Controller_attention_point {
+model Common_informations {
   id             Int    @id @default(autoincrement())
   technician     String
   control_method String
@@ -32,12 +33,12 @@ model Controller_attention_point {
 model Workstation {
   id                              Int                               @id @default(autoincrement())
   requirements_and_specifications Requirements_and_specifications[] @relation("Requirements_and_specifications")
-  specifics_requirements_client   String
-  img_layout_path                 String
-  devices                         Devices[]                         @relation("Devices")
-  used_tools                      Used_tools[]                      @relation("Used_tools")
-  safety                          Safety[]                          @relation("Safety")
+  safety_and_used_tools           Safety_and_used_tools[]           @relation("Safety")
   img_and_description             Image_and_description[]
+  materials                       Materials[]                       @relation("Materials")
+  devices                         Devices[]                         @relation("Devices")
+  img_layout_path                 String
+  specifics_requirements_client   String
   createdAt                       DateTime                          @default(now())
   updatedAt                       DateTime                          @updatedAt
   fit                             Fit                               @relation(fields: [fitId], references: [id])
@@ -52,42 +53,20 @@ model Requirements_and_specifications {
   workstationId  Int
 }
 
-model Devices {
-  id            Int         @id @default(autoincrement())
-  description   String
-  code          String
-  quantity      Int
-  workstation   Workstation @relation("Devices", fields: [workstationId], references: [id])
-  workstationId Int
-}
-
-model Used_tools {
+model Safety_and_used_tools {
   id              Int         @id @default(autoincrement())
+  helmet          Boolean
+  earplug         Boolean
+  safety_goggles  Boolean
+  safety_gloves   Boolean
+  safety_mask     Boolean
+  safety_boot     Boolean
   pliers          Boolean
   box_cutter      Boolean
   screen_printing Boolean
   outros          String
-  workstation     Workstation @relation("Used_tools", fields: [workstationId], references: [id])
+  workstation     Workstation @relation("Safety", fields: [workstationId], references: [id])
   workstationId   Int
-}
-
-model Safety {
-  id             Int         @id @default(autoincrement())
-  helmet         Boolean
-  earplug        Boolean
-  safety_goggles Boolean
-  safety_gloves  Boolean
-  safety_mask    Boolean
-  safety_boot    Boolean
-  outros         String
-  workstation    Workstation @relation("Safety", fields: [workstationId], references: [id])
-  workstationId  Int
-}
-
-model Type {
-  id                    Int                     @id @default(autoincrement())
-  type                  String
-  Image_and_description Image_and_description[]
 }
 
 model Image_and_description {
@@ -99,5 +78,29 @@ model Image_and_description {
   fit           Fit         @relation(fields: [fitId], references: [id])
   fitId         Int
   workstation   Workstation @relation(fields: [workstationId], references: [id])
+  workstationId Int
+}
+
+model Type {
+  id                    Int                     @id @default(autoincrement())
+  type                  String
+  Image_and_description Image_and_description[]
+}
+
+model Materials {
+  id            Int         @id @default(autoincrement())
+  sap_code      String
+  description   String
+  quantity      Int
+  workstation   Workstation @relation("Materials", fields: [workstationId], references: [id])
+  workstationId Int
+}
+
+model Devices {
+  id            Int         @id @default(autoincrement())
+  description   String
+  code          String
+  quantity      Int
+  workstation   Workstation @relation("Devices", fields: [workstationId], references: [id])
   workstationId Int
 }
