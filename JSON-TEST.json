@@ -1,0 +1,75 @@
+{
+  "header": {
+    "mold": "string",
+    "product_code": "string",
+    "client": "string",
+    "date": "date",
+    "process": "string",
+    "controller_attention_point": {
+      "technician": "string",
+      "control_method": "string",
+      "sample": "string",
+      "reaction_plan": "string"
+    }
+  },
+  "workstations": [
+    {
+      "workstation_1": {
+        "requirements_and_specifications": [
+          {
+            "requirements": "string",
+            "specifications": "string"
+          }
+        ],
+        "specifics_requirements_client": [
+          {
+            "requirements": "string"
+          }
+        ],
+        "devices": [
+          {
+            "description": "string",
+            "code": "string",
+            "quantity": "number"
+          }
+        ],
+        "used_tools": {
+          "pliers": "boolean",
+          "box_cutter": "boolean",
+          "scree_printing": "boolean",
+          "outros": "string"
+        },
+        "img_layout_path": {
+          "img": "string"
+        },
+        "safety": {
+          "helmet": "boolean",
+          "earplug": "boolean",
+          "safety_goggles": "boolean",
+          "safety_gloves": "boolean",
+          "safety_mask": "boolean",
+          "safety_boot": "boolean",
+          "outros": "string"
+        },
+        "operation": [
+          {
+            "img": "string",
+            "description": "string"
+          }
+        ],
+        "final_product": [
+          {
+            "img": "string",
+            "description": "string"
+          }
+        ],
+        "package_description": [
+          {
+            "img": "string",
+            "description": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

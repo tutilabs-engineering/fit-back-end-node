@@ -5,9 +5,15 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^4.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "prisma": "^4.2.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "eslint": "8.0.1",
     "eslint-config-prettier": "^8.5.0",
@@ -19,10 +25,13 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
   },
   "scripts": {
     "up": "tsc && docker-compose up -d",
-    "prepare": "husky install"
+    "down": "docker-compose down",
+    "prepare": "husky install",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn --poll src/main/server.ts"
   }
 }
