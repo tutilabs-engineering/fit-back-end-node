@@ -5,11 +5,12 @@ export type FitModel = {
   client: string
   date: Date
   process: string
-  Controller_attention_point: Controller_attention_point
+  Attention_point_control: Attention_point_control
   workstations: workstations
+  homologation: homologation
 }
 
-type Controller_attention_point = {
+type Attention_point_control = {
   technician: string
   control_method: string
   sample: string
@@ -85,5 +86,11 @@ type package_description = [
   {
     img: string
     description: string
+  }
+]
+type homologation = [
+  {
+    user_created: JSON
+    user_homologation: JSON
   }
 ]

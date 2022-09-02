@@ -8,36 +8,41 @@ datasource db {
 }
 
 model Fit {
-  id                    Int                     @id @default(autoincrement())
-  mold                  String
-  product_code          String
-  product_description   String
-  client                String
-  process               String
-  date                  DateTime
-  Common_informations   Common_informations[]
-  Workstation           Workstation[]
-  Image_and_description Image_and_description[]
+  id                      Int                       @id @default(autoincrement())
+  mold                    String
+  product_code            String
+  product_description     String
+  client                  String
+  process                 String
+  date                    DateTime                  @default(now())
+  Homologation            Homologation[]
+  Attention_point_control Attention_point_control[]
+  Workstation             Workstation[]
 }
 
-model Common_informations {
-  id             Int    @id @default(autoincrement())
-  technician     String
-  control_method String
-  sample         String
-  reaction_plan  String
-  fit            Fit    @relation(fields: [fitId], references: [id])
-  fitId          Int
+model Attention_point_control {
+  id                   Int    @id @default(autoincrement())
+  requirements         String
+  specifications       String
+  evaluation_technique String
+  control_method       String
+  sample               String
+  reaction_plan        String
+  fit                  Fit    @relation(fields: [fitId], references: [id])
+  fitId                Int
 }
 
 model Workstation {
   id                              Int                               @id @default(autoincrement())
   requirements_and_specifications Requirements_and_specifications[] @relation("Requirements_and_specifications")
-  safety_and_used_tools           Safety_and_used_tools[]           @relation("Safety")
-  img_and_description             Image_and_description[]
+  safety                          Safety[]                          @relation("Safety")
+  used_tools                      Used_tools[]                      @relation("Used_tools")
   materials                       Materials[]                       @relation("Materials")
   devices                         Devices[]                         @relation("Devices")
   img_layout_path                 String
+  Image_operation                 Image_operation[]
+  Image_package_description       Image_package_description[]
+  Image_final_product             Image_final_product[]
   specifics_requirements_client   String
   createdAt                       DateTime                          @default(now())
   updatedAt                       DateTime                          @updatedAt
@@ -53,38 +58,51 @@ model Requirements_and_specifications {
   workstationId  Int
 }
 
-model Safety_and_used_tools {
+model Safety {
+  id             Int         @id @default(autoincrement())
+  helmet         Boolean     @default(false)
+  earplug        Boolean     @default(false)
+  safety_goggles Boolean     @default(false)
+  safety_gloves  Boolean     @default(false)
+  safety_mask    Boolean     @default(false)
+  safety_boot    Boolean     @default(false)
+  outros         String
+  workstation    Workstation @relation("Safety", fields: [workstationId], references: [id])
+  workstationId  Int
+}
+
+model Used_tools {
   id              Int         @id @default(autoincrement())
-  helmet          Boolean
-  earplug         Boolean
-  safety_goggles  Boolean
-  safety_gloves   Boolean
-  safety_mask     Boolean
-  safety_boot     Boolean
-  pliers          Boolean
-  box_cutter      Boolean
-  screen_printing Boolean
+  pliers          Boolean     @default(false)
+  box_cutter      Boolean     @default(false)
+  screen_printing Boolean     @default(false)
   outros          String
-  workstation     Workstation @relation("Safety", fields: [workstationId], references: [id])
+  workstation     Workstation @relation("Used_tools", fields: [workstationId], references: [id])
   workstationId   Int
 }
 
-model Image_and_description {
+model Image_operation {
   id            Int         @id @default(autoincrement())
   img_path      String
   description   String
-  type          Type        @relation(fields: [typeId], references: [id])
-  typeId        Int
-  fit           Fit         @relation(fields: [fitId], references: [id])
-  fitId         Int
   workstation   Workstation @relation(fields: [workstationId], references: [id])
   workstationId Int
 }
 
-model Type {
-  id                    Int                     @id @default(autoincrement())
-  type                  String
-  Image_and_description Image_and_description[]
+model Image_final_product {
+  id            Int         @id @default(autoincrement())
+  img_path      String
+  description   String
+  workstation   Workstation @relation(fields: [workstationId], references: [id])
+  workstationId Int
+}
+
+model Image_package_description {
+  id            Int         @id @default(autoincrement())
+  img_path      String
+  description   String
+  workstation   Workstation @relation(fields: [workstationId], references: [id])
+  workstationId Int
 }
 
 model Materials {
@@ -103,4 +121,20 @@ model Devices {
   quantity      Int
   workstation   Workstation @relation("Devices", fields: [workstationId], references: [id])
   workstationId Int
+}
+
+model Homologation {
+  id                Int    @id @default(autoincrement())
+  user_created      Json
+  user_homologation Json?
+  fit               Fit    @relation(fields: [fitId], references: [id])
+  fitId             Int
+  status            Status @relation(fields: [statusId], references: [id])
+  statusId          Int
+}
+
+model Status {
+  id           Int            @id @default(autoincrement())
+  status       String
+  Homologation Homologation[]
 }
