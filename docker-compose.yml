@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  # redis-compose:
-  #   image: redis
-  #   command: redis-server --requirepass SUASENHA --appendonly yes
-  #   hostname: redis
-  #   ports:
-  #     - '6379:6379'
-  #   volumes:
-  #     - /home/duducp/Redis:/var/lib/postgresql/data
-  #   networks:
-  #     - fit
+  redis-compose:
+    image: redis
+    command: redis-server --requirepass SUASENHA --appendonly yes
+    hostname: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - /home/duducp/Redis:/var/lib/postgresql/data
+    networks:
+      - fit
   db-mysql-fit:
     container_name: db-mysql-fit-container
     image: mysql:8
