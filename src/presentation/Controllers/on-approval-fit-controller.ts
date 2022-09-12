@@ -8,7 +8,6 @@ export class OnApprovalController implements Controller {
   async handle(request: OnApprovalControler.Request): Promise<HttpResponse> {
     try {
       const fit = await this.execute.execute(request)
-      console.log(fit)
       return ok(fit)
     } catch (error) {
       return serverError(error)

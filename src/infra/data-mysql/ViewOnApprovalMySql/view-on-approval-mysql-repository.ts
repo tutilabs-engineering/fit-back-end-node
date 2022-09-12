@@ -30,8 +30,6 @@ export class ViewOnApprovalMySqlRepository {
       )
     })
 
-    console.log(fitsOnApproval)
-
     return fitsOnApproval
   }
 }

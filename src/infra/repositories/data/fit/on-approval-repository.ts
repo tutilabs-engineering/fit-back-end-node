@@ -2,11 +2,11 @@ import { OnApproval } from '../../../../domain/useCase/ViewOnApproval/view-on-ap
 
 export interface OnApprovalRepository {
   execute: (
-    fit: OnApprovalRepository.Params
+    fit: OnApprovalRepository.Body
   ) => Promise<OnApprovalRepository.Result>
 }
 
 export namespace OnApprovalRepository {
-  export type Params = OnApproval.Params
+  export type Body = OnApproval.Params
   export type Result = OnApproval.Result
 }

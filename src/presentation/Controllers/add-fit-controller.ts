@@ -8,7 +8,6 @@ export class AddFitControler implements Controller {
   async handle(request: AddFitController.Request): Promise<HttpResponse> {
     try {
       const fit = await this.add.execute(request)
-      console.log(fit)
       return ok(fit)
     } catch (error) {
       return serverError(error)

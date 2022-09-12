@@ -1,39 +1,59 @@
 // import { OnApproval } from '../../domain/useCase/OnApproval/on-approval'
+import Redis from 'ioredis'
 import { OnApprovalRepository } from '../../../infra/repositories/data/fit/on-approval-repository'
-// import { setRedis } from '../../../redis/redisConfig'
 import { PrismaHelper } from '../prisma-helper'
+
+const redis = new Redis({
+  password: 'redispw',
+  port: 6379,
+  host: 'localhost',
+})
 
 export class OnApprovalMySqlRepository implements OnApprovalRepository {
   async execute(fit: any): Promise<any> {
-    const value = await PrismaHelper.prisma.fit.findFirst({
-      where: {
-        id: Number(fit.id),
-      },
-      include: {
-        Attention_point_control: true,
-        Workstation: {
-          include: {
-            devices: true,
-            Image_final_product: true,
-            Image_operation: true,
-            Image_package_description: true,
-            materials: true,
-            requirements_and_specifications: true,
-            safety: true,
-            used_tools: true,
-          },
+    const getValue = async () => {
+      return await PrismaHelper.prisma.fit.findFirst({
+        where: {
+          id: Number(fit.id),
         },
-        Homologation: true,
-      },
-    })
+        include: {
+          Attention_point_control: true,
+          Workstation: {
+            include: {
+              devices: true,
+              Image_final_product: true,
+              Image_operation: true,
+              Image_package_description: true,
+              materials: true,
+              requirements_and_specifications: true,
+              safety: true,
+              used_tools: true,
+            },
+          },
+          Homologation: true,
+        },
+      })
+    }
 
-    // await setRedis('fit-header', JSON.stringify(onApproval[0]))
+    const result = await redis.get(
+      `fit_${Number(fit.id)}`,
+      async (error, fitRedis) => {
+        if (error) console.error(error)
 
-    // const fitOnApprovalRedis = await getRedis(`${onApproval[0]}`)
-    // const fitTeste = JSON.parse(fitOnApprovalRedis)
+        return fitRedis
+      }
+    )
 
-    // console.timeEnd()
+    if (result) return JSON.parse(result)
 
-    return value
+    const resultRedis = await getValue()
+    await redis.set(
+      `fit_${Number(fit.id)}`,
+      JSON.stringify(resultRedis),
+      'EX',
+      1440
+    )
+
+    return resultRedis
   }
 }

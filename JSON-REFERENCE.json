@@ -86,14 +86,31 @@
   "homologation": {
     "id": 2,
     "user_created": {
-      "date": "13/13/1313",
       "name": "Nome",
+      "date": "13/13/1313",
       "registration": 13
     },
     "user_homologation": {
-      "date": "13/02/1913",
-      "name": "Nome",
-      "comments": "Aprovado com sucesso"
+      "SESMT": {
+        "name": "Nome",
+        "date": "13/02/1913",
+        "comments": "Aprovado com sucesso"
+      },
+      "Engireering": {
+        "name": "Nome",
+        "date": "13/02/1913",
+        "comments": "Aprovado com sucesso"
+      },
+      "Quality": {
+        "name": "Nome",
+        "date": "13/02/1913",
+        "comments": "Aprovado com sucesso"
+      },
+      "Production": {
+        "name": "Nome",
+        "date": "13/02/1913",
+        "comments": "Aprovado com sucesso"
+      }
     },
     "fitId": 2,
     "statusId": 2
