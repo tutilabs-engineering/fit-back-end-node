@@ -24,13 +24,13 @@ export class ListHomologatedMySqlRepository
 
     return result
 
-    // const result = await getRedis(Number(fit.id))
+    // const result = await getRedis()
 
     // if (result) return JSON.parse(result)
 
     // const resultRedis = await getValue()
 
-    // await setRedis(resultRedis, Number(fit.id))
+    // await setRedis(resultRedis)
 
     // return resultRedis
   }
