@@ -1,4 +1,4 @@
-import { ViewOnApproval } from '../../../domain/useCase/ViewOnApproval/view-on-approval'
+import { ViewOnApproval } from '../../../domain/useCase/OnApproval/view-on-approval'
 import { ViewOnApprovalRepository } from '../../repositories/data/fit/view-on-approval-repository'
 
 export class DbViewOnApproval implements ViewOnApproval {

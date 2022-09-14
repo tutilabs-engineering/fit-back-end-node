@@ -1,4 +1,4 @@
-import { ListOnApproval } from '../../../domain/useCase/ListOnApproval/list-on-approval'
+import { ListOnApproval } from '../../../domain/useCase/OnApproval/list-on-approval'
 import { ListOnApprovalRepository } from '../../repositories/data/fit/list-on-approval-repository'
 
 export class DbListOnApproval implements ListOnApproval {
@@ -6,8 +6,8 @@ export class DbListOnApproval implements ListOnApproval {
     private readonly listOnApprovalRepository: ListOnApprovalRepository
   ) {}
 
-  async execute(fit: ListOnApproval.Params): Promise<ListOnApproval.Result> {
-    const Save = await this.listOnApprovalRepository.execute(fit)
+  async execute(): Promise<ListOnApproval.Result> {
+    const Save = await this.listOnApprovalRepository.execute()
     return Save
   }
 }

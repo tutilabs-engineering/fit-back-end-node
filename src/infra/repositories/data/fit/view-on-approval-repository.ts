@@ -1,4 +1,4 @@
-import { ViewOnApproval } from '../../../../domain/useCase/ViewOnApproval/view-on-approval'
+import { ViewOnApproval } from '../../../../domain/useCase/OnApproval/view-on-approval'
 
 export interface ViewOnApprovalRepository {
   execute: (

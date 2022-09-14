@@ -1,4 +1,4 @@
-import { ViewOnApproval } from '../../../domain/useCase/ViewOnApproval/view-on-approval'
+import { ViewOnApproval } from '../../../domain/useCase/OnApproval/view-on-approval'
 import { ViewOnApprovalMySqlRepository } from '../../../infra/data-mysql/on-approval-mysql/view-on-approval-mysql-repository'
 import { DbViewOnApproval } from '../../../infra/implements/usecase/db-view-on-approval'
 

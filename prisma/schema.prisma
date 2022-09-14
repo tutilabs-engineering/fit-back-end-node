@@ -10,11 +10,13 @@ datasource db {
 model Fit {
   id                      Int                       @id @default(autoincrement())
   mold                    String
+  mold_code               String
   product_code            String
   product_description     String
   client                  String
   process                 String
   date                    DateTime                  @default(now())
+  technician              String
   Homologation            Homologation[]
   Attention_point_control Attention_point_control[]
   Workstation             Workstation[]

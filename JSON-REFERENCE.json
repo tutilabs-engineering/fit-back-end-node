@@ -1,12 +1,14 @@
 {
   "header": {
     "id": 2,
+    "mold_code": "Código do molde",
     "mold": "Molde",
     "product_code": "Código do produto",
     "product_description": "Descrição do produto",
     "client": "Cliente",
     "process": "Processo",
-    "date": "2022-09-02T13:00:26.120Z"
+    "date": "2022-09-02T13:00:26.120Z",
+    "technician": "Nome do Técnico"
   },
   "attention_point": {
     "id": 2,

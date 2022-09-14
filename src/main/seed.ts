@@ -3,8 +3,9 @@ import { PrismaHelper } from '../infra/data-mysql/prisma-helper'
 async function main() {
   await PrismaHelper.prisma.status.createMany({
     data: [
-      { status: 'review' },
+      { status: 'in_review' },
       { status: 'on_approval' },
+      { status: 'homologated' },
       { status: 'disapproved' },
     ],
   })

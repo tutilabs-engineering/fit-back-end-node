@@ -1,10 +1,10 @@
-import { ListOnApproval } from '../../domain/useCase/OnApproval/list-on-approval'
+import { ListHomologated } from '../../domain/useCase/Homologated/list-homologated'
 import { ok, serverError } from '../helpers/http-helper'
 import { Controller } from '../models/controller'
 import { HttpResponse } from '../models/http'
 
-export class ListOnApprovalController implements Controller {
-  constructor(private readonly execute: ListOnApproval) {}
+export class ListHomologatedController implements Controller {
+  constructor(private readonly execute: ListHomologated) {}
   async handle(): Promise<HttpResponse> {
     try {
       const fit = await this.execute.execute()
@@ -14,6 +14,6 @@ export class ListOnApprovalController implements Controller {
     }
   }
 }
-export namespace ListOnApprovalControler {
-  export type Request = ListOnApproval.Params
+export namespace ListHomologatedControler {
+  export type Request = ListHomologated.Params
 }
