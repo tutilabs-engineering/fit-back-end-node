@@ -27,9 +27,30 @@ async function main() {
             date: '13/13/1313',
           },
           user_homologation: {
-            name: 'Nome',
-            date: '13/02/1913',
-            comments: 'Aprovado com sucesso',
+            SESMT: {
+              name: 'Nome',
+              date: '13/02/1913',
+              comments: 'Aprovado com sucesso',
+              status: 'Aprovado',
+            },
+            Engeneering: {
+              name: 'Nome',
+              date: '13/02/1913',
+              comments: 'Aprovado com sucesso',
+              status: 'Aguardando',
+            },
+            Quality: {
+              name: 'Nome',
+              date: '13/02/1913',
+              comments: 'Aprovado com sucesso',
+              status: 'Aprovado',
+            },
+            Production: {
+              name: 'Nome',
+              date: '13/02/1913',
+              comments: 'Aprovado com sucesso',
+              status: 'Aprovado',
+            },
           },
           statusId: 2,
         },
@@ -68,12 +89,6 @@ async function main() {
             create: {
               description: 'Descrição',
               img_path: 'Caminho da imagem',
-            },
-          },
-          requirements_and_specifications: {
-            create: {
-              requirements: 'Requisitos',
-              specifications: 'Especificações',
             },
           },
           used_tools: {

@@ -77,12 +77,6 @@
     "quantity": 13,
     "workstationId": 2
   },
-  "specifics_requirements": {
-    "id": 2,
-    "requirements": "Requisitos",
-    "specifications": "Especificações",
-    "workstationId": 2
-  },
   "homologation": {
     "id": 2,
     "user_created": {
@@ -94,25 +88,29 @@
       "SESMT": {
         "name": "Nome",
         "date": "13/02/1913",
-        "comments": "Aprovado com sucesso"
+        "comments": "Aprovado com sucesso",
+        "status": "Aprovado"
       },
       "Engireering": {
         "name": "Nome",
         "date": "13/02/1913",
-        "comments": "Aprovado com sucesso"
+        "comments": "Aprovado com sucesso",
+        "status": "Aprovado"
       },
       "Quality": {
         "name": "Nome",
-        "date": "13/02/1913",
-        "comments": "Aprovado com sucesso"
+        "date": "",
+        "comments": "",
+        "status": " "
       },
       "Production": {
         "name": "Nome",
         "date": "13/02/1913",
-        "comments": "Aprovado com sucesso"
-      }
+        "comments": "Não conforme por isso e isso",
+        "status": "Reprovado"
+      },
+      "statusId": "2"
     },
-    "fitId": 2,
-    "statusId": 2
+    "fitId": 2
   }
 }
