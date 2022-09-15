@@ -12,5 +12,8 @@ module.exports = {
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/naming-convention': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    'array-callback-return': 'off',
   },
 }

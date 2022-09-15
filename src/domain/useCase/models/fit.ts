@@ -1,61 +1,57 @@
 export type FitModel = {
   id: string
+  product_description: string
   mold: string
   product_code: string
   client: string
   date: Date
   process: string
-  Controller_attention_point: Controller_attention_point
-  workstations: workstations
+  Controller_attention_point: Controller_attention_point[]
+  Workstations: workstations[]
 }
 
 type Controller_attention_point = {
-  technician: string
+  evaluation_technique: string
   control_method: string
   sample: string
   reaction_plan: string
+  requirements: string
+  specifications: string
 }
-type workstations = [
-  {
-    requirements_and_specifications: requirements_and_specifications
-    specifics_requirements_client: specifics_requirements_client
-    devices: devices
-    used_tools: used_tools
-    img_layout_path: img_layout_path
-    safety: safety
-    operation: operation
-    final_product: final_product
-    package_description: package_description
-  }
-]
-type requirements_and_specifications = [
-  {
-    requirements: string
-    specifications: string
-  }
-]
-type specifics_requirements_client = [
-  {
-    requirements: string
-  }
-]
-type devices = [
-  {
-    description: string
-    code: string
-    quantity: number
-  }
-]
+
+type workstations = {
+  specifics_requirements_client: specifics_requirements_client[]
+  Devices: devices[]
+  Used_tools: used_tools
+  img_layout_path: string
+  Safety: safety
+  materials: materials[]
+  Image_operation: operation[]
+  Image_final_product: final_product[]
+  Image_package_description: package_description[]
+}
+type materials = {
+  sap_code: string
+  description: string
+  quantity: number
+}
+
+type specifics_requirements_client = {
+  description: string
+}
+
+type devices = {
+  description: string
+  code: string
+  quantity: number
+}
 
 type used_tools = {
   pliers: boolean
   box_cutter: boolean
-  scree_printing: boolean
+  screen_printing: boolean
   outros: string
-}
-
-type img_layout_path = {
-  img: string
+  workstationId: number
 }
 
 type safety = {
@@ -68,22 +64,17 @@ type safety = {
   outros: string
 }
 
-type operation = [
-  {
-    img: string
-    description: string
-  }
-]
+type operation = {
+  img_path: string
+  description: string
+}
 
-type final_product = [
-  {
-    img: string
-    description: string
-  }
-]
-type package_description = [
-  {
-    img: string
-    description: string
-  }
-]
+type final_product = {
+  img_path: string
+  description: string
+}
+
+type package_description = {
+  img_path: string
+  description: string
+}

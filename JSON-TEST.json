@@ -1,75 +1,78 @@
 {
-  "header": {
-    "mold": "string",
-    "product_code": "string",
-    "client": "string",
-    "date": "date",
-    "process": "string",
-    "controller_attention_point": {
-      "technician": "string",
-      "control_method": "string",
-      "sample": "string",
-      "reaction_plan": "string"
-    }
-  },
-  "workstations": [
+  "mold": "Molde",
+  "product_code": "Código do produto",
+  "product_description": "Descrição do produto",
+  "client": "Cliente",
+  "process": "Processo",
+  "date": "2022-09-02T13:00:26.120Z",
+  "Controller_attention_point": [
     {
-      "workstation_1": {
-        "requirements_and_specifications": [
-          {
-            "requirements": "string",
-            "specifications": "string"
-          }
-        ],
-        "specifics_requirements_client": [
-          {
-            "requirements": "string"
-          }
-        ],
-        "devices": [
-          {
-            "description": "string",
-            "code": "string",
-            "quantity": "number"
-          }
-        ],
-        "used_tools": {
-          "pliers": "boolean",
-          "box_cutter": "boolean",
-          "scree_printing": "boolean",
-          "outros": "string"
+      "requirements": "Requisitos",
+      "specifications": "Especificações",
+      "evaluation_technique": "Técnico de avaliação",
+      "control_method": "Método de controle",
+      "sample": "Amostra",
+      "reaction_plan": "Plano de reação"
+    },
+    {
+      "requirements": "Requisitos",
+      "specifications": "Especificações",
+      "evaluation_technique": "Técnico de avaliação",
+      "control_method": "Método de controle",
+      "sample": "Amostra",
+      "reaction_plan": "Plano de reação"
+    }
+  ],
+  "Workstations": [
+    {
+      "img_layout_path": "img_01",
+      "Used_tools": {
+        "pliers": true,
+        "box_cutter": true,
+        "screen_printing": false,
+        "outros": "Outros"
+      },
+      "Safety": {
+        "helmet": false,
+        "earplug": false,
+        "safety_goggles": false,
+        "safety_gloves": false,
+        "safety_mask": false,
+        "safety_boot": false,
+        "outros": "Outros"
+      },
+      "materials": [
+        {
+          "sap_code": "131313",
+          "description": "Descrição",
+          "quantity": 13
         },
-        "img_layout_path": {
-          "img": "string"
+        {
+          "sap_code": "131313",
+          "description": "Descrição 2",
+          "quantity": 20
+        }
+      ],
+      "Devices": [
+        {
+          "description": "Descrição",
+          "code": "Código",
+          "quantity": 13
         },
-        "safety": {
-          "helmet": "boolean",
-          "earplug": "boolean",
-          "safety_goggles": "boolean",
-          "safety_gloves": "boolean",
-          "safety_mask": "boolean",
-          "safety_boot": "boolean",
-          "outros": "string"
+        {
+          "description": "Descrição 2",
+          "code": "Código 2",
+          "quantity": 20
+        }
+      ],
+      "specifics_requirements_client": [
+        {
+          "description": "Descrição"
         },
-        "operation": [
-          {
-            "img": "string",
-            "description": "string"
-          }
-        ],
-        "final_product": [
-          {
-            "img": "string",
-            "description": "string"
-          }
-        ],
-        "package_description": [
-          {
-            "img": "string",
-            "description": "string"
-          }
-        ]
-      }
+        {
+          "description": "Descrição 2"
+        }
+      ]
     }
   ]
 }

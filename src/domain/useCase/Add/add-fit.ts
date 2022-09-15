@@ -5,6 +5,6 @@ export interface AddFit {
 }
 
 export namespace AddFit {
-  export type Params = Omit<FitModel, 'id'>
-  export type Result = FitModel
+  export type Params = { body: Omit<FitModel, 'id'>; files: any }
+  export type Result = Promise<void>
 }
