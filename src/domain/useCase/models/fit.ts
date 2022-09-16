@@ -1,5 +1,5 @@
 export type FitModel = {
-  id: string
+  id: number
   product_description: string
   mold: string
   product_code: string
