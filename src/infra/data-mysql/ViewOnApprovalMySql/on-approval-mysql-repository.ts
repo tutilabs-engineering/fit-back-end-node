@@ -25,7 +25,6 @@ export class OnApprovalMySqlRepository implements OnApprovalRepository {
               Image_operation: true,
               Image_package_description: true,
               materials: true,
-              requirements_and_specifications: true,
               safety: true,
               used_tools: true,
             },

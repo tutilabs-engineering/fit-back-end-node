@@ -70,12 +70,6 @@ async function main() {
               img_path: 'Caminho da imagem',
             },
           },
-          requirements_and_specifications: {
-            create: {
-              requirements: 'Requisitos',
-              specifications: 'Especificações',
-            },
-          },
           used_tools: {
             create: {
               outros: 'Outros',
