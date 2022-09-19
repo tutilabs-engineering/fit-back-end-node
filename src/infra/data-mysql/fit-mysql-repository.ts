@@ -1,8 +1,12 @@
 import { AddFit } from '../../domain/useCase/Add/add-fit'
+import { httpUserSystem } from '../../utils/api/user-system-api'
 import { AddFitRepository } from '../repositories/data/fit/add-repository'
+import { LoadAccountByTokenRepository } from '../repositories/data/fit/load-account-by-token-repository'
 import { PrismaHelper } from './prisma-helper'
 
-export class AddMysqlRepository implements AddFitRepository {
+export class FitMysqlRepository
+  implements AddFitRepository, LoadAccountByTokenRepository
+{
   async add(request: AddFit.Params): Promise<AddFit.Result> {
     const {
       mold,
@@ -151,5 +155,26 @@ export class AddMysqlRepository implements AddFitRepository {
             })
         }
       })
+  }
+
+  async loadByToken(
+    token: string
+  ): Promise<LoadAccountByTokenRepository.Result> {
+    try {
+      const result = await httpUserSystem.post(
+        '/session/verify',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      if (result) {
+        return result.data.user
+      }
+    } catch (error) {
+      return null
+    }
   }
 }
