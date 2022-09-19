@@ -32,6 +32,21 @@ export class FitMysqlRepository
               data: JSON.parse(Controller_attention_point.toString()),
             },
           },
+          Homologation: {
+            create: {
+              user_created: JSON.stringify({
+                user: {
+                  id: request.account.id,
+                  nome: request.account.nome_completo,
+                  matricula: request.account.matricula,
+                  email: request.account.email,
+                  nivel_de_acesso: request.account.nivel_de_acesso.descricao,
+                },
+                date_created: new Date(),
+              }),
+              statusId: 1,
+            },
+          },
         },
       })
       .then(async (fit) => {
