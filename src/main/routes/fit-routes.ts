@@ -11,8 +11,8 @@ export default (router: Router): void => {
     multer(uploadFile.getConfig).any(),
     adaptRoute(makeAddFitController())
   )
-  router.put(
-    '/:id',
+  router.post(
+    '/signup/:id',
     multer(uploadFile.getConfig).any(),
     adaptRoute(makeUpdateFitController())
   )

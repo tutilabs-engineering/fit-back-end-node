@@ -4,6 +4,12 @@ import { PrismaHelper } from './prisma-helper'
 
 export class UpdateMysqlRepository implements UpdateFitRepository {
   async update(request: UpdateFit.Params): Promise<UpdateFit.Result> {
+    const oldFit = await PrismaHelper.prisma.homologation.findFirst({
+      where: {
+        id: Number(request.params.id),
+      },
+    })
+
     const {
       mold,
       client,
@@ -13,6 +19,7 @@ export class UpdateMysqlRepository implements UpdateFitRepository {
       product_description,
       Controller_attention_point,
       Workstations,
+      Homologation,
     } = request.body
     await PrismaHelper.prisma.fit
       .create({
@@ -31,6 +38,15 @@ export class UpdateMysqlRepository implements UpdateFitRepository {
         },
       })
       .then(async (fit) => {
+        await PrismaHelper.prisma.homologation.create({
+          data: {
+            user_created: Homologation,
+            user_homologation: Homologation,
+            version: Number(oldFit.version) + 1,
+            fitId: fit.id,
+            statusId: 2,
+          },
+        })
         const img_layout_path = request.files.filter(
           (values: any) => values.fieldname === 'img_layout_path'
         )
@@ -42,6 +58,7 @@ export class UpdateMysqlRepository implements UpdateFitRepository {
               data: {
                 img_layout_path: img_layout_path[index].filename,
                 fitId: fit.id,
+
                 used_tools: {
                   create: {
                     box_cutter: Workstation.Used_tools.box_cutter,

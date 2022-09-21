@@ -6,6 +6,7 @@ export type FitModel = {
   client: string
   date: Date
   process: string
+  Homologation: Homologation
   Controller_attention_point: Controller_attention_point[]
   Workstations: workstations[]
 }
@@ -77,4 +78,10 @@ type final_product = {
 type package_description = {
   img_path: string
   description: string
+}
+
+type Homologation = {
+  user_created: JSON
+  user_homologation: JSON
+  version: Number
 }

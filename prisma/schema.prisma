@@ -15,7 +15,7 @@ model Fit {
   client                  String
   process                 String
   date                    DateTime                  @default(now())
-  // Homologation            Homologation[]
+  Homologation            Homologation[]
   Attention_point_control Attention_point_control[]
   Workstation             Workstation[]
 }
@@ -121,18 +121,19 @@ model Devices {
   workstationId Int
 }
 
-// model Homologation {
-//   id                Int    @id @default(autoincrement())
-//   user_created      Json
-//   user_homologation Json?
-//   fit               Fit    @relation(fields: [fitId], references: [id])
-//   fitId             Int
-//   status            Status @relation(fields: [statusId], references: [id])
-//   statusId          Int
-// }
+model Homologation {
+  id                Int    @id @default(autoincrement())
+  user_created      Json
+  user_homologation Json?
+  version           Int
+  fit               Fit    @relation(fields: [fitId], references: [id])
+  fitId             Int
+  status            Status @relation(fields: [statusId], references: [id])
+  statusId          Int
+}
 
-// model Status {
-//   id           Int            @id @default(autoincrement())
-//   status       String
-//   Homologation Homologation[]
-// }
+model Status {
+  id           Int            @id @default(autoincrement())
+  status       String
+  Homologation Homologation[]
+}
