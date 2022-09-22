@@ -13,7 +13,7 @@ export class ListHomologatedMySqlRepository
           Workstation: true,
           Homologation: {
             where: {
-              statusId: 3,
+              statusId: 2,
             },
           },
         },
