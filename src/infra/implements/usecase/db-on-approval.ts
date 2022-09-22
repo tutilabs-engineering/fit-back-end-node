@@ -1,4 +1,4 @@
-import { OnApproval } from '../../../domain/useCase/ViewOnApproval/view-on-approval'
+import { OnApproval } from '../../../domain/useCase/ViewSpecific/view-specific'
 import { OnApprovalRepository } from '../../repositories/data/fit/on-approval-repository'
 
 export class DbOnApproval implements OnApproval {

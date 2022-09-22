@@ -1,6 +1,6 @@
 // import { OnApproval } from '../../domain/useCase/OnApproval/on-approval'
 import Redis from 'ioredis'
-import { OnApprovalRepository } from '../../../infra/repositories/data/fit/on-approval-repository'
+import { OnApprovalRepository } from '../../repositories/data/fit/on-approval-repository'
 import { PrismaHelper } from '../prisma-helper'
 
 const redis = new Redis({

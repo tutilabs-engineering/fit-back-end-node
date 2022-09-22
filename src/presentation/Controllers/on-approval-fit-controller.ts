@@ -1,4 +1,4 @@
-import { OnApproval } from '../../domain/useCase/ViewOnApproval/view-on-approval'
+import { OnApproval } from '../../domain/useCase/ViewSpecific/view-specific'
 import { ok, serverError } from '../helpers/http-helper'
 import { Controller } from '../models/controller'
 import { HttpResponse } from '../models/http'

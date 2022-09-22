@@ -52,13 +52,18 @@ async function main() {
               status: 'Aprovado',
             },
           },
+          version: 0,
           statusId: 2,
         },
       },
       Workstation: {
         create: {
           img_layout_path: 'Imagem de layout',
-          specifics_requirements_client: 'Requisitos específicos',
+          specifics_requirements_client: {
+            create: {
+              description: 'Requisitos específicos',
+            },
+          },
           devices: {
             create: {
               code: 'Código',

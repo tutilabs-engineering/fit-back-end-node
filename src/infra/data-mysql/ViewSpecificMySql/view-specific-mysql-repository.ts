@@ -1,11 +1,8 @@
-// import { OnApproval } from '../../domain/useCase/OnApproval/on-approval'
-// import { ViewOnApprovalRepository } from '../../../infra/repositories/data/fit/on-approval-repository'
 import { PrismaHelper } from '../prisma-helper'
-// implements ViewOnApprovalRepository
 
-export class ViewOnApprovalMySqlRepository {
+export class ViewSpecificMySqlRepository {
   async execute(): Promise<any> {
-    const fitsOnApproval: any = []
+    const fitsSpecific: any = []
     const fitIds = []
 
     fitIds.push(
@@ -21,7 +18,7 @@ export class ViewOnApprovalMySqlRepository {
     )
 
     fitIds.forEach(async (element) => {
-      await fitsOnApproval.push(
+      await fitsSpecific.push(
         await PrismaHelper.prisma.fit.findMany({
           where: {
             id: Number(element),
@@ -30,10 +27,6 @@ export class ViewOnApprovalMySqlRepository {
       )
     })
 
-    return fitsOnApproval
+    return fitsSpecific
   }
 }
-
-const viewOnApprovalMySqlRepository = new ViewOnApprovalMySqlRepository()
-
-void viewOnApprovalMySqlRepository.execute()
