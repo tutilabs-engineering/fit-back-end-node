@@ -6,8 +6,8 @@ export class DbListOnApproval implements ListOnApproval {
     private readonly listOnApprovalRepository: ListOnApprovalRepository
   ) {}
 
-  async execute(fit: ListOnApproval.Params): Promise<ListOnApproval.Result> {
-    const Save = await this.listOnApprovalRepository.execute(fit)
+  async execute(): Promise<ListOnApproval.Result> {
+    const Save = await this.listOnApprovalRepository.execute()
     return Save
   }
 }

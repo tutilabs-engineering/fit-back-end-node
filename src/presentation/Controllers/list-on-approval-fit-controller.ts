@@ -5,11 +5,9 @@ import { HttpResponse } from '../models/http'
 
 export class ListOnApprovalController implements Controller {
   constructor(private readonly execute: ListOnApproval) {}
-  async handle(
-    request: ListOnApprovalControler.Request
-  ): Promise<HttpResponse> {
+  async handle(): Promise<HttpResponse> {
     try {
-      const fit = await this.execute.execute(request)
+      const fit = await this.execute.execute()
       return ok(fit)
     } catch (error) {
       return serverError(error)

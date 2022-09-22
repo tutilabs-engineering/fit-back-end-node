@@ -9,7 +9,7 @@ export class ListOnApprovalMySqlRepository implements ListOnApprovalRepository {
         include: {
           Homologation: {
             where: {
-              statusId: 2,
+              statusId: 1,
             },
             select: {
               user_homologation: true,
