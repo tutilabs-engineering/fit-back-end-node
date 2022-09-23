@@ -1,4 +1,4 @@
-// import { ListHomologated } from '../../../domain/useCase/ListHomologated/list-homologated'
+import { ListHomologated } from '../../../domain/useCase/Homologated/list-homologated'
 // import { getRedis, setRedis } from '../../../main/config/redisConfig'
 import { ListHomologatedRepository } from '../../repositories/data/fit/list-homologated-repository'
 import { PrismaHelper } from '../prisma-helper'
@@ -6,7 +6,7 @@ import { PrismaHelper } from '../prisma-helper'
 export class ListHomologatedMySqlRepository
   implements ListHomologatedRepository
 {
-  async execute(): Promise<any> {
+  async execute(): Promise<ListHomologated.Result[]> {
     const getValue = async () => {
       return await PrismaHelper.prisma.fit.findMany({
         include: {

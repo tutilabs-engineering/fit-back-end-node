@@ -6,7 +6,7 @@ export class DbListHomologated implements ListHomologated {
     private readonly listHomologatedRepository: ListHomologatedRepository
   ) {}
 
-  async execute(): Promise<ListHomologated.Result> {
+  async execute(): Promise<ListHomologated.Result[]> {
     const Save = await this.listHomologatedRepository.execute()
     return Save
   }
