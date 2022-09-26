@@ -1,9 +1,9 @@
-// import { ListOnApproval } from '../../../domain/useCase/ListOnApproval/list-on-approval'
+import { ListOnApproval } from '../../../domain/useCase/ListOnApproval/list-on-approval'
 import { ListOnApprovalRepository } from '../../repositories/data/fit/list-on-approval-repository'
 import { PrismaHelper } from '../prisma-helper'
 
 export class ListOnApprovalMySqlRepository implements ListOnApprovalRepository {
-  async execute(): Promise<any> {
+  async execute(): Promise<ListOnApproval.Result[]> {
     const getValue = async () => {
       return await PrismaHelper.prisma.fit.findMany({
         include: {

@@ -6,5 +6,8 @@ export interface ListOnApproval {
 
 export namespace ListOnApproval {
   export type Params = FitModel
-  export type Result = any
+  export type Result = Omit<
+    FitModel,
+    'Attention_point_control' | 'workstations' | 'homologation'
+  >
 }
