@@ -40,11 +40,11 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "createFit": "ts-node ./src/main/createFit",
     "up": "tsc && docker-compose up -d",
     "down": "docker-compose down",
     "prepare": "husky install",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn --poll src/main/server.ts"
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn --poll src/main/server.ts",
+    "createFit": "ts-node ./src/main/createFit.ts"
   },
   "prisma": {
     "seed": "ts-node ./src/main/seed.ts"

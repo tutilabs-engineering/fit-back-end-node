@@ -1,15 +1,8 @@
-// import { OnApproval } from '../../domain/useCase/OnApproval/on-approval'
-import Redis from 'ioredis'
-import { OnApprovalRepository } from '../../repositories/data/fit/on-approval-repository'
+import { getRedis, setRedis } from '../../../main/config/redisConfig'
+import { ViewOnApprovalRepository } from '../../repositories/data/fit/view-on-approval-repository'
 import { PrismaHelper } from '../prisma-helper'
 
-const redis = new Redis({
-  password: 'redispw',
-  port: 6379,
-  host: 'localhost',
-})
-
-export class OnApprovalMySqlRepository implements OnApprovalRepository {
+export class ViewOnApprovalMySqlRepository implements ViewOnApprovalRepository {
   async execute(fit: any): Promise<any> {
     const getValue = async () => {
       return await PrismaHelper.prisma.fit.findFirst({
@@ -34,24 +27,13 @@ export class OnApprovalMySqlRepository implements OnApprovalRepository {
       })
     }
 
-    const result = await redis.get(
-      `fit_${Number(fit.id)}`,
-      async (error, fitRedis) => {
-        if (error) console.error(error)
-
-        return fitRedis
-      }
-    )
+    const result = await getRedis(Number(fit.id))
 
     if (result) return JSON.parse(result)
 
     const resultRedis = await getValue()
-    await redis.set(
-      `fit_${Number(fit.id)}`,
-      JSON.stringify(resultRedis),
-      'EX',
-      1440
-    )
+
+    await setRedis(resultRedis, Number(fit.id))
 
     return resultRedis
   }
