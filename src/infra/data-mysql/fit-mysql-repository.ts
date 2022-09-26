@@ -1,11 +1,15 @@
 import { AddFit } from '../../domain/useCase/Add/add-fit'
 import { httpUserSystem } from '../../utils/api/user-system-api'
 import { AddFitRepository } from '../repositories/data/fit/add-repository'
+import { HomologationFitRepository } from '../repositories/data/fit/homologation-repository'
 import { LoadAccountByTokenRepository } from '../repositories/data/fit/load-account-by-token-repository'
 import { PrismaHelper } from './prisma-helper'
 
 export class FitMysqlRepository
-  implements AddFitRepository, LoadAccountByTokenRepository
+  implements
+    AddFitRepository,
+    LoadAccountByTokenRepository,
+    HomologationFitRepository
 {
   async add(request: AddFit.Params): Promise<AddFit.Result> {
     const {
@@ -44,6 +48,9 @@ export class FitMysqlRepository
                 },
                 date_created: new Date(),
               }),
+              mold,
+              product_code,
+              version: 0,
               statusId: 1,
             },
           },
@@ -191,5 +198,21 @@ export class FitMysqlRepository
     } catch (error) {
       return null
     }
+  }
+
+  async homolog(
+    request: HomologationFitRepository.Params
+  ): Promise<HomologationFitRepository.Result> {
+    await PrismaHelper.prisma.homologation.update({
+      data: {
+        user_homologation: JSON.stringify(request.body.findHomologation),
+        statusId: {
+          set: request.body.status,
+        },
+      },
+      where: {
+        id: Number(request.params.id),
+      },
+    })
   }
 }

@@ -1,4 +1,4 @@
-import { FitModel } from '../models/fit'
+import { FitModel } from '../../models/fit'
 
 export interface AddFit {
   execute: (fit: AddFit.Params) => Promise<AddFit.Result>

@@ -76,3 +76,8 @@
     }
   ]
 }
+
+
+"[{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Luan Albuquerque dos Santos\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"5054\",\"role\":\"sesmt_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Rafael Railton Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"4538\",\"role\":\"producao_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Kevin Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"1234\",\"role\":\"qualidade_admin\"}]"
+
+"[{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Luan Albuquerque dos Santos\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"5054\",\"role\":\"sesmt_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Rafael Railton Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"4538\",\"role\":\"producao_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Kevin Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"1234\",\"role\":\"qualidade_admin\"},{\"id\":\"c7509a91-efce-4d61-a8a9-b36ea4424a3a\",\"name\":\"Graziele Nunes Gomes    \",\"email\":\"graziele.nunes@tutiplast.com.br\",\"registration\":\"3831\",\"role\":\"eng_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Luan Albuquerque dos Santos\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"5054\",\"role\":\"eng_analista\"}]"

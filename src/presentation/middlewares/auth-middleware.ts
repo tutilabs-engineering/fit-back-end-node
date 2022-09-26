@@ -19,7 +19,23 @@ export class AuthMiddleware implements Middleware {
           this.role
         )
         if (account) {
-          return ok({ account })
+          if (this.role) {
+            if (this.role === 'admin') {
+              if (
+                account.nivel_de_acesso.descricao === 'eng_admin' ||
+                account.nivel_de_acesso.descricao === 'qualidade_admin' ||
+                account.nivel_de_acesso.descricao === 'producao_admin' ||
+                account.nivel_de_acesso.descricao === 'sesmt_admin'
+              ) {
+                return ok({ account })
+              }
+            }
+            if (this.role === 'eng_analista') {
+              if (account.nivel_de_acesso.descricao === 'eng_analista') {
+                return ok({ account })
+              }
+            }
+          }
         }
       }
       return forbidden(new AccessDeniedError())

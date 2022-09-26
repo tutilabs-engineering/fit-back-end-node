@@ -125,6 +125,9 @@ model Homologation {
   id                Int    @id @default(autoincrement())
   user_created      Json
   user_homologation Json?
+  mold              String
+  product_code      String
+  version           Int
   fit               Fit    @relation(fields: [fitId], references: [id])
   fitId             Int
   status            Status @relation(fields: [statusId], references: [id])

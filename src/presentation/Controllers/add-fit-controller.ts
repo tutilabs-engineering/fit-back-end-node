@@ -17,7 +17,7 @@ export class AddFitControler implements Controller {
         return badRequest(error)
       }
       await this.add.execute(request)
-      return ok({ msg: 'Created successfully' })
+      return ok({ message: 'Created successfully' })
     } catch (error) {
       console.error(error)
       return serverError(error)
