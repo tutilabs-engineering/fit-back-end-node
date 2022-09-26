@@ -168,5 +168,10 @@ export class UpdateMysqlRepository implements UpdateFitRepository {
             })
         }
       })
+    // Desabilita o botão "Revisar" da FIT antiga
+    await PrismaHelper.prisma.homologation.update({
+      where: { id: oldFit.id },
+      data: { statusId: 4 },
+    })
   }
 }

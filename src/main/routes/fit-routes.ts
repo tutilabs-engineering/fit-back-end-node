@@ -12,7 +12,7 @@ export default (router: Router): void => {
     adaptRoute(makeAddFitController())
   )
   router.post(
-    '/signup/:id',
+    '/review/:id',
     multer(uploadFile.getConfig).any(),
     adaptRoute(makeUpdateFitController())
   )
