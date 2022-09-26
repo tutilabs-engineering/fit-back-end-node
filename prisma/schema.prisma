@@ -51,6 +51,7 @@ model Workstation {
 
 model Specifics_requirements_client {
   id            Int         @id @default(autoincrement())
+  img_path      String
   description   String
   workstation   Workstation @relation("Specifics_requirements_client", fields: [workstationId], references: [id])
   workstationId Int
@@ -97,7 +98,6 @@ model Image_final_product {
 
 model Image_package_description {
   id            Int         @id @default(autoincrement())
-  img_path      String
   description   String
   workstation   Workstation @relation(fields: [workstationId], references: [id])
   workstationId Int
