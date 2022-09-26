@@ -11,9 +11,6 @@ export class ListOnApprovalMySqlRepository implements ListOnApprovalRepository {
             where: {
               statusId: 1,
             },
-            select: {
-              user_homologation: true,
-            },
           },
         },
       })

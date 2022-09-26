@@ -1,5 +1,5 @@
 export type FitModel = {
-  id: string
+  id: number
   mold: string
   product_code: string
   client: string
@@ -88,9 +88,7 @@ type package_description = [
     description: string
   }
 ]
-type homologation = [
-  {
-    user_created: JSON
-    user_homologation: JSON
-  }
-]
+type homologation = {
+  user_created: JSON
+  user_homologation: JSON
+}
