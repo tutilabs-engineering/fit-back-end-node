@@ -6,13 +6,13 @@ const redis = new Redis({
   host: 'localhost',
 })
 
-export async function getRedis(id: number) {
-  return await redis.get(`fit_${id}`, async (error, fitRedis) => {
+export async function getRedis() {
+  return await redis.get(`fit`, async (error, fitRedis) => {
     if (error) console.error(error)
     return fitRedis
   })
 }
 
-export async function setRedis(resultRedis: any, id: number) {
-  await redis.set(`fit_${id}`, JSON.stringify(resultRedis), 'EX', 1440)
+export async function setRedis(resultRedis: any, fit: any) {
+  await redis.set(`fit`, JSON.stringify(resultRedis), 'EX', 1440)
 }

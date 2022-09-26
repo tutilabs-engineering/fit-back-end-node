@@ -5,8 +5,7 @@ import { uploadFile } from '../middlewares/multer-file-config'
 import { makeHomologationFitController } from '../factories/controllers/homologation-controller-factory'
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
-import { makeListOnApprovalController } from '../factories/controllers/list-on-approval-factory'
-import { makeViewOnApprovalController } from '../factories/controllers/view-on-approval-factory'
+import { makeListHomologatedController } from '../factories/controllers/list-homologated-factory'
 export default (router: Router): void => {
   router.post(
     '/signup',
@@ -21,4 +20,5 @@ export default (router: Router): void => {
   )
   router.get('/view-specific/:id', adaptRoute(makeViewOnApprovalController()))
   router.get('/list-on-approval', adaptRoute(makeListOnApprovalController()))
+  router.get('/list-homologated', adaptRoute(makeListHomologatedController()))
 }
