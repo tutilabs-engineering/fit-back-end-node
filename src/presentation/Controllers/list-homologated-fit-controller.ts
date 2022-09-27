@@ -1,4 +1,4 @@
-import { ListHomologated } from '../../domain/useCase/Homologated/list-homologated'
+import { ListHomologated } from '../../domain/useCase/ListHomologated/list-homologated'
 import { ok, serverError } from '../helpers/http-helper'
 import { Controller } from '../models/controller'
 import { HttpResponse } from '../models/http'

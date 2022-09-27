@@ -1,7 +1,11 @@
 import { AddFit } from '../../domain/useCase/Add/add-fit'
+import { FindSpecificFit } from '../../domain/useCase/ViewSpecific/view-specific'
 import { httpUserSystem } from '../../utils/api/user-system-api'
 import { AddFitRepository } from '../repositories/data/fit/add-repository'
+import { FindByFitRepository } from '../repositories/data/fit/find-by-fit-repository'
 import { HomologationFitRepository } from '../repositories/data/fit/homologation-repository'
+import { ListHomologatedRepository } from '../repositories/data/fit/list-homologated-repository'
+import { ListOnApprovalRepository } from '../repositories/data/fit/list-on-approval-repository'
 import { LoadAccountByTokenRepository } from '../repositories/data/fit/load-account-by-token-repository'
 import { PrismaHelper } from './prisma-helper'
 
@@ -9,7 +13,10 @@ export class FitMysqlRepository
   implements
     AddFitRepository,
     LoadAccountByTokenRepository,
-    HomologationFitRepository
+    HomologationFitRepository,
+    ListOnApprovalRepository,
+    FindByFitRepository,
+    ListHomologatedRepository
 {
   async add(request: AddFit.Params): Promise<AddFit.Result> {
     const {
@@ -21,10 +28,12 @@ export class FitMysqlRepository
       product_description,
       Controller_attention_point,
       Workstations,
+      code_mold,
     } = request.body
     await PrismaHelper.prisma.fit
       .create({
         data: {
+          code_mold,
           client,
           date,
           mold,
@@ -33,6 +42,7 @@ export class FitMysqlRepository
           product_description,
           Attention_point_control: {
             createMany: {
+              // eslint-disable-next-line @typescript-eslint/no-base-to-string
               data: JSON.parse(Controller_attention_point.toString()),
             },
           },
@@ -66,6 +76,7 @@ export class FitMysqlRepository
           await PrismaHelper.prisma.workstation
             .create({
               data: {
+                workstation_name: Workstation.workstation_name,
                 img_layout_path: img_layout_path[index].filename,
                 fitId: fit.id,
                 used_tools: {
@@ -214,5 +225,75 @@ export class FitMysqlRepository
         id: Number(request.params.id),
       },
     })
+  }
+
+  async listOnApproval(): Promise<ListOnApprovalRepository.Result[]> {
+    const FitsOnApproval = await PrismaHelper.prisma.fit.findMany({
+      include: {
+        Homologation: {
+          where: {
+            statusId: 1,
+          },
+        },
+      },
+      where: {
+        Homologation: {
+          some: {
+            statusId: 1,
+          },
+        },
+      },
+    })
+    return FitsOnApproval
+  }
+
+  async findByFit(fit: FindSpecificFit.Params): Promise<any> {
+    const findByFit = await PrismaHelper.prisma.fit.findUnique({
+      include: {
+        Attention_point_control: true,
+        Workstation: {
+          include: {
+            devices: true,
+            Image_final_product: true,
+            Image_operation: true,
+            Image_package_description: true,
+            materials: true,
+            safety: true,
+            specifics_requirements_client: true,
+            used_tools: true,
+          },
+        },
+        Homologation: true,
+      },
+      where: {
+        id: Number(fit.id),
+      },
+    })
+    return findByFit
+  }
+
+  async ListFitHomologated(): Promise<ListHomologatedRepository.Result[]> {
+    const findFitHomologated = await PrismaHelper.prisma.fit.findMany({
+      include: {
+        _count: {
+          select: {
+            Workstation: true,
+          },
+        },
+        Homologation: {
+          where: {
+            statusId: 3,
+          },
+        },
+      },
+      where: {
+        Homologation: {
+          some: {
+            statusId: 3,
+          },
+        },
+      },
+    })
+    return findFitHomologated
   }
 }

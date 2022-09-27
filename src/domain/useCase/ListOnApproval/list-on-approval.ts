@@ -1,4 +1,4 @@
-import { FitModel } from '../models/fit'
+import { FitModel } from '../../models/fit'
 
 export interface ListOnApproval {
   execute: () => Promise<ListOnApproval.Result[]>
@@ -8,6 +8,9 @@ export namespace ListOnApproval {
   export type Params = FitModel
   export type Result = Omit<
     FitModel,
-    'Attention_point_control' | 'workstations' | 'homologation'
+    | 'Attention_point_control'
+    | 'Workstations'
+    | 'Homologation'
+    | 'Controller_attention_point'
   >
 }

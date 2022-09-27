@@ -54,7 +54,7 @@ export class HomologationFitController implements Controller {
         role: request.account.nivel_de_acesso.descricao,
       })
       if (findHomologation.length === 4) {
-        request.body = { findHomologation, status: 2 }
+        request.body = { findHomologation, status: 3 }
         await this.homolagtion.execute(request)
         return ok({ message: 'Approval carried out successfully' })
       }

@@ -9,6 +9,7 @@ datasource db {
 
 model Fit {
   id                      Int                       @id @default(autoincrement())
+  code_mold               String
   mold                    String
   product_code            String
   product_description     String
@@ -34,6 +35,7 @@ model Attention_point_control {
 
 model Workstation {
   id                            Int                             @id @default(autoincrement())
+  workstation_name              String
   safety                        Safety[]                        @relation("Safety")
   used_tools                    Used_tools[]                    @relation("Used_tools")
   materials                     Materials[]                     @relation("Materials")
@@ -51,7 +53,6 @@ model Workstation {
 
 model Specifics_requirements_client {
   id            Int         @id @default(autoincrement())
-  img_path      String
   description   String
   workstation   Workstation @relation("Specifics_requirements_client", fields: [workstationId], references: [id])
   workstationId Int
@@ -98,6 +99,7 @@ model Image_final_product {
 
 model Image_package_description {
   id            Int         @id @default(autoincrement())
+  img_path      String
   description   String
   workstation   Workstation @relation(fields: [workstationId], references: [id])
   workstationId Int

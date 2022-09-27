@@ -1,7 +1,7 @@
-import { ListHomologated } from '../../../../domain/useCase/Homologated/list-homologated'
+import { ListHomologated } from '../../../../domain/useCase/ListHomologated/list-homologated'
 
 export interface ListHomologatedRepository {
-  execute: () => Promise<ListHomologatedRepository.Result[]>
+  ListFitHomologated: () => Promise<ListHomologatedRepository.Result[]>
 }
 
 export namespace ListHomologatedRepository {

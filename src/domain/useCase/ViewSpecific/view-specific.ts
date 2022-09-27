@@ -1,10 +1,10 @@
-import { FitModel } from '../models/fit'
+import { FitModel } from '../../models/fit'
 
-export interface ViewOnApproval {
-  execute: (fit: ViewOnApproval.Params) => Promise<ViewOnApproval.Result>
+export interface FindSpecificFit {
+  execute: (fit: FindSpecificFit.Params) => Promise<FindSpecificFit.Result>
 }
 
-export namespace ViewOnApproval {
+export namespace FindSpecificFit {
   export type Params = Pick<FitModel, 'id'>
   export type Result = FitModel
 }

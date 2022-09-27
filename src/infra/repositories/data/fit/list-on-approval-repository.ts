@@ -1,7 +1,7 @@
 import { ListOnApproval } from '../../../../domain/useCase/ListOnApproval/list-on-approval'
 
 export interface ListOnApprovalRepository {
-  execute: () => Promise<ListOnApprovalRepository.Result[]>
+  listOnApproval: () => Promise<ListOnApprovalRepository.Result[]>
 }
 
 export namespace ListOnApprovalRepository {

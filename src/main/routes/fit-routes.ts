@@ -6,6 +6,8 @@ import { makeHomologationFitController } from '../factories/controllers/homologa
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
 import { makeListHomologatedController } from '../factories/controllers/list-homologated-factory'
+import { makeListOnApprovalController } from '../factories/controllers/list-on-approval-factory'
+import { makeFindByFitController } from '../factories/controllers/find-by-fit-factory'
 export default (router: Router): void => {
   router.post(
     '/signup',
@@ -18,7 +20,7 @@ export default (router: Router): void => {
     adminAuth,
     adaptRoute(makeHomologationFitController())
   )
-  router.get('/view-specific/:id', adaptRoute(makeViewOnApprovalController()))
+  router.get('/view-specific/:id', adaptRoute(makeFindByFitController()))
   router.get('/list-on-approval', adaptRoute(makeListOnApprovalController()))
   router.get('/list-homologated', adaptRoute(makeListHomologatedController()))
 }

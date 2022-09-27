@@ -25,6 +25,7 @@
   ],
   "Workstations": [
     {
+      "workstation_name": "name 1",
       "img_layout_path": "img_01",
       "Used_tools": {
         "pliers": true,
