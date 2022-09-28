@@ -1,18 +1,17 @@
-// import paths from './paths'
-// import components from './components'
-// import schemas from './schemas'
+import paths from './paths'
+import components from './components'
+import schemas from './schemas'
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: '4Dev - Enquetes para Programadores',
+    title: 'Tutilabs - Api Ficha de Instrução de Trabalho',
     description:
-      'Essa é a documentação da API feita pelo instrutor Rodrigo Manguinho no curso da Udemy de NodeJs usando Typescript, TDD, Clean Architecture e seguindo os princípios do SOLID e Design Patterns.',
+      'Essa é a documentação da API feita pela equipe Tutilabs para evidenciar os end-points do sistema de Ficha de Instrução de Trabalho vulgo FIT.',
     version: '1.0.0',
     contact: {
-      name: 'Rodrigo Manguinho',
-      email: 'rodrigo.manguinho@gmail.com',
-      url: 'https://www.linkedin.com/in/rmanguinho',
+      name: 'Phellipe Dinardi',
+      email: 'phellipe.dinardi@tutiplast.com.br',
     },
     license: {
       name: 'GPL-3.0-or-later',
@@ -20,8 +19,8 @@ export default {
     },
   },
   externalDocs: {
-    description: 'Link para o treinamento completo',
-    url: 'https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1',
+    description: 'API Report Tryout',
+    url: 'http://185.209.179.253:5001/api-docs/',
   },
   servers: [
     {
@@ -31,15 +30,11 @@ export default {
   ],
   tags: [
     {
-      name: 'Login',
-      description: 'APIs relacionadas a Login',
-    },
-    {
-      name: 'Enquete',
-      description: 'APIs relacionadas a Enquete',
+      name: 'FIT',
+      description: 'APIs relacionadas a FIT',
     },
   ],
-  //   paths,
-  //   schemas,
-  //   components
+  paths,
+  schemas,
+  components,
 }

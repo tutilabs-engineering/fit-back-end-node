@@ -1,84 +1,174 @@
-{
-  "mold": "Molde",
-  "product_code": "Código do produto",
-  "product_description": "Descrição do produto",
-  "client": "Cliente",
-  "process": "Processo",
-  "date": "2022-09-02T13:00:26.120Z",
-  "Controller_attention_point": [
-    {
-      "requirements": "Requisitos",
-      "specifications": "Especificações",
-      "evaluation_technique": "Técnico de avaliação",
-      "control_method": "Método de controle",
-      "sample": "Amostra",
-      "reaction_plan": "Plano de reação"
+[
+  {
+    "workstation_name": "name_1",
+    "Used_tools": {
+      "pliers": true,
+      "box_cutter": true,
+      "screen_printing": false,
+      "outros": "Outros"
     },
-    {
-      "requirements": "Requisitos",
-      "specifications": "Especificações",
-      "evaluation_technique": "Técnico de avaliação",
-      "control_method": "Método de controle",
-      "sample": "Amostra",
-      "reaction_plan": "Plano de reação"
-    }
-  ],
-  "Workstations": [
-    {
-      "workstation_name": "name 1",
-      "img_layout_path": "img_01",
-      "Used_tools": {
-        "pliers": true,
-        "box_cutter": true,
-        "screen_printing": false,
-        "outros": "Outros"
-      },
-      "Safety": {
-        "helmet": false,
-        "earplug": false,
-        "safety_goggles": false,
-        "safety_gloves": false,
-        "safety_mask": false,
-        "safety_boot": false,
-        "outros": "Outros"
-      },
-      "materials": [
-        {
-          "sap_code": "131313",
-          "description": "Descrição",
-          "quantity": 13
-        },
-        {
-          "sap_code": "131313",
-          "description": "Descrição 2",
-          "quantity": 20
-        }
-      ],
-      "Devices": [
-        {
-          "description": "Descrição",
-          "code": "Código",
-          "quantity": 13
-        },
-        {
-          "description": "Descrição 2",
-          "code": "Código 2",
-          "quantity": 20
-        }
-      ],
-      "specifics_requirements_client": [
-        {
-          "description": "Descrição"
-        },
-        {
-          "description": "Descrição 2"
-        }
-      ]
-    }
-  ]
-}
-
-
-"[{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Luan Albuquerque dos Santos\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"5054\",\"role\":\"sesmt_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Rafael Railton Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"4538\",\"role\":\"producao_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Kevin Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"1234\",\"role\":\"qualidade_admin\"}]"
-
-"[{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Luan Albuquerque dos Santos\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"5054\",\"role\":\"sesmt_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Rafael Railton Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"4538\",\"role\":\"producao_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Kevin Reis de Almeida\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"1234\",\"role\":\"qualidade_admin\"},{\"id\":\"c7509a91-efce-4d61-a8a9-b36ea4424a3a\",\"name\":\"Graziele Nunes Gomes    \",\"email\":\"graziele.nunes@tutiplast.com.br\",\"registration\":\"3831\",\"role\":\"eng_admin\"},{\"id\":\"a306fa5f-2ffb-4306-9bf6-a1785a6798cf\",\"name\":\"Luan Albuquerque dos Santos\",\"email\":\"luan.albuquerque@tutiplast.com.br\",\"registration\":\"5054\",\"role\":\"eng_analista\"}]"
+    "Safety": {
+      "helmet": false,
+      "earplug": false,
+      "safety_goggles": false,
+      "safety_gloves": false,
+      "safety_mask": false,
+      "safety_boot": false,
+      "outros": "Outros"
+    },
+    "materials": [
+      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
+      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
+    ],
+    "Devices": [
+      { "description": "Descrição", "code": "Código", "quantity": 13 },
+      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
+    ],
+    "specifics_requirements_client": [
+      { "description": "Descrição" },
+      { "description": "Descrição 2" }
+    ],
+    "Images_operations": [
+      { "description": "descricao operacao imagem 1" },
+      { "description": "descricao operacao imagem 2" },
+      { "description": "" }
+    ],
+    "Images_package_description": [
+      { "description": "descricao de embalagem imagem 1" },
+      { "description": "descricao embalagem imagem 2" }
+    ],
+    "Images_final_product": [
+      { "description": "descricao de produto final imagem 1" },
+      { "description": "descricao de produto final imagem 2" }
+    ]
+  },
+  {
+    "workstation_name": "name_2",
+    "Used_tools": {
+      "pliers": true,
+      "box_cutter": true,
+      "screen_printing": false,
+      "outros": "Outros"
+    },
+    "Safety": {
+      "helmet": false,
+      "earplug": false,
+      "safety_goggles": false,
+      "safety_gloves": false,
+      "safety_mask": false,
+      "safety_boot": false,
+      "outros": "Outros"
+    },
+    "materials": [
+      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
+      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
+    ],
+    "Devices": [
+      { "description": "Descrição", "code": "Código", "quantity": 13 },
+      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
+    ],
+    "specifics_requirements_client": [
+      { "description": "Descrição" },
+      { "description": "Descrição 2" }
+    ],
+    "Images_operations": [
+      { "description": "descricao operacao imagem 1" },
+      { "description": "descricao operacao imagem 2" },
+      { "description": "" }
+    ],
+    "Images_package_description": [
+      { "description": "descricao de embalagem imagem 1" },
+      { "description": "descricao embalagem imagem 2" }
+    ],
+    "Images_final_product": [
+      { "description": "descricao de produto final imagem 1" },
+      { "description": "descricao de produto final imagem 2" }
+    ]
+  },
+  {
+    "workstation_name": "name_3",
+    "Used_tools": {
+      "pliers": true,
+      "box_cutter": true,
+      "screen_printing": false,
+      "outros": "Outros"
+    },
+    "Safety": {
+      "helmet": false,
+      "earplug": false,
+      "safety_goggles": false,
+      "safety_gloves": false,
+      "safety_mask": false,
+      "safety_boot": false,
+      "outros": "Outros"
+    },
+    "materials": [
+      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
+      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
+    ],
+    "Devices": [
+      { "description": "Descrição", "code": "Código", "quantity": 13 },
+      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
+    ],
+    "specifics_requirements_client": [
+      { "description": "Descrição" },
+      { "description": "Descrição 2" }
+    ],
+    "Images_operations": [
+      { "description": "descricao operacao imagem 1" },
+      { "description": "descricao operacao imagem 2" },
+      { "description": "" }
+    ],
+    "Images_package_description": [
+      { "description": "descricao de embalagem imagem 1" },
+      { "description": "descricao embalagem imagem 2" }
+    ],
+    "Images_final_product": [
+      { "description": "descricao de produto final imagem 1" },
+      { "description": "descricao de produto final imagem 2" }
+    ]
+  },
+  {
+    "workstation_name": "name_4",
+    "Used_tools": {
+      "pliers": true,
+      "box_cutter": true,
+      "screen_printing": false,
+      "outros": "Outros"
+    },
+    "Safety": {
+      "helmet": false,
+      "earplug": false,
+      "safety_goggles": false,
+      "safety_gloves": false,
+      "safety_mask": false,
+      "safety_boot": false,
+      "outros": "Outros"
+    },
+    "materials": [
+      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
+      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
+    ],
+    "Devices": [
+      { "description": "Descrição", "code": "Código", "quantity": 13 },
+      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
+    ],
+    "specifics_requirements_client": [
+      { "description": "Descrição" },
+      { "description": "Descrição 2" }
+    ],
+    "Images_operations": [
+      { "description": "descricao operacao imagem 1" },
+      { "description": "descricao operacao imagem 2" },
+      { "description": "" }
+    ],
+    "Images_package_description": [
+      { "description": "descricao de embalagem imagem 1" },
+      { "description": "descricao embalagem imagem 2" }
+    ],
+    "Images_final_product": [
+      { "description": "descricao de produto final imagem 1" },
+      { "description": "descricao de produto final imagem 2" }
+    ]
+  }
+]

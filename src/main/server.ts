@@ -5,10 +5,14 @@ PrismaHelper.prisma
   .then(async () => {
     const { setupApp } = await import('./config/app')
     const app = await setupApp()
-    app.listen(process.env.PORT_SERVER, () =>
+
+    app.listen(process.env.PORT_SERVER, () => {
       console.log(
         `Server running at http://localhost:${process.env.PORT_SERVER}`
       )
-    )
+      console.log(
+        `Server running at Docs http://localhost:${process.env.PORT_SERVER}/api-docs`
+      )
+    })
   })
   .catch(console.error)
