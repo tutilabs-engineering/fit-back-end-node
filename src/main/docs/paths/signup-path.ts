@@ -1,7 +1,7 @@
 export const signUpPath = {
   post: {
     tags: ['FIT'],
-    summary: 'API para criar uma nova Fit',
+    summary: 'Cria uma nova FIT',
     description:
       'Essa rota pode ser executada por apenas usuários: **eng_analista**',
     requestBody: {
@@ -16,24 +16,17 @@ export const signUpPath = {
     },
     responses: {
       200: {
-        description: 'Sucesso',
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/schemas/account',
-            },
-          },
-        },
+        $ref: '#/components/success',
       },
       400: {
         $ref: '#/components/badRequest',
       },
-      // 403: {
-      //   $ref: '#/components/forbidden',
-      // },
-      404: {
-        $ref: '#/components/notFound',
+      403: {
+        $ref: '#/components/forbidden',
       },
+      // 404: {
+      //   $ref: '#/components/notFound',
+      // },
       500: {
         $ref: '#/components/serverError',
       },
