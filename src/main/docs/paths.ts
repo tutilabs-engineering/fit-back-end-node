@@ -9,7 +9,7 @@ import {
 export default {
   '/signup': signUpPath,
   '/list-on-approval': listOnApproval,
-  '/view-specific': findById,
+  '/view-specific/{id}': findById,
   '/list-homologated': listHomologated,
-  '/homologation': homologation,
+  '/homologation/{id}': homologation,
 }

@@ -4,6 +4,20 @@ export const homologation = {
     summary: 'Homologa FIT específica',
     description:
       'Essa rota pode ser executada por apenas usuários: **eng_analista, sesmt, produção e qualidade**',
+    parameters: [
+      {
+        name: 'id',
+        in: 'path',
+        description: 'ID da FIT',
+        required: true,
+        schema: {
+          type: 'number',
+        },
+      },
+    ],
+    security: {
+      bearerAuth: [{}],
+    },
     responses: {
       200: {
         $ref: '#/components/success',

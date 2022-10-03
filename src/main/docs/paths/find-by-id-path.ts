@@ -3,16 +3,17 @@ export const findById = {
     tags: ['FIT'],
     summary: 'Busca FIT por ID',
     description: 'Retorna uma única FIT',
-    requestBody: {
-      required: true,
-      content: {
-        'multipart/form-data': {
-          schema: {
-            $ref: '#/schemas/signUpParams',
-          },
+    parameters: [
+      {
+        name: 'id',
+        in: 'path',
+        description: 'ID da FIT',
+        required: true,
+        schema: {
+          type: 'number',
         },
       },
-    },
+    ],
     responses: {
       200: {
         $ref: '#/components/success',
