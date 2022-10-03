@@ -15,9 +15,11 @@ export const homologation = {
         },
       },
     ],
-    security: {
-      bearerAuth: [{}],
-    },
+    security: [
+      {
+        bearerAuth: [{}],
+      },
+    ],
     responses: {
       200: {
         $ref: '#/components/success',

@@ -9,7 +9,7 @@ import {
 
 export default {
   securitySchemes: {
-    apiKeyAuth: apiKeyAuthSchema,
+    bearerAuth: apiKeyAuthSchema,
   },
   success,
   forbidden,

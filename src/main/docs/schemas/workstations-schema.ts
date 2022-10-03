@@ -4,25 +4,7 @@ export const workstations = {
     workstation_name: {
       type: 'string',
     },
-    requirements_and_specifications: {
-      type: 'array',
-      items: {
-        $ref: '#/schemas/requirements_and_specifications',
-      },
-    },
-    specifics_requirements_client: {
-      type: 'array',
-      items: {
-        $ref: '#/schemas/specifics_requirements_client',
-      },
-    },
-    devices: {
-      type: 'array',
-      items: {
-        $ref: '#/schemas/devices',
-      },
-    },
-    used_tools: {
+    Used_tools: {
       type: 'object',
       properties: {
         pliers: {
@@ -31,16 +13,16 @@ export const workstations = {
         box_cutter: {
           type: 'boolean',
         },
-        scree_printing: {
+        screen_printing: {
           type: 'boolean',
         },
         outros: {
           type: 'string',
         },
       },
-      required: ['pliers', 'box_cutter', 'scree_printing'],
+      required: ['pliers', 'box_cutter', 'screen_printing'],
     },
-    safety: {
+    Safety: {
       type: 'object',
       properties: {
         helmet: {
@@ -77,15 +59,59 @@ export const workstations = {
     materials: {
       type: 'array',
       items: {
-        $ref: '#/schemas/devices',
+        sap_code: {
+          type: 'number',
+        },
+        description: {
+          type: 'string',
+        },
+        quantity: {
+          type: 'number',
+        },
+      },
+    },
+    Devices: {
+      type: 'array',
+      items: {
+        description: 'string',
+        code: 'string',
+        quantity: 'number',
+      },
+    },
+    specifics_requirements_client: {
+      type: 'array',
+      items: {
+        description: 'string',
+      },
+    },
+    Images_operations: {
+      type: 'array',
+      items: {
+        description: 'string',
+      },
+    },
+    Images_package_description: {
+      type: 'array',
+      items: {
+        description: 'string',
+      },
+    },
+    Images_final_product: {
+      type: 'array',
+      items: {
+        description: 'string',
       },
     },
   },
   required: [
     'workstation_name',
-    'requirements_and_specifications',
+    'Used_tools',
+    'Safety',
+    'materials',
+    'Devices',
     'specifics_requirements_client',
-    'devices',
-    'img_layout_path',
+    'Images_operations',
+    'Images_package_description',
+    'Images_final_product',
   ],
 }

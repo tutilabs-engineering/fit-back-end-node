@@ -1,5 +1,6 @@
 export const apiKeyAuthSchema = {
-  type: 'apiKey',
-  in: 'header',
-  name: 'Authorization',
+  name: 'Bearer Authentication',
+  type: 'http',
+  scheme: 'bearer',
+  bearerFormat: 'JWT',
 }
