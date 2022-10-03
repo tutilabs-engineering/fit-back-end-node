@@ -128,6 +128,7 @@ model Homologation {
   user_created      Json
   user_homologation Json?
   mold              String
+  code_mold         String
   product_code      String
   version           Int
   fit               Fit    @relation(fields: [fitId], references: [id])
