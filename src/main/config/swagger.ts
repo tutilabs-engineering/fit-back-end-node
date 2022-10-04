@@ -1,8 +1,19 @@
-// import { noCache } from '@/main/middlewares'
 import swaggerConfig from '../docs'
-import { serve, setup } from 'swagger-ui-express'
+import swaggerUi from 'swagger-ui-express'
+import { SwaggerTheme } from 'swagger-themes'
 import { Express } from 'express'
 
+const theme = new SwaggerTheme('v3')
+
+const optionsV1 = {
+  explorer: true,
+  customCss: theme.getBuffer('dark'),
+}
+
 export default (app: Express): void => {
-  app.use('/api-docs', serve, setup(swaggerConfig))
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerConfig, optionsV1)
+  )
 }

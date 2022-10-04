@@ -2,9 +2,10 @@ export const signUpPath = {
   post: {
     tags: ['FIT'],
     summary: 'Cria uma nova FIT',
-    description:
-      'Essa rota pode ser executada por apenas usuários: **eng_analista**',
+    description: 'Usuários autorizados: **eng_analista**',
     requestBody: {
+      description:
+        'Os nomes das imagens ( files ) são dinâmicos, o index indica a qual Workstation a imagem pertence.',
       required: true,
       content: {
         'multipart/form-data': {

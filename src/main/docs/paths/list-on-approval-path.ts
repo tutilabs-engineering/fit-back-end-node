@@ -2,8 +2,7 @@ export const listOnApproval = {
   get: {
     tags: ['FIT'],
     summary: 'Retorna uma lista de FITs em aprovação',
-    description:
-      'Essa rota pode ser executada por: eng, sesmt, produção e qualidade',
+    description: 'Usuários autorizados: eng, sesmt, produção e qualidade',
     responses: {
       200: {
         $ref: '#/components/success',
