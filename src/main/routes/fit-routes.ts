@@ -11,6 +11,7 @@ import {
 } from '../factories/controllers'
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
+import { makeCancellationFitController } from '../factories/controllers/cancellation-fit-factory'
 export default (router: Router): void => {
   router.post(
     '/signup',
@@ -35,6 +36,6 @@ export default (router: Router): void => {
   router.put(
     '/cancel/:id',
     adminAuth,
-    adaptRoute(makeHomologationFitController())
+    adaptRoute(makeCancellationFitController())
   )
 }

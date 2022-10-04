@@ -10,6 +10,9 @@ export class RequiredHomologationFit implements Validation {
             code_mold: input.body.code_mold,
             product_code: input.body.product_code,
           },
+          NOT: {
+            statusId: 2,
+          },
         },
         orderBy: {
           id: 'desc',

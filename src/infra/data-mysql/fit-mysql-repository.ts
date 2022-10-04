@@ -239,12 +239,17 @@ export class FitMysqlRepository
             code_mold: FindByFitCodMoldAndCodeProd.code_mold,
             product_code: FindByFitCodMoldAndCodeProd.product_code,
           },
-          NOT: {
-            id: Number(request.params.id),
-          },
+          NOT: [
+            {
+              statusId: 2,
+            },
+            {
+              statusId: 5,
+            },
+          ],
         },
         orderBy: {
-          id: 'desc',
+          id: 'asc',
         },
       })
 
@@ -363,6 +368,9 @@ export class FitMysqlRepository
           AND: {
             code_mold,
             product_code,
+          },
+          NOT: {
+            statusId: 2,
           },
         },
         orderBy: {
@@ -535,6 +543,9 @@ export class FitMysqlRepository
           AND: {
             code_mold,
             product_code,
+            NOT: {
+              statusId: 2,
+            },
           },
           NOT: {
             id: findByHomologation.id,
@@ -545,7 +556,6 @@ export class FitMysqlRepository
         },
       }
     )
-
     const lastFitHomologation = FindAllHomologation.shift()
     FindAllHomologation.map(async (values) => {
       if (lastFitHomologation.id !== values.id) {
@@ -569,7 +579,55 @@ export class FitMysqlRepository
     })
   }
 
-  async cancel(id: CancellationFit.Params): Promise<CancellationFit.Result> {
-    console.log(id)
+  async cancel(
+    request: CancellationFit.Params
+  ): Promise<CancellationFit.Result> {
+    const findByFitCodeMoldAndCodeProd =
+      await PrismaHelper.prisma.fit.findUnique({
+        select: {
+          product_code: true,
+          code_mold: true,
+          Homologation: {
+            select: {
+              version: true,
+              id: true,
+            },
+          },
+        },
+        where: {
+          id: Number(request.id),
+        },
+      })
+    if (findByFitCodeMoldAndCodeProd.Homologation[0].version !== 0) {
+      await PrismaHelper.prisma.homologation.update({
+        data: {
+          version: 0,
+          statusId: 2,
+        },
+        where: {
+          id: findByFitCodeMoldAndCodeProd.Homologation[0].id,
+        },
+      })
+      const FindByAllFit = await PrismaHelper.prisma.homologation.findFirst({
+        where: {
+          AND: {
+            code_mold: findByFitCodeMoldAndCodeProd.code_mold,
+            product_code: findByFitCodeMoldAndCodeProd.product_code,
+          },
+        },
+        orderBy: {
+          id: 'asc',
+        },
+      })
+
+      await PrismaHelper.prisma.homologation.update({
+        data: {
+          statusId: 3,
+        },
+        where: {
+          id: FindByAllFit.id,
+        },
+      })
+    }
   }
 }
