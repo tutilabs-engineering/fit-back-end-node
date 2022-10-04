@@ -1,8 +1,15 @@
-import { signUpPath } from './paths/'
+import {
+  signUpPath,
+  findById,
+  listOnApproval,
+  listHomologated,
+  homologation,
+} from './paths/'
 
 export default {
-  //   '/login': loginPath,
   '/signup': signUpPath,
-  //   '/surveys': surveyPath,
-  //   '/surveys/{surveyId}/results': surveyResultPath,
+  '/list-on-approval': listOnApproval,
+  '/view-specific/{id}': findById,
+  '/list-homologated': listHomologated,
+  '/homologation/{id}': homologation,
 }
