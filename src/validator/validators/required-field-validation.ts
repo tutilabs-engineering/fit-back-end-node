@@ -4,24 +4,24 @@ import { Validation } from '../../presentation/models/validation'
 export class RequiredFieldValidation implements Validation {
   constructor(private readonly fieldName: string) {}
   async validate(input: any): Promise<Error> {
+    const body = JSON.parse(input.body.data)
     const header = Object.assign({
       body: {
-        mold: input.body.mold,
-        client: input.body.client,
-        date: input.body.date,
-        product_code: input.body.product_code,
-        process: input.body.process,
-        product_description: input.body.product_description,
-        Workstations: input.body.Workstations,
-        Controller_attention_point: input.body.Controller_attention_point,
+        mold: body.mold,
+        client: body.client,
+        date: body.date,
+        product_code: body.product_code,
+        process: body.process,
+        product_description: body.product_description,
+        Workstations: body.Workstations,
+        Controller_attention_point: body.Controller_attention_point,
       },
     })
+
     if (!header.body[this.fieldName]) {
       return new MissingParamError(this.fieldName)
     }
-    const workstations = Object.assign(
-      JSON.parse(input.body.Workstations.toString())
-    )
+    const workstations = Object.assign(header.body.Workstations)
     for (const workstation of workstations) {
       if (workstation.Used_tools === undefined) {
         return new MissingParamError(this.fieldName)

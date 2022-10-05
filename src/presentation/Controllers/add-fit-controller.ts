@@ -14,6 +14,7 @@ export class AddFitControler implements Controller {
     try {
       const error = await this.validate.validate(request)
       if (error) {
+        console.error(error)
         return badRequest(error)
       }
       await this.add.execute(request)
