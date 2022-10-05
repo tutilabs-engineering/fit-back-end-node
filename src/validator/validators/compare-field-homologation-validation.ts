@@ -3,7 +3,7 @@ import { Validation } from '../../presentation/models/validation'
 
 export class CompareFieldHomologationValidation implements Validation {
   constructor(private readonly fieldName: string) {}
-  validate(input: any): Error {
+  async validate(input: any): Promise<Error> {
     return new MissingParamError(null)
   }
 }

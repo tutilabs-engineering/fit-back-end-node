@@ -1,13 +1,17 @@
 import { Router } from 'express'
-import { makeAddFitController } from '../factories/controllers/add-controller-factory'
 import multer from 'multer'
 import { uploadFile } from '../middlewares/multer-file-config'
-import { makeHomologationFitController } from '../factories/controllers/homologation-controller-factory'
+import {
+  makeHomologationFitController,
+  makeAddFitController,
+  makeFindByFitController,
+  makeListHomologatedController,
+  makeListOnApprovalController,
+  makeVersioningController,
+} from '../factories/controllers'
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
-import { makeListHomologatedController } from '../factories/controllers/list-homologated-factory'
-import { makeListOnApprovalController } from '../factories/controllers/list-on-approval-factory'
-import { makeFindByFitController } from '../factories/controllers/find-by-fit-factory'
+import { makeCancellationFitController } from '../factories/controllers/cancellation-fit-factory'
 export default (router: Router): void => {
   router.post(
     '/signup',
@@ -23,4 +27,15 @@ export default (router: Router): void => {
   router.get('/view-specific/:id', adaptRoute(makeFindByFitController()))
   router.get('/list-on-approval', adaptRoute(makeListOnApprovalController()))
   router.get('/list-homologated', adaptRoute(makeListHomologatedController()))
+  router.post(
+    '/versioning',
+    adminAuthEngAnalist,
+    multer(uploadFile.getConfig).any(),
+    adaptRoute(makeVersioningController())
+  )
+  router.put(
+    '/cancel/:id',
+    adminAuth,
+    adaptRoute(makeCancellationFitController())
+  )
 }

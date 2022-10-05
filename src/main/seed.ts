@@ -7,6 +7,7 @@ async function main() {
       { status: 'disabled' },
       { status: 'homologated' },
       { status: 'review_button_disabled' },
+      { status: 'old_fit' },
     ],
   })
 }

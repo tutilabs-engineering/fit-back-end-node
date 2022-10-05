@@ -12,7 +12,7 @@ export class AddFitControler implements Controller {
 
   async handle(request: AddFitControllerType.Request): Promise<HttpResponse> {
     try {
-      const error = this.validate.validate(request)
+      const error = await this.validate.validate(request)
       if (error) {
         return badRequest(error)
       }

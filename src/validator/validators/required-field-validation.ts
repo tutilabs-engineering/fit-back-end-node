@@ -3,7 +3,7 @@ import { Validation } from '../../presentation/models/validation'
 
 export class RequiredFieldValidation implements Validation {
   constructor(private readonly fieldName: string) {}
-  validate(input: any): Error {
+  async validate(input: any): Promise<Error> {
     const header = Object.assign({
       body: {
         mold: input.body.mold,
