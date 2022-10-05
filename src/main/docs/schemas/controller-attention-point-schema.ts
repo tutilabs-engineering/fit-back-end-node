@@ -7,7 +7,7 @@ export const controllerAttentionPoint = {
     specifications: {
       type: 'string',
     },
-    evalutaion_technique: {
+    evaluation_technique: {
       type: 'string',
     },
     control_method: {

@@ -5,7 +5,7 @@ import {
   unauthorized,
   success,
   forbidden,
-} from './components/'
+} from './components/responses'
 
 export default {
   securitySchemes: {

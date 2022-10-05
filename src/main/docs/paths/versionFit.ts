@@ -1,8 +1,8 @@
-export const findById = {
-  get: {
+export const versionFit = {
+  post: {
     tags: ['FIT'],
-    summary: 'Busca uma FIT específica',
-    description: 'Retorna uma única FIT',
+    summary: 'Versiona uma FIT específica',
+    description: 'Usuários autorizados: eng_analista',
     parameters: [
       {
         name: 'id',
@@ -12,6 +12,11 @@ export const findById = {
         schema: {
           type: 'number',
         },
+      },
+    ],
+    security: [
+      {
+        bearerAuth: [{}],
       },
     ],
     responses: {

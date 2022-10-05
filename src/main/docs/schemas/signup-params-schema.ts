@@ -100,8 +100,5 @@ export const signUpParamsSchema = {
     'img_operation_path_0',
     'img_package_description_0',
     'img_final_product_0',
-    'img_operation_path_1',
-    'img_package_description_1',
-    'img_final_product_1',
   ],
 }

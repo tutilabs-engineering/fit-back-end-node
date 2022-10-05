@@ -3,7 +3,7 @@ export const homologation = {
     tags: ['FIT'],
     summary: 'Homologa FIT específica',
     description:
-      'Usuários autorizados: **eng_analista, sesmt, produção e qualidade**',
+      'Usuários autorizados: eng_analista, sesmt, produção e qualidade',
     parameters: [
       {
         name: 'id',

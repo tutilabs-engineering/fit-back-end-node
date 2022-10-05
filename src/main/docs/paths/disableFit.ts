@@ -1,8 +1,8 @@
-export const findById = {
-  get: {
+export const disableFit = {
+  put: {
     tags: ['FIT'],
-    summary: 'Busca uma FIT específica',
-    description: 'Retorna uma única FIT',
+    summary: 'Desabilita uma FIT específica',
+    description: 'Usuários autorizados: eng_admin',
     parameters: [
       {
         name: 'id',
@@ -12,6 +12,11 @@ export const findById = {
         schema: {
           type: 'number',
         },
+      },
+    ],
+    security: [
+      {
+        bearerAuth: [{}],
       },
     ],
     responses: {
