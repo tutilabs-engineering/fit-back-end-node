@@ -28,7 +28,6 @@ export class FitMysqlRepository
     const {
       mold,
       client,
-      // date,
       product_code,
       process,
       product_description,
@@ -41,7 +40,7 @@ export class FitMysqlRepository
         data: {
           code_mold,
           client,
-          date: '2022-09-02T13:00:26.120Z',
+          date: new Date(),
           mold,
           process,
           product_code,
@@ -77,7 +76,6 @@ export class FitMysqlRepository
         const img_layout_path = request.files.filter(
           (values: any) => values.fieldname === 'img_layout_path'
         )
-
         for (const [index, Workstation] of Workstations.entries()) {
           await PrismaHelper.prisma.workstation
             .create({
@@ -353,14 +351,13 @@ export class FitMysqlRepository
     const {
       mold,
       client,
-      date,
       product_code,
       process,
       product_description,
       Controller_attention_point,
       Workstations,
       code_mold,
-    } = request.body
+    } = JSON.parse(request.body.data)
     const findByHomologation = await PrismaHelper.prisma.homologation.findFirst(
       {
         where: {
@@ -382,7 +379,7 @@ export class FitMysqlRepository
         data: {
           code_mold,
           client,
-          date,
+          date: new Date(),
           mold,
           process,
           product_code,
@@ -390,7 +387,7 @@ export class FitMysqlRepository
           Attention_point_control: {
             createMany: {
               // eslint-disable-next-line @typescript-eslint/no-base-to-string
-              data: JSON.parse(Controller_attention_point.toString()),
+              data: Controller_attention_point,
             },
           },
           Homologation: {
@@ -408,7 +405,7 @@ export class FitMysqlRepository
               mold,
               code_mold,
               product_code,
-              version: findByHomologation.version + 1,
+              version: 0,
               statusId: 1,
             },
           },
@@ -418,13 +415,11 @@ export class FitMysqlRepository
         const img_layout_path = request.files.filter(
           (values: any) => values.fieldname === 'img_layout_path'
         )
-        for (const [index, Workstation] of JSON.parse(
-          Workstations.toString()
-        ).entries()) {
+        for (const [index, Workstation] of Workstations.entries()) {
           await PrismaHelper.prisma.workstation
             .create({
               data: {
-                workstation_name: Workstation.workstation_name,
+                workstation_name: Workstation.workstations_name,
                 img_layout_path: img_layout_path[index].filename,
                 fitId: fit.id,
                 used_tools: {

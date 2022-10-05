@@ -1,174 +1,68 @@
-[
-  {
-    "workstation_name": "name_1",
-    "Used_tools": {
-      "pliers": true,
-      "box_cutter": true,
-      "screen_printing": false,
-      "outros": "Outros"
+{
+  "code_mold": "MD030",
+  "mold": "description default mold",
+  "product_code": "03.124.124004.01-00",
+  "product_description": "TAMPA TRASEIRA DE PLASTICO E970",
+  "client": "Yamaha",
+  "process": "Injeção",
+  "date": "28/10/2033",
+  "Controller_attention_point": [],
+  "Workstations": [
+    {
+      "workstations_name": "fhf",
+      "materials": [
+        { "sap_code": "dsfdsf", "description": "dsffd", "quantity": 1 }
+      ],
+      "Safety": {
+        "helmet": false,
+        "earplug": true,
+        "safety_goggles": false,
+        "safety_gloves": true,
+        "safety_mask": false,
+        "safety_boot": false,
+        "outros": "Outros"
+      },
+      "Used_tools": {
+        "pliers": true,
+        "box_cutter": true,
+        "screen_printing": false,
+        "outros": "Outros"
+      },
+      "Devices": [
+        { "description": "dsffsdf", "code": "dsfsdfd", "quantity": 1 }
+      ],
+      "specifics_requirements_client": [{ "description": "dsfdfdsfdsfdsf" }],
+      "Images_operations": [{ "description": "dsffds" }],
+      "Images_package_description": [{ "description": "dsfdfsdf" }],
+      "Images_final_product": [{ "description": "dsffdf" }]
     },
-    "Safety": {
-      "helmet": false,
-      "earplug": false,
-      "safety_goggles": false,
-      "safety_gloves": false,
-      "safety_mask": false,
-      "safety_boot": false,
-      "outros": "Outros"
-    },
-    "materials": [
-      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
-      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
-    ],
-    "Devices": [
-      { "description": "Descrição", "code": "Código", "quantity": 13 },
-      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
-    ],
-    "specifics_requirements_client": [
-      { "description": "Descrição" },
-      { "description": "Descrição 2" }
-    ],
-    "Images_operations": [
-      { "description": "descricao operacao imagem 1" },
-      { "description": "descricao operacao imagem 2" },
-      { "description": "" }
-    ],
-    "Images_package_description": [
-      { "description": "descricao de embalagem imagem 1" },
-      { "description": "descricao embalagem imagem 2" }
-    ],
-    "Images_final_product": [
-      { "description": "descricao de produto final imagem 1" },
-      { "description": "descricao de produto final imagem 2" }
-    ]
-  },
-  {
-    "workstation_name": "name_2",
-    "Used_tools": {
-      "pliers": true,
-      "box_cutter": true,
-      "screen_printing": false,
-      "outros": "Outros"
-    },
-    "Safety": {
-      "helmet": false,
-      "earplug": false,
-      "safety_goggles": false,
-      "safety_gloves": false,
-      "safety_mask": false,
-      "safety_boot": false,
-      "outros": "Outros"
-    },
-    "materials": [
-      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
-      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
-    ],
-    "Devices": [
-      { "description": "Descrição", "code": "Código", "quantity": 13 },
-      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
-    ],
-    "specifics_requirements_client": [
-      { "description": "Descrição" },
-      { "description": "Descrição 2" }
-    ],
-    "Images_operations": [
-      { "description": "descricao operacao imagem 1" },
-      { "description": "descricao operacao imagem 2" },
-      { "description": "" }
-    ],
-    "Images_package_description": [
-      { "description": "descricao de embalagem imagem 1" },
-      { "description": "descricao embalagem imagem 2" }
-    ],
-    "Images_final_product": [
-      { "description": "descricao de produto final imagem 1" },
-      { "description": "descricao de produto final imagem 2" }
-    ]
-  },
-  {
-    "workstation_name": "name_3",
-    "Used_tools": {
-      "pliers": true,
-      "box_cutter": true,
-      "screen_printing": false,
-      "outros": "Outros"
-    },
-    "Safety": {
-      "helmet": false,
-      "earplug": false,
-      "safety_goggles": false,
-      "safety_gloves": false,
-      "safety_mask": false,
-      "safety_boot": false,
-      "outros": "Outros"
-    },
-    "materials": [
-      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
-      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
-    ],
-    "Devices": [
-      { "description": "Descrição", "code": "Código", "quantity": 13 },
-      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
-    ],
-    "specifics_requirements_client": [
-      { "description": "Descrição" },
-      { "description": "Descrição 2" }
-    ],
-    "Images_operations": [
-      { "description": "descricao operacao imagem 1" },
-      { "description": "descricao operacao imagem 2" },
-      { "description": "" }
-    ],
-    "Images_package_description": [
-      { "description": "descricao de embalagem imagem 1" },
-      { "description": "descricao embalagem imagem 2" }
-    ],
-    "Images_final_product": [
-      { "description": "descricao de produto final imagem 1" },
-      { "description": "descricao de produto final imagem 2" }
-    ]
-  },
-  {
-    "workstation_name": "name_4",
-    "Used_tools": {
-      "pliers": true,
-      "box_cutter": true,
-      "screen_printing": false,
-      "outros": "Outros"
-    },
-    "Safety": {
-      "helmet": false,
-      "earplug": false,
-      "safety_goggles": false,
-      "safety_gloves": false,
-      "safety_mask": false,
-      "safety_boot": false,
-      "outros": "Outros"
-    },
-    "materials": [
-      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
-      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
-    ],
-    "Devices": [
-      { "description": "Descrição", "code": "Código", "quantity": 13 },
-      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
-    ],
-    "specifics_requirements_client": [
-      { "description": "Descrição" },
-      { "description": "Descrição 2" }
-    ],
-    "Images_operations": [
-      { "description": "descricao operacao imagem 1" },
-      { "description": "descricao operacao imagem 2" },
-      { "description": "" }
-    ],
-    "Images_package_description": [
-      { "description": "descricao de embalagem imagem 1" },
-      { "description": "descricao embalagem imagem 2" }
-    ],
-    "Images_final_product": [
-      { "description": "descricao de produto final imagem 1" },
-      { "description": "descricao de produto final imagem 2" }
-    ]
-  }
-]
+    {
+      "workstations_name": "hh",
+      "materials": [
+        { "sap_code": "sdfdfds", "description": "dsfsdf", "quantity": 1 }
+      ],
+      "Safety": {
+        "helmet": false,
+        "earplug": true,
+        "safety_goggles": false,
+        "safety_gloves": false,
+        "safety_mask": false,
+        "safety_boot": false,
+        "outros": "Outros"
+      },
+      "Used_tools": {
+        "pliers": true,
+        "box_cutter": true,
+        "screen_printing": false,
+        "outros": "Outros"
+      },
+      "Devices": [
+        { "description": "sdfdsfsdf", "code": "dfsdfdf", "quantity": 1 }
+      ],
+      "specifics_requirements_client": [{ "description": "sdasdsdas" }],
+      "Images_operations": [{ "description": "dsfdfdsf" }],
+      "Images_package_description": [{ "description": "dfsfdsfsdf" }],
+      "Images_final_product": [{ "description": "dfsdfsd" }]
+    }
+  ]
+}
