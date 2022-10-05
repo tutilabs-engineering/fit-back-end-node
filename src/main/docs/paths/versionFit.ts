@@ -3,17 +3,18 @@ export const versionFit = {
     tags: ['FIT'],
     summary: 'Versiona uma FIT específica',
     description: 'Usuários autorizados: eng_analista',
-    parameters: [
-      {
-        name: 'id',
-        in: 'path',
-        description: 'ID da FIT',
-        required: true,
-        schema: {
-          type: 'number',
+    requestBody: {
+      description:
+        'Os nomes das imagens ( files ) são dinâmicos. O index indica a qual Workstation a imagem pertence.',
+      required: true,
+      content: {
+        'multipart/form-data': {
+          schema: {
+            $ref: '#/schemas/signUpParams',
+          },
         },
       },
-    ],
+    },
     security: [
       {
         bearerAuth: [{}],
@@ -25,6 +26,9 @@ export const versionFit = {
       },
       400: {
         $ref: '#/components/badRequest',
+      },
+      401: {
+        $ref: '#/components/unauthorized',
       },
       403: {
         $ref: '#/components/forbidden',

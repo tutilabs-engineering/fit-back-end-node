@@ -8,8 +8,6 @@ const theme = new SwaggerTheme('v3')
 const optionsV1 = {
   explorer: true,
   customCss: theme.getBuffer('dark'),
-  customSiteTittle: 'Tutilabs FIT',
-  customfavIcon: '/assets/favicon.ico',
 }
 
 export default (app: Express): void => {

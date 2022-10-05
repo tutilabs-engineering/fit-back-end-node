@@ -5,7 +5,7 @@ export const signUpPath = {
     description: 'Usuários autorizados: eng_analista',
     requestBody: {
       description:
-        'Os nomes das imagens ( files ) são dinâmicos, o index indica a qual Workstation a imagem pertence.',
+        'Os nomes das imagens ( files ) são dinâmicos. O index indica a qual Workstation a imagem pertence.',
       required: true,
       content: {
         'multipart/form-data': {
