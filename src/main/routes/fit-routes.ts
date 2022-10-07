@@ -4,6 +4,7 @@ import { uploadFile } from '../middlewares/multer-file-config'
 import {
   makeHomologationFitController,
   makeAddFitController,
+  makeUpdateFitController,
   makeFindByFitController,
   makeListHomologatedController,
   makeListOnApprovalController,
@@ -18,6 +19,12 @@ export default (router: Router): void => {
     adminAuthEngAnalist,
     multer(uploadFile.getConfig).any(),
     adaptRoute(makeAddFitController())
+  )
+  router.put(
+    '/update/:id',
+    adminAuthEngAnalist,
+    multer(uploadFile.getConfig).any(),
+    adaptRoute(makeUpdateFitController())
   )
   router.put(
     '/homologation/:id',
