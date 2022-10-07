@@ -208,7 +208,7 @@ export class FitMysqlRepository
       product_code,
       process,
       product_description,
-      Controller_attention_point,
+      // Controller_attention_point,
       // Workstations,
       code_mold,
     } = request.body
@@ -224,15 +224,15 @@ export class FitMysqlRepository
         process,
         product_code,
         product_description,
-        Attention_point_control: {
-          updateMany: {
-            where: {
-              fitId: Number(request.params.id),
-            },
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
-            data: JSON.parse(Controller_attention_point.toString()),
-          },
-        },
+        // Attention_point_control: {
+        //   updateMany: {
+        //     where: {
+        //       fitId: Number(request.params.id),
+        //     },
+        //     // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        //     data: JSON.parse(Controller_attention_point.toString()),
+        //   },
+        // },
         Homologation: {
           updateMany: {
             where: {
