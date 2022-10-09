@@ -1,4 +1,5 @@
 export * from './add-controller-factory'
+export * from './update-controller-factory'
 export * from './find-by-fit-factory'
 export * from './homologation-controller-factory'
 export * from './homologation-validation-factory'
