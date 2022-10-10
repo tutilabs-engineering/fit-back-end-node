@@ -207,16 +207,21 @@ export class FitMysqlRepository
   async update(request: UpdateFit.Params): Promise<UpdateFit.Result> {
     const {
       mold,
-      process,
+      client,
+      // date,
+      Controller_attention_point: isValidaController_attention_point,
+      Workstations: isValidWorkstations,
       product_code,
+      process,
       product_description,
       code_mold,
-      client,
-    } = request.body
-    const Controller_attention_point = JSON.parse(
-      request.body.Controller_attention_point
-    )
-    const Workstations = JSON.parse(request.body.Workstations)
+    } = request.body.data ? JSON.parse(request.body.data) : request.body
+    const Workstations = request.body.data
+      ? isValidWorkstations
+      : JSON.parse(request.body.Workstations)
+    const Controller_attention_point = request.body.data
+      ? isValidaController_attention_point
+      : JSON.parse(request.body.Controller_attention_point)
     await PrismaHelper.prisma.fit
       .update({
         data: {
@@ -592,13 +597,20 @@ export class FitMysqlRepository
     const {
       mold,
       client,
+      // date,
+      Controller_attention_point: isValidaController_attention_point,
+      Workstations: isValidWorkstations,
       product_code,
       process,
       product_description,
-      Controller_attention_point,
-      Workstations,
       code_mold,
-    } = JSON.parse(request.body.data)
+    } = request.body.data ? JSON.parse(request.body.data) : request.body
+    const Workstations = request.body.data
+      ? isValidWorkstations
+      : JSON.parse(request.body.Workstations)
+    const Controller_attention_point = request.body.data
+      ? isValidaController_attention_point
+      : JSON.parse(request.body.Controller_attention_point)
     const findByHomologation = await PrismaHelper.prisma.homologation.findFirst(
       {
         where: {
@@ -646,7 +658,7 @@ export class FitMysqlRepository
               mold,
               code_mold,
               product_code,
-              version: 0,
+              version: findByHomologation.version + 1,
               statusId: 1,
             },
           },
@@ -660,7 +672,7 @@ export class FitMysqlRepository
           await PrismaHelper.prisma.workstation
             .create({
               data: {
-                workstation_name: Workstation.workstations_name,
+                workstation_name: Workstation.workstation_name,
                 img_layout_path: img_layout_path[index].filename,
                 fitId: fit.id,
                 used_tools: {
@@ -849,12 +861,13 @@ export class FitMysqlRepository
             code_mold: findByFitCodeMoldAndCodeProd.code_mold,
             product_code: findByFitCodeMoldAndCodeProd.product_code,
           },
+          NOT: [{ statusId: 5 }, { statusId: 2 }],
         },
+
         orderBy: {
           id: 'asc',
         },
       })
-
       await PrismaHelper.prisma.homologation.update({
         data: {
           statusId: 3,

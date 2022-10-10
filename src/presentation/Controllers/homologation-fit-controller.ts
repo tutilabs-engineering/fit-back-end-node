@@ -30,6 +30,8 @@ export class HomologationFitController implements Controller {
           email: request.account.email,
           registration: request.account.matricula,
           role: request.account.nivel_de_acesso.descricao,
+          comment: request.body.comment,
+          status: request.body.status,
         })
         request.body = { findHomologation, status: 1 }
         await this.homolagtion.execute(request)
@@ -52,6 +54,8 @@ export class HomologationFitController implements Controller {
         email: request.account.email,
         registration: request.account.matricula,
         role: request.account.nivel_de_acesso.descricao,
+        comment: request.body.comment,
+        status: request.body.status,
       })
       if (findHomologation.length === 4) {
         request.body = { findHomologation, status: 3 }
