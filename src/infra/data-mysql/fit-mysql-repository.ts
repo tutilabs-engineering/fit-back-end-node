@@ -32,13 +32,19 @@ export class FitMysqlRepository
       mold,
       client,
       // date,
+      Controller_attention_point: isValidaController_attention_point,
+      Workstations: isValidWorkstations,
       product_code,
       process,
       product_description,
-      Controller_attention_point,
-      Workstations,
       code_mold,
-    } = JSON.parse(request.body.data)
+    } = request.body.data ? JSON.parse(request.body.data) : request.body
+    const Workstations = request.body.data
+      ? isValidWorkstations
+      : JSON.parse(request.body.Workstations)
+    const Controller_attention_point = request.body.data
+      ? isValidaController_attention_point
+      : JSON.parse(request.body.Controller_attention_point)
     await PrismaHelper.prisma.fit
       .create({
         data: {
@@ -85,7 +91,7 @@ export class FitMysqlRepository
           await PrismaHelper.prisma.workstation
             .create({
               data: {
-                workstation_name: Workstation.workstations_name,
+                workstation_name: Workstation.workstation_name,
                 img_layout_path: img_layout_path[index].filename,
                 fitId: fit.id,
                 used_tools: {
