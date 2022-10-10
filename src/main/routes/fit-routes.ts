@@ -6,6 +6,7 @@ import {
   makeAddFitController,
   makeUpdateFitController,
   makeFindByFitController,
+  makeFindFitByCodeController,
   makeListHomologatedController,
   makeListOnApprovalController,
   makeVersioningController,
@@ -32,6 +33,7 @@ export default (router: Router): void => {
     adaptRoute(makeHomologationFitController())
   )
   router.get('/view-specific/:id', adaptRoute(makeFindByFitController()))
+  router.get('/view-specific/', adaptRoute(makeFindFitByCodeController()))
   router.get('/list-on-approval', adaptRoute(makeListOnApprovalController()))
   router.get('/list-homologated', adaptRoute(makeListHomologatedController()))
   router.post(

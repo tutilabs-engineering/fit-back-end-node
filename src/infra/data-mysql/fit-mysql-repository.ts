@@ -1,19 +1,25 @@
-import { AddFit } from '../../domain/useCase/Add/add-fit'
-import { UpdateFit } from '../../domain/useCase/Update/update-fit'
-import { VersioningFIt } from '../../domain/useCase/Versioning/versioning-fit'
-import { FindSpecificFit } from '../../domain/useCase/ViewSpecific/view-specific'
+import {
+  AddFit,
+  CancellationFit,
+  FindSpecificFit,
+  FindSpecificFitByCode,
+  UpdateFit,
+  VersioningFIt,
+} from '../../domain/useCase/index'
+import {
+  AddFitRepository,
+  CancellationFitRepository,
+  FindByFitRepository,
+  FindFitByCodeRepository,
+  HomologationFitRepository,
+  ListHomologatedRepository,
+  ListOnApprovalRepository,
+  LoadAccountByTokenRepository,
+  UpdateFitRepository,
+  VersioningFitRepository,
+} from '../repositories/data/fit/index'
 import { httpUserSystem } from '../../utils/api/user-system-api'
-import { AddFitRepository } from '../repositories/data/fit/add-repository'
-import { UpdateFitRepository } from '../repositories/data/fit/update-repository'
-import { FindByFitRepository } from '../repositories/data/fit/find-by-fit-repository'
-import { HomologationFitRepository } from '../repositories/data/fit/homologation-repository'
-import { ListHomologatedRepository } from '../repositories/data/fit/list-homologated-repository'
-import { ListOnApprovalRepository } from '../repositories/data/fit/list-on-approval-repository'
-import { LoadAccountByTokenRepository } from '../repositories/data/fit/load-account-by-token-repository'
-import { VersioningFitRepository } from '../repositories/data/fit/versioning-repository'
-import { CancellationFitRepository } from '../repositories/data/fit/cancellation-fit-repository'
 import { PrismaHelper } from './prisma-helper'
-import { CancellationFit } from '../../domain/useCase/Cancellation/cancellation-fit'
 
 export class FitMysqlRepository
   implements
@@ -23,6 +29,7 @@ export class FitMysqlRepository
     HomologationFitRepository,
     ListOnApprovalRepository,
     FindByFitRepository,
+    FindFitByCodeRepository,
     ListHomologatedRepository,
     VersioningFitRepository,
     CancellationFitRepository
@@ -509,6 +516,38 @@ export class FitMysqlRepository
       },
     })
     return findByFit
+  }
+
+  async findFitByCode(fit: FindSpecificFitByCode.Query): Promise<any> {
+    const findFitByCode = await PrismaHelper.prisma.fit.findFirst({
+      include: {
+        Attention_point_control: true,
+        Workstation: {
+          include: {
+            devices: true,
+            Image_final_product: true,
+            Image_operation: true,
+            Image_package_description: true,
+            materials: true,
+            safety: true,
+            specifics_requirements_client: true,
+            used_tools: true,
+          },
+        },
+        Homologation: true,
+      },
+      where: {
+        AND: [
+          {
+            product_code: fit.product_code,
+          },
+          {
+            code_mold: fit.code_mold,
+          },
+        ],
+      },
+    })
+    return findFitByCode
   }
 
   async ListFitHomologated(): Promise<ListHomologatedRepository.Result[]> {
