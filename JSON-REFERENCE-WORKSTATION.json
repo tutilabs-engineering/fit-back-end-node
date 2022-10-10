@@ -5,7 +5,7 @@
       "pliers": true,
       "box_cutter": true,
       "screen_printing": false,
-      "outros": "Outros"
+      "outros": "Outros update"
     },
     "Safety": {
       "helmet": false,
@@ -14,32 +14,48 @@
       "safety_gloves": false,
       "safety_mask": false,
       "safety_boot": false,
-      "outros": "Outros"
+      "outros": "Outros update"
     },
     "materials": [
-      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
-      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
+      {
+        "sap_code": "131313",
+        "description": "Descrição update",
+        "quantity": 13
+      },
+      {
+        "sap_code": "131313",
+        "description": "Descrição 2 update",
+        "quantity": 20
+      }
     ],
     "Devices": [
-      { "description": "Descrição", "code": "Código", "quantity": 13 },
-      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
+      {
+        "description": "Descrição update",
+        "code": "Código update",
+        "quantity": 13
+      },
+      {
+        "description": "Descrição 2 update",
+        "code": "Código 2 update",
+        "quantity": 20
+      }
     ],
     "specifics_requirements_client": [
-      { "description": "Descrição" },
-      { "description": "Descrição 2" }
+      { "description": "Descrição update" },
+      { "description": "Descrição 2 update" }
     ],
     "Images_operations": [
-      { "description": "descricao operacao imagem 1" },
-      { "description": "descricao operacao imagem 2" },
+      { "description": "descricao operacao imagem 1 update" },
+      { "description": "descricao operacao imagem 2 update" },
       { "description": "" }
     ],
     "Images_package_description": [
-      { "description": "descricao de embalagem imagem 1" },
-      { "description": "descricao embalagem imagem 2" }
+      { "description": "descricao de embalagem imagem 1 update" },
+      { "description": "descricao embalagem imagem 2 update" }
     ],
     "Images_final_product": [
-      { "description": "descricao de produto final imagem 1" },
-      { "description": "descricao de produto final imagem 2" }
+      { "description": "descricao de produto final imagem 1 update" },
+      { "description": "descricao de produto final imagem 2 update" }
     ]
   },
   {
@@ -48,7 +64,7 @@
       "pliers": true,
       "box_cutter": true,
       "screen_printing": false,
-      "outros": "Outros"
+      "outros": "Outros update"
     },
     "Safety": {
       "helmet": false,
@@ -57,32 +73,44 @@
       "safety_gloves": false,
       "safety_mask": false,
       "safety_boot": false,
-      "outros": "Outros"
+      "outros": "Outros update"
     },
     "materials": [
-      { "sap_code": "131313", "description": "Descrição", "quantity": 13 },
-      { "sap_code": "131313", "description": "Descrição 2", "quantity": 20 }
+      {
+        "sap_code": "131313",
+        "description": "Descrição update",
+        "quantity": 13
+      },
+      {
+        "sap_code": "131313",
+        "description": "Descrição 2 update",
+        "quantity": 20
+      }
     ],
     "Devices": [
-      { "description": "Descrição", "code": "Código", "quantity": 13 },
-      { "description": "Descrição 2", "code": "Código 2", "quantity": 20 }
+      { "description": "Descrição update", "code": "Código", "quantity": 13 },
+      {
+        "description": "Descrição 2 update",
+        "code": "Código 2",
+        "quantity": 20
+      }
     ],
     "specifics_requirements_client": [
-      { "description": "Descrição" },
-      { "description": "Descrição 2" }
+      { "description": "Descrição update" },
+      { "description": "Descrição 2 update" }
     ],
     "Images_operations": [
-      { "description": "descricao operacao imagem 1" },
-      { "description": "descricao operacao imagem 2" },
+      { "description": "descricao operacao imagem 1 update" },
+      { "description": "descricao operacao imagem 2 update" },
       { "description": "" }
     ],
     "Images_package_description": [
-      { "description": "descricao de embalagem imagem 1" },
-      { "description": "descricao embalagem imagem 2" }
+      { "description": "descricao de embalagem imagem 1 update" },
+      { "description": "descricao embalagem imagem 2 update" }
     ],
     "Images_final_product": [
-      { "description": "descricao de produto final imagem 1" },
-      { "description": "descricao de produto final imagem 2" }
+      { "description": "descricao de produto final imagem 1 update" },
+      { "description": "descricao de produto final imagem 2 update" }
     ]
   },
   {

@@ -4,7 +4,7 @@ import { Validation } from '../../presentation/models/validation'
 export class RequiredFieldValidation implements Validation {
   constructor(private readonly fieldName: string) {}
   async validate(input: any): Promise<Error> {
-    const body = JSON.parse(input.body.data)
+    const body = input.body.data ? JSON.parse(input.body.data) : input.body
     const header = Object.assign({
       body: {
         mold: body.mold,
@@ -13,11 +13,14 @@ export class RequiredFieldValidation implements Validation {
         product_code: body.product_code,
         process: body.process,
         product_description: body.product_description,
-        Workstations: body.Workstations,
-        Controller_attention_point: body.Controller_attention_point,
+        Workstations: input.body.data
+          ? body.Workstations
+          : JSON.parse(body.Workstations),
+        Controller_attention_point: input.body.data
+          ? body.Controller_attention_point
+          : JSON.parse(body.Controller_attention_point),
       },
     })
-
     if (!header.body[this.fieldName]) {
       return new MissingParamError(this.fieldName)
     }

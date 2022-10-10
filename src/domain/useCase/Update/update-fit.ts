@@ -6,7 +6,7 @@ export interface UpdateFit {
 
 export namespace UpdateFit {
   export type Params = {
-    body: Omit<FitModel, 'id'>
+    body: Omit<FitModel, 'id'> | any
     params: Pick<FitModel, 'id'>
     files: any
     account: any

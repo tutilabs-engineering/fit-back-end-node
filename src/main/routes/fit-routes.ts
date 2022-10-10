@@ -12,12 +12,19 @@ import {
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
 import { makeCancellationFitController } from '../factories/controllers/cancellation-fit-factory'
+import { makeUpdateFitController } from '../factories/controllers/update-controller-factory'
 export default (router: Router): void => {
   router.post(
     '/signup',
     adminAuthEngAnalist,
     multer(uploadFile.getConfig).any(),
     adaptRoute(makeAddFitController())
+  )
+  router.post(
+    '/update/:id',
+    adminAuthEngAnalist,
+    multer(uploadFile.getConfig).any(),
+    adaptRoute(makeUpdateFitController())
   )
   router.put(
     '/homologation/:id',
