@@ -20,7 +20,7 @@ export default (router: Router): void => {
     multer(uploadFile.getConfig).any(),
     adaptRoute(makeAddFitController())
   )
-  router.post(
+  router.put(
     '/update/:id',
     adminAuthEngAnalist,
     multer(uploadFile.getConfig).any(),

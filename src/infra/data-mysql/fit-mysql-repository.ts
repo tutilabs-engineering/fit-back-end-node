@@ -265,14 +265,44 @@ export class FitMysqlRepository
         },
       })
       .then(async (fit) => {
-        for (const [index, values] of fit.Attention_point_control.entries()) {
-          await PrismaHelper.prisma.attention_point_control.updateMany({
-            data: Controller_attention_point[index],
+        // limpando lista de ponto de controle de atenção
+        for (const values of Controller_attention_point) {
+          fit.Attention_point_control.slice.call(values)
+        }
+        for (const isDelAttentionPointControl of fit.Attention_point_control) {
+          await PrismaHelper.prisma.attention_point_control.deleteMany({
             where: {
-              id: values.id,
+              id: isDelAttentionPointControl.id,
             },
           })
         }
+        //
+        // atualizando lista de ponto de controle de atenção
+        for (const values of Controller_attention_point) {
+          await PrismaHelper.prisma.attention_point_control.upsert({
+            update: {
+              control_method: values.control_method,
+              evaluation_technique: values.evaluation_technique,
+              reaction_plan: values.reaction_plan,
+              requirements: values.requirements,
+              sample: values.sample,
+              specifications: values.specifications,
+            },
+            where: {
+              id: values.id ? values.id : 0,
+            },
+            create: {
+              fitId: fit.id,
+              control_method: values.control_method,
+              evaluation_technique: values.evaluation_technique,
+              reaction_plan: values.reaction_plan,
+              requirements: values.requirements,
+              sample: values.sample,
+              specifications: values.specifications,
+            },
+          })
+        }
+        //
         const img_layout_path = request.files.filter(
           (values: any) => values.fieldname === 'img_layout_path'
         )
@@ -280,27 +310,47 @@ export class FitMysqlRepository
           await PrismaHelper.prisma.workstation.updateMany({
             data: {
               workstation_name: Workstations[index].workstation_name,
-              img_layout_path: img_layout_path[index].filename,
+              img_layout_path: img_layout_path[index]
+                ? img_layout_path[index].filename
+                : request.body.img_layout_path,
             },
             where: {
               id: values.id,
             },
           })
-          for (const [indexDevice, valuesDevice] of fit.Workstation[
-            index
-          ].devices.entries()) {
-            await PrismaHelper.prisma.devices.updateMany({
-              data: {
-                code: Workstations[index].Devices[indexDevice].code,
-                description:
-                  Workstations[index].Devices[indexDevice].description,
-                quantity: Workstations[index].Devices[indexDevice].quantity,
-              },
+          // limpando lista de dispositivos
+          for (const values of Workstations[index].Devices) {
+            fit.Workstation[index].devices.slice.call(values)
+          }
+          for (const isDelDevice of fit.Workstation[index].devices) {
+            await PrismaHelper.prisma.devices.deleteMany({
               where: {
-                id: valuesDevice.id,
+                id: isDelDevice.id,
               },
             })
           }
+          //
+          // atualizando lista de dispositivos
+          for (const valuesDevice of Workstations[index].Devices) {
+            await PrismaHelper.prisma.devices.upsert({
+              update: {
+                code: valuesDevice.code,
+                description: valuesDevice.description,
+                quantity: valuesDevice.quantity,
+              },
+              create: {
+                code: valuesDevice.code,
+                description: valuesDevice.description,
+                quantity: valuesDevice.quantity,
+                workstationId: values.id,
+              },
+              where: {
+                id: valuesDevice.id ? valuesDevice.id : 0,
+              },
+            })
+          }
+          //
+          // atualizando ferramentaas
           for (const valuesSafety of fit.Workstation[index].safety) {
             await PrismaHelper.prisma.safety.updateMany({
               data: Workstations[index].Safety,
@@ -309,6 +359,7 @@ export class FitMysqlRepository
               },
             })
           }
+          // atualizando componentes de segurança
           for (const valuesUsedtools of fit.Workstation[index].used_tools) {
             await PrismaHelper.prisma.used_tools.updateMany({
               data: Workstations[index].Used_tools,
@@ -317,39 +368,74 @@ export class FitMysqlRepository
               },
             })
           }
-          for (const [indexMaterials, valuesMaterials] of fit.Workstation[
+          // Limpando lista de materiais
+          for (const values of Workstations[index].materials) {
+            fit.Workstation[index].materials.slice.call(values)
+          }
+          for (const isDelmaterials of fit.Workstation[index].materials) {
+            await PrismaHelper.prisma.materials.deleteMany({
+              where: {
+                id: isDelmaterials.id,
+              },
+            })
+          }
+          //
+          // atualizando lista de materiais
+          for (const valuesMaterials of Workstations[index].materials) {
+            await PrismaHelper.prisma.materials.upsert({
+              update: {
+                sap_code: valuesMaterials.sap_code,
+                description: valuesMaterials.description,
+                quantity: valuesMaterials.quantity,
+              },
+              create: {
+                sap_code: valuesMaterials.sap_code,
+                description: valuesMaterials.description,
+                quantity: valuesMaterials.quantity,
+                workstationId: values.id,
+              },
+              where: {
+                id: valuesMaterials.id ? valuesMaterials.id : 0,
+              },
+            })
+          }
+          //
+          // Limpando lista de requerimentos specificos de cliente
+          for (const values of Workstations[index]
+            .specifics_requirements_client) {
+            fit.Workstation[index].specifics_requirements_client.slice.call(
+              values
+            )
+          }
+          for (const isDelspecifics_requirements_client of fit.Workstation[
             index
-          ].materials.entries()) {
-            await PrismaHelper.prisma.materials.updateMany({
-              data: {
-                sap_code:
-                  Workstations[index].materials[indexMaterials].sap_code,
-                description:
-                  Workstations[index].materials[indexMaterials].description,
-                quantity:
-                  Workstations[index].materials[indexMaterials].quantity,
-              },
+          ].specifics_requirements_client) {
+            await PrismaHelper.prisma.specifics_requirements_client.deleteMany({
               where: {
-                id: valuesMaterials.id,
+                id: isDelspecifics_requirements_client.id,
               },
             })
           }
-          for (const [
-            indexSpecifics_requirements_client,
-            valuesSpecifics_requirements_client,
-          ] of fit.Workstation[index].specifics_requirements_client.entries()) {
-            await PrismaHelper.prisma.specifics_requirements_client.updateMany({
-              data: {
-                description:
-                  Workstations[index].specifics_requirements_client[
-                    indexSpecifics_requirements_client
-                  ].description,
+          //
+          // atualizando lista de requerimentos especificos do cliente
+          for (const valuesSpecifics_requirements_client of Workstations[index]
+            .specifics_requirements_client) {
+            await PrismaHelper.prisma.specifics_requirements_client.upsert({
+              update: {
+                description: valuesSpecifics_requirements_client.description,
+              },
+              create: {
+                description: valuesSpecifics_requirements_client.description,
+                workstationId: values.id,
               },
               where: {
-                id: valuesSpecifics_requirements_client.id,
+                id: valuesSpecifics_requirements_client.id
+                  ? valuesSpecifics_requirements_client.id
+                  : 0,
               },
             })
           }
+          //
           // Update Images de Operação
           const find_img_operations = request.files.map((values: any) => {
             if (values.fieldname === `img_operation_path_${index}`) {
@@ -359,6 +445,7 @@ export class FitMysqlRepository
           const filter_img_operation_path = find_img_operations.filter(
             (values: any) => values !== undefined
           )
+          console.log(filter_img_operation_path)
           const workstation_Images_Operations = Workstations[
             index
           ].Images_operations.map((values: any, index: number) => {
@@ -370,10 +457,19 @@ export class FitMysqlRepository
             indexImageOperation,
             valuesImageOperation,
           ] of fit.Workstation[index].Image_operation.entries()) {
-            await PrismaHelper.prisma.image_operation.updateMany({
-              data: workstation_Images_Operations[indexImageOperation],
+            console.log(valuesImageOperation)
+            await PrismaHelper.prisma.image_operation.upsert({
+              update: workstation_Images_Operations[indexImageOperation],
+              create: {
+                description:
+                  workstation_Images_Operations[indexImageOperation]
+                    .description,
+                img_path:
+                  workstation_Images_Operations[indexImageOperation].img_path,
+                workstationId: values.id,
+              },
               where: {
-                id: valuesImageOperation.id,
+                id: valuesImageOperation.id ? valuesImageOperation.id : 0,
               },
             })
           }
