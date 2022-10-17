@@ -1,56 +1,273 @@
-import nodemailer from 'nodemailer'
-// import path from 'path'
+import * as nodemailer from 'nodemailer'
+import * as handlebars from 'handlebars'
+import * as fs from 'fs'
+import * as path from 'path'
 
-// async..await is not allowed in global scope, must use a wrapper
-async function main() {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  const testAccount = await nodemailer.createTestAccount()
+export class SendEmail {
+  async sendEmailNewFit() {
+    const testAccount = await nodemailer.createTestAccount()
+    const filePath = path.join(__dirname, './email-fit/new-fit.hbs')
+    const source = fs.readFileSync(filePath, 'utf-8').toString()
+    const template = handlebars.compile(source)
 
-  // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
-    },
-  })
+    const replacements = {
+      id: '4',
+      product_code: '4425',
+      product_description: 'aqui vai a descrição do produto',
+      code_mold: 'MD490',
+      mold: 'Molde tal',
+      client: 'Yamaha',
+      process: 'Injeção',
+      date: '10/05/2022',
+      // CSS
+      all: `margin: 0; border: none; box-sizing: border-box; font-family: 'Roboto', sans-serif;`,
+      body: `width: 100vw; height: 100vh; color: #636363;`,
+      table_th_td: 'border: 1px solid #636363; border-collapse: collapse;',
+      title: `width: 70%; height: 68.8px; text-align: center; font-size: 20.8px;`,
+      title_date: `font-size: 16px; font-weight: bold;`,
+      subtitle: `height: 68.8px; font-size: 16px;`,
+      subtitle_td: `font-weight: 600; padding-left: 20px;`,
+      content_td: `padding: 20px; border: none;`,
+      content_table: `border: 2px solid #EDEDED; text-align: center; margin-bottom: 2rem;`,
+      content_table_th: `border: none; height: 28px;`,
+      footer: `border-bottom: 1px solid #000; width: 100%; height: 100px; display: flex; justify-content: space-around; align-items: center;`,
+      footer_td: `text-align: right; padding-right: 20px; border: 2px solid transparent;`,
+      image: `float: right; width: 167px; height: 50px; background-image: url('/assets/logo.png'); background-size: cover;`,
+      imagelabs: `float: right; width: 121px; height: 50px; background-image: url('/assets/tutilabs.png'); background-size: cover;`,
+    }
+    const hbsToSend = template(replacements)
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    })
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.office365.com',
+    //   port: 587,
+    //   auth: {
+    //     user: 'yantutilabs@outlook.com',
+    //     pass: 'tuti@5045',
+    //   },
+    // })
 
-  // send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: '"Tutilabs" <tutilabs@tutiplast.com>', // sender address
-    to: 'eng_tec@tutiplast.com', // list of receivers
-    subject: 'FIT em processo de Homologação', // Subject line
-    text: 'FIT em processo de homologação aguardando a aprovação do SESMT, Produção, Qualidade e Engenharia\nlink: www.example.com', // plain text body
-    // html: '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="styles.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"><title>Email Técnico</title></head><body><table border="1" width="100%"><tr class="title"><th colspan="2">FIT</th><th colspan="2" class="title">Ficha de Instrução de Trabalho - N°XXX</th><th colspan="2" class="title-date">Data: 30/08/2022</th></tr><tr class="subtitle"><td colspan="6">Status de Nova FIT</td></tr><tr class="content"><td colspan="6" class="content-internal"><table width="100%"><tr style="background-color: #EDEDED;"><th>Cód. Produto</th><th>Desc. Produto</th><th>Cód. Molde</th><th>Molde</th><th>Cliente</th><th>Processo</th><th>Data</th><th>Status</th></tr><tr><td>123.456789-10</td><td>Lorem Ipsum product description</td><td>MD101</td><td>Lorem Ipsum Molde</td><td>Honda</td><td>Injeção</td><td>12/12/2012</td><td style="color: #25c032da; font-weight: bold;">Disponivel para Elaboração</td></tr></table></td></tr></table><div class="footer"><td colspan="6"><div class="image"></div></td><td colspan="6"><div class="footerText">Tutilabs e todas as marcas associadas são marcas da Tutiplast</div></td><td colspan="6"><div class="imageLabs"></div></td></div></body></html>', // html body
-    html: {
-      path: '../../../teste/fit-email',
-    },
-    // attachments: [
-    //   {
-    //     filename: 'mailtrap.png',
-    //     path: __dirname + '/mailtrap.png',
-    //     cid: 'uniq-mailtrap.png'
-    //   }
-    // ]
-  })
+    const mailList = ['yantutilabs@outlook.com']
 
-  //   const info = await transporter.sendMail({
-  //     from: '"Tutilabs" <tutilabs@tutiplast.com>', // sender address
-  //     to: 'eng@tutiplast.com, sesmt@tutiplast.com, prod@tutiplast.com, quality@tutiplast.com', // list of receivers
-  //     subject: 'FIT Disponível para Elaboração', // Subject line
-  //     text: 'FIT Elaboração', // plain text body
-  //     html: '<b>Table</b>', // html body
-  //   })
+    const mailOptions = {
+      from: '"Tutilabs" <yantutilabs@outlook.com>',
+      to: mailList,
+      subject: 'FIT disponível para Elaboração',
+      text: 'Aguardando a criação da Nova FIT\nlink: www.example.com',
+      html: hbsToSend,
+    }
 
-  console.log('Message sent: %s', info.messageId)
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    const info = await transporter.sendMail(mailOptions)
+    console.log('Message sent: %s', info.messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+  }
 
-  // Preview only available when sending through an Ethereal account
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  async sendEmailOnApprovalDepartments() {
+    const filePath = path.join(__dirname, './email-fit/on-approval.hbs')
+    const source = fs.readFileSync(filePath, 'utf-8').toString()
+    const template = handlebars.compile(source)
+    const testAccount = await nodemailer.createTestAccount()
+
+    const replacements = {
+      id: '4',
+      product_code: '4425',
+      product_description: 'aqui vai a descrição do produto',
+      code_mold: 'MD490',
+      mold: 'Molde tal',
+      client: 'Yamaha',
+      process: 'Injeção',
+      date: '10/05/2022',
+      // CSS
+      all: `margin: 0; border: none; box-sizing: border-box; font-family: 'Roboto', sans-serif;`,
+      body: `width: 100vw; height: 100vh; color: #636363;`,
+      table_th_td: 'border: 1px solid #636363; border-collapse: collapse;',
+      title: `width: 70%; height: 68.8px; text-align: center; font-size: 20.8px;`,
+      title_date: `font-size: 16px; font-weight: bold;`,
+      subtitle: `height: 68.8px; font-size: 16px;`,
+      subtitle_td: `font-weight: 600; padding-left: 20px;`,
+      content_td: `padding: 20px; border: none;`,
+      content_table: `border: 2px solid #EDEDED; text-align: center; margin-bottom: 2rem;`,
+      content_table_th: `border: none; height: 28px;`,
+      footer: `border-bottom: 1px solid #000; width: 100%; height: 100px; display: flex; justify-content: space-around; align-items: center;`,
+      footer_td: `text-align: right; padding-right: 20px; border: 2px solid transparent;`,
+      image: `float: right; width: 167px; height: 50px; background-image: url('/assets/logo.png'); background-size: cover;`,
+      imagelabs: `float: right; width: 121px; height: 50px; background-image: url('/assets/tutilabs.png'); background-size: cover;`,
+    }
+    const hbsToSend = template(replacements)
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    })
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.office365.com',
+    //   port: 587,
+    //   auth: {
+    //     user: 'yantutilabs@outlook.com',
+    //     pass: 'tuti@5045',
+    //   },
+    // })
+
+    const mailList = ['yantutilabs@outlook.com']
+
+    const mailOptions = {
+      from: '"Tutilabs" <yantutilabs@outlook.com>',
+      to: mailList,
+      subject: 'FIT em processo de Homologação',
+      text: 'FIT em processo de homologação aguardando a aprovação dos setores: SESMT, Produção, Qualidade\nlink: www.example.com',
+      html: hbsToSend,
+    }
+
+    const info = await transporter.sendMail(mailOptions)
+    console.log('Message sent: %s', info.messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+  }
+
+  async sendEmailOnApprovalEngAdmin() {
+    const filePath = path.join(__dirname, './email-fit/on-approval.hbs')
+    const source = fs.readFileSync(filePath, 'utf-8').toString()
+    const template = handlebars.compile(source)
+    const testAccount = await nodemailer.createTestAccount()
+
+    const replacements = {
+      id: '4',
+      product_code: '4425',
+      product_description: 'aqui vai a descrição do produto',
+      code_mold: 'MD490',
+      mold: 'Molde tal',
+      client: 'Yamaha',
+      process: 'Injeção',
+      date: '10/05/2022',
+      // CSS
+      all: `margin: 0; border: none; box-sizing: border-box; font-family: 'Roboto', sans-serif;`,
+      body: `width: 100vw; height: 100vh; color: #636363;`,
+      table_th_td: 'border: 1px solid #636363; border-collapse: collapse;',
+      title: `width: 70%; height: 68.8px; text-align: center; font-size: 20.8px;`,
+      title_date: `font-size: 16px; font-weight: bold;`,
+      subtitle: `height: 68.8px; font-size: 16px;`,
+      subtitle_td: `font-weight: 600; padding-left: 20px;`,
+      content_td: `padding: 20px; border: none;`,
+      content_table: `border: 2px solid #EDEDED; text-align: center; margin-bottom: 2rem;`,
+      content_table_th: `border: none; height: 28px;`,
+      footer: `border-bottom: 1px solid #000; width: 100%; height: 100px; display: flex; justify-content: space-around; align-items: center;`,
+      footer_td: `text-align: right; padding-right: 20px; border: 2px solid transparent;`,
+      image: `float: right; width: 167px; height: 50px; background-image: url('/assets/logo.png'); background-size: cover;`,
+      imagelabs: `float: right; width: 121px; height: 50px; background-image: url('/assets/tutilabs.png'); background-size: cover;`,
+    }
+    const hbsToSend = template(replacements)
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    })
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.office365.com',
+    //   port: 587,
+    //   auth: {
+    //     user: 'yantutilabs@outlook.com',
+    //     pass: 'tuti@5045',
+    //   },
+    // })
+
+    const mailList = ['yantutilabs@outlook.com']
+
+    const mailOptions = {
+      from: '"Tutilabs" <yantutilabs@outlook.com>',
+      to: mailList,
+      subject: 'FIT em processo de Homologação',
+      text: 'FIT em processo de homologação aguardando a aprovação da Engenharia\nlink: www.example.com',
+      html: hbsToSend,
+    }
+
+    const info = await transporter.sendMail(mailOptions)
+    console.log('Message sent: %s', info.messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+  }
+
+  async sendEmailRejectedFit() {
+    const filePath = path.join(__dirname, './email-fit/rejected.hbs')
+    const source = fs.readFileSync(filePath, 'utf-8').toString()
+    const template = handlebars.compile(source)
+    const testAccount = await nodemailer.createTestAccount()
+
+    const replacements = {
+      id: '4',
+      product_code: '4425',
+      product_description: 'aqui vai a descrição do produto',
+      code_mold: 'MD490',
+      mold: 'Molde tal',
+      client: 'Yamaha',
+      process: 'Injeção',
+      date: '10/05/2022',
+      // CSS
+      all: `margin: 0; border: none; box-sizing: border-box; font-family: 'Roboto', sans-serif;`,
+      body: `width: 100vw; height: 100vh; color: #636363;`,
+      table_th_td: 'border: 1px solid #636363; border-collapse: collapse;',
+      title: `width: 70%; height: 68.8px; text-align: center; font-size: 20.8px;`,
+      title_date: `font-size: 16px; font-weight: bold;`,
+      subtitle: `height: 68.8px; font-size: 16px;`,
+      subtitle_td: `font-weight: 600; padding-left: 20px;`,
+      content_td: `padding: 20px; border: none;`,
+      content_table: `border: 2px solid #EDEDED; text-align: center; margin-bottom: 2rem;`,
+      content_table_th: `border: none; height: 28px;`,
+      footer: `border-bottom: 1px solid #000; width: 100%; height: 100px; display: flex; justify-content: space-around; align-items: center;`,
+      footer_td: `text-align: right; padding-right: 20px; border: 2px solid transparent;`,
+      image: `float: right; width: 167px; height: 50px; background-image: url('/assets/logo.png'); background-size: cover;`,
+      imagelabs: `float: right; width: 121px; height: 50px; background-image: url('/assets/tutilabs.png'); background-size: cover;`,
+    }
+    const hbsToSend = template(replacements)
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    })
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.office365.com',
+    //   port: 587,
+    //   auth: {
+    //     user: 'yantutilabs@outlook.com',
+    //     pass: 'tuti@5045',
+    //   },
+    // })
+
+    const mailList = ['yantutilabs@outlook.com']
+
+    const mailOptions = {
+      from: '"Tutilabs" <yantutilabs@outlook.com>',
+      to: mailList,
+      subject: 'FIT Reprovada',
+      text: 'FIT reprovada aguardando uma Nova Elaboração\nlink: www.example.com',
+      html: hbsToSend,
+    }
+
+    const info = await transporter.sendMail(mailOptions)
+    console.log('Message sent: %s', info.messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+  }
 }
 
-main().catch(console.error)
+const teste = new SendEmail()
+
+teste.sendEmailNewFit().catch(console.error)
+teste.sendEmailOnApprovalDepartments().catch(console.error)
+teste.sendEmailOnApprovalEngAdmin().catch(console.error)
+teste.sendEmailRejectedFit().catch(console.error)

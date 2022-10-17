@@ -567,7 +567,14 @@ export class FitMysqlRepository
       where: {
         Homologation: {
           some: {
-            statusId: 3,
+            OR: [
+              {
+                statusId: 3,
+              },
+              {
+                statusId: 2,
+              },
+            ],
           },
         },
       },
