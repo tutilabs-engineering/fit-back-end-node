@@ -22,26 +22,47 @@ export class RequiredFieldValidation implements Validation {
       },
     })
     if (!header.body[this.fieldName]) {
+      console.log(header.body[this.fieldName])
       return new MissingParamError(this.fieldName)
     }
     const workstations = Object.assign(header.body.Workstations)
     for (const workstation of workstations) {
-      if (workstation.Used_tools === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.Safety === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.materials === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.Devices === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.specifics_requirements_client === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.Images_operations === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.Images_package_description === undefined) {
-        return new MissingParamError(this.fieldName)
-      } else if (workstation.Images_final_product === undefined) {
-        return new MissingParamError(this.fieldName)
+      if (workstation.typeWorkstation === 'update') {
+        if (workstation.used_tools === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.safety === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.materials === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.devices === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.specifics_requirements_client === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Image_operation === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Image_package_description === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Image_final_product === undefined) {
+          return new MissingParamError(this.fieldName)
+        }
+      } else {
+        if (workstation.Used_tools === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Safety === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.materials === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Devices === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.specifics_requirements_client === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Images_operations === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Images_package_description === undefined) {
+          return new MissingParamError(this.fieldName)
+        } else if (workstation.Images_final_product === undefined) {
+          return new MissingParamError(this.fieldName)
+        }
       }
     }
   }

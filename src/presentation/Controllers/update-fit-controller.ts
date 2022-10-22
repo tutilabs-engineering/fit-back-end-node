@@ -16,6 +16,7 @@ export class UpdateFitControler implements Controller {
     try {
       const error = await this.validate.validate(request)
       if (error) {
+        console.error(error)
         return badRequest(error)
       }
       await this.update.execute(request)

@@ -317,7 +317,9 @@ export class FitMysqlRepository
             },
           })
           // limpando lista de dispositivos
-          for (const values of Workstations[index].Devices) {
+          for (const values of Workstations[index].Devices
+            ? Workstations[index].Devices
+            : Workstations[index].devices) {
             fit.Workstation[index].devices.slice.call(values)
           }
           for (const isDelDevice of fit.Workstation[index].devices) {
@@ -329,7 +331,9 @@ export class FitMysqlRepository
           }
           //
           // atualizando lista de dispositivos
-          for (const valuesDevice of Workstations[index].Devices) {
+          for (const valuesDevice of Workstations[index].Devices
+            ? Workstations[index].Devices
+            : Workstations[index].devices) {
             await PrismaHelper.prisma.devices.upsert({
               update: {
                 code: valuesDevice.code,
@@ -349,9 +353,12 @@ export class FitMysqlRepository
           }
           //
           // atualizando ferramentaas
+          console.log(Workstations[index])
           for (const valuesSafety of fit.Workstation[index].safety) {
             await PrismaHelper.prisma.safety.updateMany({
-              data: Workstations[index].Safety,
+              data: Workstations[index].Safety
+                ? Workstations[index].Safety
+                : Workstations[index].safety[0],
               where: {
                 id: valuesSafety.id,
               },
@@ -360,7 +367,9 @@ export class FitMysqlRepository
           // atualizando componentes de segurança
           for (const valuesUsedtools of fit.Workstation[index].used_tools) {
             await PrismaHelper.prisma.used_tools.updateMany({
-              data: Workstations[index].Used_tools,
+              data: Workstations[index].Used_tools
+                ? Workstations[index].Used_tools
+                : Workstations[index].used_tools[0],
               where: {
                 id: valuesUsedtools.id,
               },
