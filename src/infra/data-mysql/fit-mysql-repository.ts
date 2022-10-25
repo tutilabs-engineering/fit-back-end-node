@@ -20,6 +20,10 @@ import {
 } from '../repositories/data/fit/index'
 import { httpUserSystem } from '../../utils/api/user-system-api'
 import { PrismaHelper } from './prisma-helper'
+import { SendEmail } from '../../main/config/nodemailer'
+
+// * alterações feitas por mim
+const sendEmail = new SendEmail()
 
 export class FitMysqlRepository
   implements
@@ -46,6 +50,7 @@ export class FitMysqlRepository
       Workstations,
       code_mold,
     } = request.body
+
     await PrismaHelper.prisma.fit
       .create({
         data: {
@@ -205,6 +210,35 @@ export class FitMysqlRepository
             })
         }
       })
+
+    // * alterações feitas por mim
+    const id = await PrismaHelper.prisma.fit.findFirst({
+      orderBy: {
+        id: 'desc',
+      },
+      take: 1,
+      select: {
+        id: true,
+      },
+    })
+
+    const dateBrFormat = date
+      .toString()
+      .slice(0, 10)
+      .split('-')
+      .reverse()
+      .join('/')
+
+    void sendEmail.sendEmailNewFit(
+      id.id,
+      product_code,
+      product_description,
+      code_mold,
+      mold,
+      client,
+      process,
+      dateBrFormat
+    )
   }
 
   async update(request: UpdateFit.Params): Promise<UpdateFit.Result> {
