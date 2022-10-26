@@ -3,7 +3,7 @@ import * as handlebars from 'handlebars'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as dotenv from 'dotenv'
-import { css } from './email-fit/css/css'
+import { css } from './css/css'
 dotenv.config()
 
 // const testAccount = await nodemailer.createTestAccount()
@@ -38,7 +38,7 @@ export class SendEmail {
     date: string
   ) {
     // const testAccount = await nodemailer.createTestAccount()
-    const filePath = path.join(__dirname, './email-fit/new-fit.hbs')
+    const filePath = path.join(__dirname, './hbs/new-fit.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
     const testAccount = await nodemailer.createTestAccount()
@@ -104,7 +104,7 @@ export class SendEmail {
     process: string,
     date: string
   ) {
-    const filePath = path.join(__dirname, './email-fit/on-approval.hbs')
+    const filePath = path.join(__dirname, './hbs/on-approval.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
     const testAccount = await nodemailer.createTestAccount()
@@ -170,7 +170,7 @@ export class SendEmail {
     process: string,
     date: string
   ) {
-    const filePath = path.join(__dirname, './email-fit/on-approval.hbs')
+    const filePath = path.join(__dirname, './hbs/on-approval.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
     const testAccount = await nodemailer.createTestAccount()
@@ -236,7 +236,7 @@ export class SendEmail {
     process: string,
     date: string
   ) {
-    const filePath = path.join(__dirname, './email-fit/rejected.hbs')
+    const filePath = path.join(__dirname, './hbs/rejected.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
     const testAccount = await nodemailer.createTestAccount()
