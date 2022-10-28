@@ -301,23 +301,55 @@ export class FitMysqlRepository
           })
         }
         //
+        // Apagando wokstations deletadas
+        for (const values of JSON.parse(request.body.deleteWorks)) {
+          await PrismaHelper.prisma.workstation.deleteMany({
+            where: {
+              id: values.id,
+            },
+          })
+        }
+        //
+
         const img_layout_path_new_files = request.files.filter(
           (values: any) => values.fieldname === 'img_layout_path'
         )
-
+        let countImgLayoutNew = 0
+        let countImgLayoutOld = 0
+        let img_path_layout
         for (const [index, Workstationvalues] of Workstations.entries()) {
-          console.log(img_layout_path_new_files[index])
+          if (
+            typeof request.body.img_layout_path === 'string' &&
+            request.body.indexPostImgLayout === index.toString()
+          ) {
+            img_path_layout = request.body.img_layout_path
+          } else {
+            if (request.body.img_layout_path) {
+              if (request.body.indexPostImgLayout.includes(index.toString())) {
+                img_path_layout =
+                  request.body.img_layout_path[countImgLayoutOld]
+                countImgLayoutOld++
+              }
+            }
+          }
+
+          if (request.body.indexPostImgLayoutNew) {
+            if (request.body.indexPostImgLayoutNew.includes(index.toString())) {
+              img_path_layout = img_layout_path_new_files[countImgLayoutNew]
+              countImgLayoutNew++
+            }
+          }
           const newWorkstation = await PrismaHelper.prisma.workstation.upsert({
             update: {
               workstation_name: Workstationvalues.workstation_name,
-              img_layout_path: img_layout_path_new_files[index]
-                ? img_layout_path_new_files[index].filename
-                : request.body.img_layout_path[index],
+              img_layout_path: img_path_layout.filename
+                ? img_path_layout.filename
+                : img_path_layout,
             },
             create: {
-              img_layout_path: img_layout_path_new_files[index]
-                ? img_layout_path_new_files[index].filename
-                : request.body.img_layout_path[index],
+              img_layout_path: img_path_layout.filename
+                ? img_path_layout.filename
+                : img_path_layout,
               workstation_name: Workstationvalues.workstation_name,
               fitId: fit.id,
             },
@@ -520,7 +552,6 @@ export class FitMysqlRepository
           const filter_img_operation_path = find_img_operations.filter(
             (values: any) => values !== undefined
           )
-          console.log('filter_img_operation_path:', filter_img_operation_path)
           const workstation_Images_Operations_old: any[] = []
           if (typeof request.body.img_operation === 'string') {
             const array = request.body.img_operation.split(',', 4)
