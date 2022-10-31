@@ -30,7 +30,7 @@ model Attention_point_control {
   sample               String
   reaction_plan        String
   fitId                Int
-  fit                  Fit    @relation(fields: [fitId], references: [id])
+  fit                  Fit    @relation(fields: [fitId], references: [id], onDelete: Cascade)
 
   @@index([fitId], map: "Attention_point_control_fitId_fkey")
 }
@@ -153,7 +153,7 @@ model Homologation {
   version           Int
   fitId             Int
   statusId          Int
-  fit               Fit    @relation(fields: [fitId], references: [id])
+  fit               Fit    @relation(fields: [fitId], references: [id], onDelete: Cascade)
   status            Status @relation(fields: [statusId], references: [id])
 
   @@index([fitId], map: "Homologation_fitId_fkey")
