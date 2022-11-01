@@ -1,15 +1,20 @@
 import { PrismaHelper } from '../infra/data-mysql/prisma-helper'
 
 async function main() {
-  await PrismaHelper.prisma.status.createMany({
-    data: [
-      { status: 'on_approval' },
-      { status: 'disabled' },
-      { status: 'homologated' },
-      { status: 'review_button_disabled' },
-      { status: 'old_fit' },
-    ],
-  })
+  const isValid = await PrismaHelper.prisma.status.findMany()
+  if (isValid.length === 0) {
+    await PrismaHelper.prisma.status.createMany({
+      data: [
+        { status: 'on_approval' },
+        { status: 'disabled' },
+        { status: 'homologated' },
+        { status: 'review_button_disabled' },
+        { status: 'old_fit' },
+      ],
+    })
+  } else {
+    console.log('Seed já realizada!')
+  }
 }
 
 main()

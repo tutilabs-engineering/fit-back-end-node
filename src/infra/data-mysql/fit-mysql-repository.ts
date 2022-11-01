@@ -14,6 +14,7 @@ import { PrismaHelper } from './prisma-helper'
 import { CancellationFit } from '../../domain/useCase/Cancellation/cancellation-fit'
 import { UpdateFitRepository } from '../repositories/data/fit/update-repository'
 import { UpdateFit } from '../../domain/useCase/Update/update-fit'
+import { httpReportSystem } from '../../utils/api/report-tryout-system-api'
 
 export class FitMysqlRepository
   implements
@@ -29,6 +30,7 @@ export class FitMysqlRepository
 {
   async add(request: AddFit.Params): Promise<AddFit.Result> {
     const {
+      id_report_tryout,
       mold,
       client,
       Controller_attention_point: isValidaController_attention_point,
@@ -201,6 +203,15 @@ export class FitMysqlRepository
             })
         }
       })
+    await httpReportSystem.patch(
+      `reportTryout/modify/${id_report_tryout}`,
+      { status: 2 },
+      {
+        headers: {
+          Authorization: `${request.accessToken}`,
+        },
+      }
+    )
   }
 
   async update(request: UpdateFit.Params): Promise<UpdateFit.Result> {

@@ -9,6 +9,7 @@ export const adaptRoute = (controller: Controller) => {
       file: req.file,
       files: req.files,
       account: req.account,
+      accessToken: req.accessToken,
     }
 
     const httpResponse = await controller.handle(request)

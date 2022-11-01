@@ -27,12 +27,12 @@ export class AuthMiddleware implements Middleware {
                 account.nivel_de_acesso.descricao === 'producao_admin' ||
                 account.nivel_de_acesso.descricao === 'sesmt_admin'
               ) {
-                return ok({ account })
+                return ok({ account, accessToken })
               }
             }
             if (this.role === 'eng_analista') {
               if (account.nivel_de_acesso.descricao === 'eng_analista') {
-                return ok({ account })
+                return ok({ account, accessToken })
               }
             }
           }

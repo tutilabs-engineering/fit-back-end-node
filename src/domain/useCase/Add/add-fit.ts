@@ -7,6 +7,7 @@ export namespace AddFit {
     body: any
     files: any
     account: any
+    accessToken: any
   }
   export type Result = Promise<void>
 }

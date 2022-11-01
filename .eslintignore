@@ -3,3 +3,5 @@ dist
 db
 .env
 .dockerignore
+nodemailer.ts
+nodemailertest.ts
