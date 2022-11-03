@@ -1,4 +1,4 @@
-import swaggerDocument from '../docs'
+import swaggerDocument from '../docs/'
 import swaggerUi from 'swagger-ui-express'
 import { SwaggerTheme } from 'swagger-themes'
 import { Express } from 'express'

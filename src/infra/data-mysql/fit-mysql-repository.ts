@@ -1,34 +1,27 @@
-import { AddFit } from '../../domain/useCase/Add/add-fit'
-import { VersioningFIt } from '../../domain/useCase/Versioning/versioning-fit'
-import { FindSpecificFit } from '../../domain/useCase/ViewSpecific/view-specific'
+import * as useCase from '../../domain/useCase/index'
+import * as repository from '../repositories/data/fit/index'
 import { httpUserSystem } from '../../utils/api/user-system-api'
-import { AddFitRepository } from '../repositories/data/fit/add-repository'
-import { FindByFitRepository } from '../repositories/data/fit/find-by-fit-repository'
-import { HomologationFitRepository } from '../repositories/data/fit/homologation-repository'
-import { ListHomologatedRepository } from '../repositories/data/fit/list-homologated-repository'
-import { ListOnApprovalRepository } from '../repositories/data/fit/list-on-approval-repository'
-import { LoadAccountByTokenRepository } from '../repositories/data/fit/load-account-by-token-repository'
-import { VersioningFitRepository } from '../repositories/data/fit/versioning-repository'
-import { CancellationFitRepository } from '../repositories/data/fit/cancellation-fit-repository'
 import { PrismaHelper } from './prisma-helper'
-import { CancellationFit } from '../../domain/useCase/Cancellation/cancellation-fit'
-import { UpdateFitRepository } from '../repositories/data/fit/update-repository'
-import { UpdateFit } from '../../domain/useCase/Update/update-fit'
+import { SendEmail } from '../../utils/email-fit-nodemailer/nodemailer'
 import { httpReportSystem } from '../../utils/api/report-tryout-system-api'
+import { UpdateFit } from '../../domain/useCase/index'
+
+const sendEmail = new SendEmail()
 
 export class FitMysqlRepository
   implements
-    AddFitRepository,
-    LoadAccountByTokenRepository,
-    HomologationFitRepository,
-    ListOnApprovalRepository,
-    FindByFitRepository,
-    ListHomologatedRepository,
-    VersioningFitRepository,
-    CancellationFitRepository,
-    UpdateFitRepository
+    repository.AddFitRepository,
+    repository.UpdateFitRepository,
+    repository.LoadAccountByTokenRepository,
+    repository.HomologationFitRepository,
+    repository.ListOnApprovalRepository,
+    repository.FindByFitRepository,
+    repository.FindFitByCodeRepository,
+    repository.ListHomologatedRepository,
+    repository.VersioningFitRepository,
+    repository.CancellationFitRepository
 {
-  async add(request: AddFit.Params): Promise<AddFit.Result> {
+  async add(request: useCase.AddFit.Params): Promise<useCase.AddFit.Result> {
     const {
       id_report_tryout,
       mold,
@@ -211,6 +204,34 @@ export class FitMysqlRepository
           Authorization: `${request.accessToken}`,
         },
       }
+    )
+
+    // * alterações feitas por mim
+    const id = await PrismaHelper.prisma.fit.findFirst({
+      orderBy: {
+        id: 'desc',
+      },
+      take: 1,
+      select: {
+        id: true,
+      },
+    })
+
+    const dateBrFormat = Date.toString()
+      .slice(0, 10)
+      .split('-')
+      .reverse()
+      .join('/')
+
+    void sendEmail.sendEmailNewFit(
+      id.id,
+      product_code,
+      product_description,
+      code_mold,
+      mold,
+      client,
+      process,
+      dateBrFormat
     )
   }
 
@@ -1315,7 +1336,7 @@ export class FitMysqlRepository
 
   async loadByToken(
     token: string
-  ): Promise<LoadAccountByTokenRepository.Result> {
+  ): Promise<repository.LoadAccountByTokenRepository.Result> {
     try {
       const result = await httpUserSystem.post(
         '/session/verify',
@@ -1335,8 +1356,8 @@ export class FitMysqlRepository
   }
 
   async homolog(
-    request: HomologationFitRepository.Params
-  ): Promise<HomologationFitRepository.Result> {
+    request: repository.HomologationFitRepository.Params
+  ): Promise<repository.HomologationFitRepository.Result> {
     const FindByFitCodMoldAndCodeProd =
       await PrismaHelper.prisma.homologation.findUnique({
         select: {
@@ -1394,7 +1415,9 @@ export class FitMysqlRepository
     })
   }
 
-  async listOnApproval(): Promise<ListOnApprovalRepository.Result[]> {
+  async listOnApproval(): Promise<
+    repository.ListOnApprovalRepository.Result[]
+  > {
     const FitsOnApproval = await PrismaHelper.prisma.fit.findMany({
       include: {
         Homologation: {
@@ -1414,7 +1437,7 @@ export class FitMysqlRepository
     return FitsOnApproval
   }
 
-  async findByFit(fit: FindSpecificFit.Params): Promise<any> {
+  async findByFit(fit: useCase.FindSpecificFit.Params): Promise<any> {
     const findByFit = await PrismaHelper.prisma.fit.findUnique({
       include: {
         Attention_point_control: true,
@@ -1439,7 +1462,41 @@ export class FitMysqlRepository
     return findByFit
   }
 
-  async ListFitHomologated(): Promise<ListHomologatedRepository.Result[]> {
+  async findFitByCode(fit: useCase.FindSpecificFitByCode.Query): Promise<any> {
+    const findFitByCode = await PrismaHelper.prisma.fit.findFirst({
+      include: {
+        Attention_point_control: true,
+        Workstation: {
+          include: {
+            devices: true,
+            Image_final_product: true,
+            Image_operation: true,
+            Image_package_description: true,
+            materials: true,
+            safety: true,
+            specifics_requirements_client: true,
+            used_tools: true,
+          },
+        },
+        Homologation: true,
+      },
+      where: {
+        AND: [
+          {
+            product_code: fit.product_code,
+          },
+          {
+            code_mold: fit.code_mold,
+          },
+        ],
+      },
+    })
+    return findFitByCode
+  }
+
+  async ListFitHomologated(): Promise<
+    repository.ListHomologatedRepository.Result[]
+  > {
     const findFitHomologated = await PrismaHelper.prisma.fit.findMany({
       include: {
         _count: {
@@ -1479,8 +1536,8 @@ export class FitMysqlRepository
   }
 
   async cancel(
-    request: CancellationFit.Params
-  ): Promise<CancellationFit.Result> {
+    request: useCase.CancellationFit.Params
+  ): Promise<useCase.CancellationFit.Result> {
     const findByFitCodeMoldAndCodeProd =
       await PrismaHelper.prisma.fit.findUnique({
         select: {

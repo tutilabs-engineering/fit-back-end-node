@@ -1,16 +1,25 @@
-export const findById = {
+export const findByCode = {
   get: {
     tags: ['FIT'],
-    summary: 'Busca uma FIT específica por ID',
+    summary: 'Busca uma FIT específica por código do produto e código do molde',
     description: 'Retorna uma única FIT',
     parameters: [
       {
-        name: 'id',
-        in: 'path',
-        description: 'ID da FIT',
+        name: 'product_code',
+        in: 'query',
+        description: 'Código do produto',
         required: true,
         schema: {
-          type: 'number',
+          type: 'string',
+        },
+      },
+      {
+        name: 'code_mold',
+        in: 'query',
+        description: 'Código do molde',
+        required: true,
+        schema: {
+          type: 'string',
         },
       },
     ],
