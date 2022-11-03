@@ -50,7 +50,7 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "start": "yarn prisma generate && yarn prisma db push && yarn prisma db seed && node ./dist/main/server.js",
-    "up": "yarn build && docker compose up -d",
+    "up": "yarn build && docker-compose up -d",
     "down": "docker-compose down",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn --poll src/main/server.ts"
   },

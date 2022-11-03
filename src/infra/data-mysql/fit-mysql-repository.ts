@@ -21,7 +21,7 @@ export class FitMysqlRepository
 {
   async add(request: useCase.AddFit.Params): Promise<useCase.AddFit.Result> {
     const {
-      // id_report_tryout,
+      id_report_tryout,
       mold,
       client,
       Controller_attention_point: isValidaController_attention_point,
@@ -194,15 +194,15 @@ export class FitMysqlRepository
             })
         }
       })
-    // await api.httpReportSystem.patch(
-    //   `reportTryout/modify/${id_report_tryout}`,
-    //   { status: 2 },
-    //   {
-    //     headers: {
-    //       Authorization: `${request.accessToken}`,
-    //     },
-    //   }
-    // )
+    await api.httpReportSystem.patch(
+      `reportTryout/modify/${id_report_tryout}`,
+      { status: 2 },
+      {
+        headers: {
+          Authorization: `${request.accessToken}`,
+        },
+      }
+    )
 
     // * alterações feitas por mim
     const id = await PrismaHelper.prisma.fit.findFirst({
