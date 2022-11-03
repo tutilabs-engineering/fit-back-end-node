@@ -150,7 +150,7 @@ export class SendEmail {
 
     const mailList = [
       'yantutilabs@outlook.com',
-      // 'rafael.railton@tutiplast.com.br',
+      'rafael.railton@tutiplast.com.br',
     ]
 
     const mailOptions = {
