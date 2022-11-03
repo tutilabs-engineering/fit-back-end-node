@@ -1,7 +1,7 @@
 import { AddFit } from '../../../../domain/useCase/Add/add-fit'
 
 export interface AddFitRepository {
-  add: (fit: AddFitRepository.Params) => Promise<AddFitRepository.Result>
+  add: (fit: AddFit.Params) => Promise<AddFit.Result>
 }
 
 export namespace AddFitRepository {

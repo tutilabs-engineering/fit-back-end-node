@@ -1,0 +1,81 @@
+<html lang='pt-BR'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='stylesheet' href='styles.css' />
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap'
+      rel='stylesheet'
+    />
+    <title style='{{title}} {{all}}'>Nova FIT</title>
+  </head>
+
+  <body style="{{body}} {{all}}">
+    <table style='{{all}} {{table_th_td}}' border='1' width='100%'>
+      <tr style='{{title}} {{all}} class='title'>
+        <th style="{{all}} {{table_th_td}}" colspan='2'>FIT</th>
+        <th style="{{all}} {{table_th_td}}" colspan='2' class='title'>
+          Ficha de Instrução de Trabalho - N°{{id}}
+        </th>
+        <th style='{{all}} {{table_th_td}} {{title_date}}' colspan='2' class='title-date'>Data:
+          {{date}}</th>
+      </tr>
+
+      <tr style='{{subtitle}} {{all}}' class='subtitle'>
+        <td style='{{all}} {{table_th_td}} {{content_td}}' colspan='6'>Status de Novas FITs</td>
+      </tr>
+
+      <tr style='{{content_td}} {{all}}' class='content'>
+        <td
+          style='{{all}} {{table_th_td}}'
+          colspan='6'
+          class='content-internal'
+        >
+          <table style='{{all}} {{table_th_td}}' width='100%'>
+            <tr style='{{all}} {{table_th_td}} background-color: #ededed'>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Cód. Produto</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Desc. Produto</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Cód. Molde</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Molde</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Cliente</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Processo</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Data</th>
+              <th style='{{all}} {{table_th_td}} {{content_table_th}} {{content_table}}'>Status</th>
+            </tr>
+            <tr>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{product_code}}</td>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{product_description}}</td>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{code_mold}}</td>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{mold}}</td>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{client}}</td>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{process}}</td>
+              <td style='{{all}} {{table_th_td}} {{content_td}} {{content_table}}'>{{date}}</td>
+              <td
+                style='color: #25c032da; font-weight: bold {{all}} {{table_th_td}}  {{content_table}}'
+              >
+                Disponível para Elaboração
+              </td>
+            </tr>
+          </table>
+        </td> 
+      </tr>
+    </table>
+    <div style='{{all}} {{footer}}' class='footer'>
+      <td style='{{all}} {{table_th_td}}' colspan='6'>
+        <div style="{{image}}" class='image'></div>
+      </td>
+      <td style='{{all}} {{table_th_td}}' colspan='6'>
+        <div style='{{all}} {{footer_td}}' class='footerText'>
+          Tutilabs e todas as marcas associadas são marcas da Tutiplast
+        </div>
+      </td>
+      <td style='{{all}} {{table_th_td}}' colspan='6'>
+        <a href="https://example.com" target="_blank" rel="noopener noreferrer">Elaborar FIT</a>
+        <div style="{{imagelabs}}" class='imageLabs'></div>
+      </td>
+    </div>
+  </body>
+</html>
