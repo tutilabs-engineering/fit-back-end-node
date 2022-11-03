@@ -81,7 +81,7 @@ export class SendEmail {
 
     const mailList = [
       'yantutilabs@outlook.com',
-      'rafael.railton@tutiplast.com.br',
+      // 'rafael.railton@tutiplast.com.br',
     ]
 
     const mailOptions = {
@@ -150,7 +150,7 @@ export class SendEmail {
 
     const mailList = [
       'yantutilabs@outlook.com',
-      'rafael.railton@tutiplast.com.br',
+      // 'rafael.railton@tutiplast.com.br',
     ]
 
     const mailOptions = {
@@ -223,7 +223,6 @@ export class SendEmail {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
       to: mailList,
       subject: 'FIT em processo de Homologação',
-      text: 'FIT em processo de homologação aguardando a aprovação da Engenharia\nlink: www.example.com',
       html: hbsToSend,
     }
 

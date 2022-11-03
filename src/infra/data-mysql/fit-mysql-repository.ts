@@ -1,10 +1,8 @@
 import * as useCase from '../../domain/useCase/index'
 import * as repository from '../repositories/data/fit/index'
-import { httpUserSystem } from '../../utils/api/user-system-api'
+import * as api from '../../utils/api/index'
 import { PrismaHelper } from './prisma-helper'
 import { SendEmail } from '../../utils/email-fit-nodemailer/nodemailer'
-// import { httpReportSystem } from '../../utils/api/report-tryout-system-api'
-import { UpdateFit, VersioningFIt } from '../../domain/useCase/index'
 
 const sendEmail = new SendEmail()
 
@@ -196,7 +194,7 @@ export class FitMysqlRepository
             })
         }
       })
-    // await httpReportSystem.patch(
+    // await api.httpReportSystem.patch(
     //   `reportTryout/modify/${id_report_tryout}`,
     //   { status: 2 },
     //   {
@@ -230,7 +228,9 @@ export class FitMysqlRepository
     )
   }
 
-  async update(request: UpdateFit.Params): Promise<UpdateFit.Result> {
+  async update(
+    request: useCase.UpdateFit.Params
+  ): Promise<useCase.UpdateFit.Result> {
     const {
       mold,
       client,
@@ -851,8 +851,8 @@ export class FitMysqlRepository
   }
 
   async versioning(
-    request: VersioningFIt.Params
-  ): Promise<VersioningFIt.Result> {
+    request: useCase.VersioningFIt.Params
+  ): Promise<useCase.VersioningFIt.Result> {
     const {
       mold,
       client,
@@ -1333,7 +1333,7 @@ export class FitMysqlRepository
     token: string
   ): Promise<repository.LoadAccountByTokenRepository.Result> {
     try {
-      const result = await httpUserSystem.post(
+      const result = await api.httpUserSystem.post(
         '/session/verify',
         {},
         {
