@@ -101,5 +101,9 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
 
-  "exclude": ["**/nodemailertest.ts", "**/nodemailer.ts"]
+  "exclude": [
+    "**/nodemailertest.ts",
+    "**/nodemailer.ts",
+    "**/email-fit-nodemailer/**"
+  ]
 }
