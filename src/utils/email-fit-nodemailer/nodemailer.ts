@@ -17,14 +17,14 @@ dotenv.config()
 //   },
 // });
 
-// const transporter = nodemailer.createTransport({
-//   host: 'smtp.office365.com',
-//   port: 587,
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// })
+const transporter = nodemailer.createTransport({
+  host: 'smtp.office365.com',
+  port: 587,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+})
 
 export class SendEmail {
   async sendEmailNewFit(
@@ -41,16 +41,16 @@ export class SendEmail {
     const filePath = path.join(__dirname, './hbs/new-fit.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
-    const testAccount = await nodemailer.createTestAccount()
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    })
+    // const testAccount = await nodemailer.createTestAccount()
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.ethereal.email',
+    //   port: 587,
+    //   secure: false,
+    //   auth: {
+    //     user: testAccount.user,
+    //     pass: testAccount.pass,
+    //   },
+    // })
 
     const replacements = {
       id,
@@ -79,7 +79,10 @@ export class SendEmail {
     }
     const hbsToSend = template(replacements)
 
-    const mailList = ['yantutilabs@outlook.com']
+    const mailList = [
+      'yantutilabs@outlook.com',
+      'rafael.railton@tutiplast.com.br',
+    ]
 
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
@@ -107,16 +110,16 @@ export class SendEmail {
     const filePath = path.join(__dirname, './hbs/on-approval.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
-    const testAccount = await nodemailer.createTestAccount()
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    })
+    // const testAccount = await nodemailer.createTestAccount()
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.ethereal.email',
+    //   port: 587,
+    //   secure: false,
+    //   auth: {
+    //     user: testAccount.user,
+    //     pass: testAccount.pass,
+    //   },
+    // })
 
     const replacements = {
       id,
@@ -145,7 +148,10 @@ export class SendEmail {
     }
     const hbsToSend = template(replacements)
 
-    const mailList = ['yantutilabs@outlook.com']
+    const mailList = [
+      'yantutilabs@outlook.com',
+      'rafael.railton@tutiplast.com.br',
+    ]
 
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',

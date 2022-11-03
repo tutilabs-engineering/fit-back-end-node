@@ -3,8 +3,8 @@ import * as repository from '../repositories/data/fit/index'
 import { httpUserSystem } from '../../utils/api/user-system-api'
 import { PrismaHelper } from './prisma-helper'
 import { SendEmail } from '../../utils/email-fit-nodemailer/nodemailer'
-import { httpReportSystem } from '../../utils/api/report-tryout-system-api'
-import { UpdateFit } from '../../domain/useCase/index'
+// import { httpReportSystem } from '../../utils/api/report-tryout-system-api'
+import { UpdateFit, VersioningFIt } from '../../domain/useCase/index'
 
 const sendEmail = new SendEmail()
 
@@ -23,7 +23,7 @@ export class FitMysqlRepository
 {
   async add(request: useCase.AddFit.Params): Promise<useCase.AddFit.Result> {
     const {
-      id_report_tryout,
+      // id_report_tryout,
       mold,
       client,
       Controller_attention_point: isValidaController_attention_point,
@@ -196,15 +196,15 @@ export class FitMysqlRepository
             })
         }
       })
-    await httpReportSystem.patch(
-      `reportTryout/modify/${id_report_tryout}`,
-      { status: 2 },
-      {
-        headers: {
-          Authorization: `${request.accessToken}`,
-        },
-      }
-    )
+    // await httpReportSystem.patch(
+    //   `reportTryout/modify/${id_report_tryout}`,
+    //   { status: 2 },
+    //   {
+    //     headers: {
+    //       Authorization: `${request.accessToken}`,
+    //     },
+    //   }
+    // )
 
     // * alterações feitas por mim
     const id = await PrismaHelper.prisma.fit.findFirst({
@@ -217,13 +217,8 @@ export class FitMysqlRepository
       },
     })
 
-    const dateBrFormat = Date.toString()
-      .slice(0, 10)
-      .split('-')
-      .reverse()
-      .join('/')
-
-    void sendEmail.sendEmailNewFit(
+    const dateBrFormat = new Date()
+    void sendEmail.sendEmailOnApprovalDepartments(
       id.id,
       product_code,
       product_description,
@@ -231,7 +226,7 @@ export class FitMysqlRepository
       mold,
       client,
       process,
-      dateBrFormat
+      dateBrFormat.toLocaleDateString()
     )
   }
 

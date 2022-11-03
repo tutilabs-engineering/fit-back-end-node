@@ -24,25 +24,25 @@ services:
       - ./db:/var/lib/mysql
     networks:
       - fit
-  api-fit:
-    container_name: api-container-fit
-    image: node:14
-    working_dir: /usr/src/api-node-fit
-    restart: always
-    env_file:
-      - .env
-    depends_on:
-      - db-mysql-fit
-    command: bash -c "yarn --only=prod && yarn start"
-    volumes:
-      - ./dist/:/usr/src/api-node-fit/dist/
-      - ./package.json:/usr/src/api-node-fit/package.json
-      - ./prisma:/usr/src/api-node-fit/prisma
-      - ./uploads:/usr/src/api-node-fit/uploads
-    ports:
-      - '9006:9006'
-    networks:
-      - fit
+  # api-fit:
+  #   container_name: api-container-fit
+  #   image: node:14
+  #   working_dir: /usr/src/api-node-fit
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db-mysql-fit
+  #   command: bash -c "yarn --only=prod && yarn start"
+  #   volumes:
+  #     - ./dist/:/usr/src/api-node-fit/dist/
+  #     - ./package.json:/usr/src/api-node-fit/package.json
+  #     - ./prisma:/usr/src/api-node-fit/prisma
+  #     - ./uploads:/usr/src/api-node-fit/uploads
+  #   ports:
+  #     - '9006:9006'
+  #   networks:
+  #     - fit
 networks:
   fit:
     driver: bridge
