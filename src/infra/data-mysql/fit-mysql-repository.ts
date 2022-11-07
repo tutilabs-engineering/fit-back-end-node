@@ -1513,8 +1513,8 @@ export class FitMysqlRepository
           product_code: fit.product_code,
         },
       },
-      take,
-      skip,
+      take: 5,
+      skip: 0,
     })
     return findFitByCode
   }
