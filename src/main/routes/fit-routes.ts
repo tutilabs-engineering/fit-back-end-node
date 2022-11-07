@@ -1,11 +1,9 @@
 import { Router } from 'express'
 import multer from 'multer'
 import { uploadFile } from '../middlewares/multer-file-config'
-import * as controller from '../factories/controllers'
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
-import { makeCancellationFitController } from '../factories/controllers/cancellation-fit-factory'
-import { makeUpdateFitController } from '../factories/controllers/update-controller-factory'
+import * as controller from '../factories/controllers'
 export default (router: Router): void => {
   router.post(
     '/signup',
@@ -23,7 +21,7 @@ export default (router: Router): void => {
     '/update/:id',
     adminAuthEngAnalist,
     multer(uploadFile.getConfig).any(),
-    adaptRoute(makeUpdateFitController())
+    adaptRoute(controller.makeUpdateFitController())
   )
   router.put(
     '/homologation/:id',
@@ -55,6 +53,10 @@ export default (router: Router): void => {
   router.put(
     '/cancel/:id',
     adminAuth,
-    adaptRoute(makeCancellationFitController())
+    adaptRoute(controller.makeCancellationFitController())
+  )
+  router.get(
+    '/list-fit-by-code/',
+    adaptRoute(controller.makeListFitByCodeController())
   )
 }

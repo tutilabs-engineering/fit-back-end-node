@@ -17,7 +17,8 @@ export class FitMysqlRepository
     repository.FindFitByCodeRepository,
     repository.ListHomologatedRepository,
     repository.VersioningFitRepository,
-    repository.CancellationFitRepository
+    repository.CancellationFitRepository,
+    repository.ListFitByCodeRepository
 {
   async add(request: useCase.AddFit.Params): Promise<useCase.AddFit.Result> {
     const {
@@ -1485,6 +1486,35 @@ export class FitMysqlRepository
           },
         ],
       },
+    })
+    return findFitByCode
+  }
+
+  async listFitByCode(fit: useCase.ListFitByCode.Query): Promise<any> {
+    const findFitByCode = await PrismaHelper.prisma.fit.findMany({
+      include: {
+        Attention_point_control: true,
+        Workstation: {
+          include: {
+            devices: true,
+            Image_final_product: true,
+            Image_operation: true,
+            Image_package_description: true,
+            materials: true,
+            safety: true,
+            specifics_requirements_client: true,
+            used_tools: true,
+          },
+        },
+        Homologation: true,
+      },
+      where: {
+        NOT: {
+          product_code: fit.product_code,
+        },
+      },
+      take,
+      skip,
     })
     return findFitByCode
   }
