@@ -3,7 +3,6 @@ import * as repository from '../repositories/data/fit/index'
 import * as api from '../../utils/api/index'
 import { PrismaHelper } from './prisma-helper'
 import { SendEmail } from '../../utils/email-fit-nodemailer/nodemailer'
-
 const sendEmail = new SendEmail()
 
 export class FitMysqlRepository
@@ -22,6 +21,7 @@ export class FitMysqlRepository
 {
   async add(request: useCase.AddFit.Params): Promise<useCase.AddFit.Result> {
     const {
+      // ! descomentar
       id_report_tryout,
       mold,
       client,
@@ -205,7 +205,7 @@ export class FitMysqlRepository
       }
     )
 
-    // * alterações feitas por mim
+    // * email
     const id = await PrismaHelper.prisma.fit.findFirst({
       orderBy: {
         id: 'desc',
@@ -1328,6 +1328,19 @@ export class FitMysqlRepository
         id: findByHomologation.id,
       },
     })
+
+    const dateBrFormat = new Date()
+
+    void sendEmail.sendEmailOnApprovalDepartments(
+      findByHomologation.id,
+      product_code,
+      product_description,
+      code_mold,
+      mold,
+      client,
+      process,
+      dateBrFormat.toLocaleDateString()
+    )
   }
 
   async loadByToken(
@@ -1359,6 +1372,13 @@ export class FitMysqlRepository
         select: {
           code_mold: true,
           product_code: true,
+          fit: {
+            select: {
+              product_description: true,
+              client: true,
+              process: true,
+            },
+          },
         },
         where: {
           id: Number(request.params.id),
@@ -1398,17 +1418,40 @@ export class FitMysqlRepository
         })
       }
     }
-    await PrismaHelper.prisma.homologation.update({
-      data: {
-        user_homologation: JSON.stringify(request.body.findHomologation),
-        statusId: {
-          set: request.body.status,
+    await PrismaHelper.prisma.homologation
+      .update({
+        data: {
+          user_homologation: JSON.stringify(request.body.findHomologation),
+          statusId: {
+            set: request.body.status,
+          },
         },
-      },
-      where: {
-        id: Number(request.params.id),
-      },
-    })
+        where: {
+          id: Number(request.params.id),
+        },
+      })
+      .finally(async () => {
+        let bool = false
+        await request.body.findHomologation.find(async (user: any) => {
+          // eslint-disable-next-line no-extra-boolean-cast
+          if (!Boolean(user.status)) {
+            bool = true
+          }
+        })
+        if (bool) {
+          const dateBrFormat = new Date()
+          await sendEmail.sendEmailRejectedFit(
+            FindByFItHomologation.id,
+            FindByFItHomologation.product_code,
+            FindByFitCodMoldAndCodeProd.fit.product_description,
+            FindByFItHomologation.code_mold,
+            FindByFItHomologation.mold,
+            FindByFitCodMoldAndCodeProd.fit.client,
+            FindByFitCodMoldAndCodeProd.fit.process,
+            dateBrFormat.toLocaleDateString()
+          )
+        }
+      })
   }
 
   async listOnApproval(): Promise<

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "04f1ca8c-dc79-4da5-bbfd-7d58c1b29b81",
+    "name": "Rafael Railton Reis de Almeida",
+    "email": "rafael.railton@tutiplast.com.br",
+    "registration": "4538",
+    "role": "qualidade_admin",
+    "comment": "okk",
+    "status": true
+  },
+  {
+    "id": "f7e9b395-0da7-4f27-9bce-09a3a6d68261",
+    "name": "willzao",
+    "email": "will@mail.com.br",
+    "registration": "5057",
+    "role": "producao_admin",
+    "comment": "Reprovado pela produção - William",
+    "status": false
+  }
+]

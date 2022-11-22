@@ -6,17 +6,6 @@ import * as dotenv from 'dotenv'
 import { css } from './css/css'
 dotenv.config()
 
-// const testAccount = await nodemailer.createTestAccount()
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.ethereal.email",
-//   port: 587,
-//   secure: false,
-//   auth: {
-//     user: testAccount.user,
-//     pass: testAccount.pass,
-//   },
-// });
-
 const transporter = nodemailer.createTransport({
   host: 'smtp.office365.com',
   port: 587,
@@ -37,20 +26,9 @@ export class SendEmail {
     process: string,
     date: string
   ) {
-    // const testAccount = await nodemailer.createTestAccount()
     const filePath = path.join(__dirname, './hbs/new-fit.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
-    // const testAccount = await nodemailer.createTestAccount()
-    // const transporter = nodemailer.createTransport({
-    //   host: 'smtp.ethereal.email',
-    //   port: 587,
-    //   secure: false,
-    //   auth: {
-    //     user: testAccount.user,
-    //     pass: testAccount.pass,
-    //   },
-    // })
 
     const replacements = {
       id,
@@ -79,10 +57,18 @@ export class SendEmail {
     }
     const hbsToSend = template(replacements)
 
-    const mailList = [
-      'yantutilabs@outlook.com',
-      // 'rafael.railton@tutiplast.com.br',
-    ]
+    const mailList = ['yantutilabs@outlook.com.br']
+
+    // const mailList = [
+    // 'juci.alencar@tutiplast.com.br',
+    // 'analista.matriz@tutiplast.com.br',
+    // 'qsb.matriz@tutiplast.com.br',
+    // 'felipe.mazzieri@tutiplast.com.br',
+    // 'sesmt@tutiplast.com.br',
+    // 'cristioney.brito@tutiplast.com.br',
+    // 'auzimar@tutiplast.com.br',
+    // 'dornilson.borges@tutiplast.com.br',
+    // ]
 
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
@@ -110,85 +96,6 @@ export class SendEmail {
     const filePath = path.join(__dirname, './hbs/on-approval.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
-    // const testAccount = await nodemailer.createTestAccount()
-    // const transporter = nodemailer.createTransport({
-    //   host: 'smtp.ethereal.email',
-    //   port: 587,
-    //   secure: false,
-    //   auth: {
-    //     user: testAccount.user,
-    //     pass: testAccount.pass,
-    //   },
-    // })
-
-    const replacements = {
-      id,
-      product_code,
-      product_description,
-      code_mold,
-      mold,
-      client,
-      process,
-      date,
-      // * CSS
-      all: css.all,
-      body: css.body,
-      table_th_td: css.table_th_td,
-      title: css.title,
-      title_date: css.title_date,
-      subtitle: css.subtitle,
-      subtitle_td: css.subtitle_td,
-      content_td: css.content_td,
-      content_table: css.content_table,
-      content_table_th: css.content_table_th,
-      footer: css.footer,
-      footer_td: css.footer_td,
-      image: css.image,
-      imagelabs: css.imagelabs,
-    }
-    const hbsToSend = template(replacements)
-
-    const mailList = [
-      'yantutilabs@outlook.com',
-      'rafael.railton@tutiplast.com.br',
-    ]
-
-    const mailOptions = {
-      from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
-      to: mailList,
-      subject: 'FIT em processo de Homologação',
-      text: 'FIT em processo de homologação aguardando a aprovação dos setores: SESMT, Produção, Qualidade\nlink: www.example.com',
-      html: hbsToSend,
-    }
-
-    const info = await transporter.sendMail(mailOptions)
-    console.log('Message sent: %s', info.messageId)
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
-  }
-
-  async sendEmailOnApprovalEngAdmin(
-    id: number,
-    product_code: string,
-    product_description: string,
-    code_mold: string,
-    mold: string,
-    client: string,
-    process: string,
-    date: string
-  ) {
-    const filePath = path.join(__dirname, './hbs/on-approval.hbs')
-    const source = fs.readFileSync(filePath, 'utf-8').toString()
-    const template = handlebars.compile(source)
-    const testAccount = await nodemailer.createTestAccount()
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    })
 
     const replacements = {
       id,
@@ -219,10 +126,22 @@ export class SendEmail {
 
     const mailList = ['yantutilabs@outlook.com']
 
+    // const mailList = [
+    //   'juci.alencar@tutiplast.com.br',
+    //   'analista.matriz@tutiplast.com.br',
+    //   'qsb.matriz@tutiplast.com.br',
+    //   'felipe.mazzieri@tutiplast.com.br',
+    //   'sesmt@tutiplast.com.br',
+    //   'cristioney.brito@tutiplast.com.br',
+    //   'auzimar@tutiplast.com.br',
+    //   'dornilson.borges@tutiplast.com.br',
+    //   ]
+
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
       to: mailList,
       subject: 'FIT em processo de Homologação',
+      text: 'FIT em processo de homologação aguardando a aprovação dos setores: SESMT, Produção, Qualidade\nlink: http://185.209.179.253:9007/emAprovacao',
       html: hbsToSend,
     }
 
@@ -244,16 +163,6 @@ export class SendEmail {
     const filePath = path.join(__dirname, './hbs/rejected.hbs')
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
-    const testAccount = await nodemailer.createTestAccount()
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    })
 
     const replacements = {
       id,
@@ -292,11 +201,22 @@ export class SendEmail {
 
     const mailList = ['yantutilabs@outlook.com']
 
+    // const mailList = [
+    //   'juci.alencar@tutiplast.com.br',
+    //   'analista.matriz@tutiplast.com.br',
+    //   'qsb.matriz@tutiplast.com.br',
+    //   'felipe.mazzieri@tutiplast.com.br',
+    //   'sesmt@tutiplast.com.br',
+    //   'cristioney.brito@tutiplast.com.br',
+    //   'auzimar@tutiplast.com.br',
+    //   'dornilson.borges@tutiplast.com.br',
+    //   ]
+
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
       to: mailList,
       subject: 'FIT Reprovada',
-      text: 'FIT reprovada aguardando uma Nova Elaboração\nlink: www.example.com',
+      text: 'FIT reprovada aguardando uma Nova Elaboração\nlink: http://185.209.179.253:9007/emAprovacao',
       html: hbsToSend,
     }
 
@@ -305,3 +225,78 @@ export class SendEmail {
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
   }
 }
+
+// async sendEmailOnApprovalEngAdmin(
+//   id: number,
+//   product_code: string,
+//   product_description: string,
+//   code_mold: string,
+//   mold: string,
+//   client: string,
+//   process: string,
+//   date: string
+// ) {
+//   const filePath = path.join(__dirname, './hbs/on-approval.hbs')
+//   const source = fs.readFileSync(filePath, 'utf-8').toString()
+//   const template = handlebars.compile(source)
+//   const testAccount = await nodemailer.createTestAccount()
+//   const transporter = nodemailer.createTransport({
+//     host: 'smtp.ethereal.email',
+//     port: 587,
+//     secure: false,
+//     auth: {
+//       user: testAccount.user,
+//       pass: testAccount.pass,
+//     },
+//   })
+
+//   const replacements = {
+//     id,
+//     product_code,
+//     product_description,
+//     code_mold,
+//     mold,
+//     client,
+//     process,
+//     date,
+// * CSS
+//     all: css.all,
+//     body: css.body,
+//     table_th_td: css.table_th_td,
+//     title: css.title,
+//     title_date: css.title_date,
+//     subtitle: css.subtitle,
+//     subtitle_td: css.subtitle_td,
+//     content_td: css.content_td,
+//     content_table: css.content_table,
+//     content_table_th: css.content_table_th,
+//     footer: css.footer,
+//     footer_td: css.footer_td,
+//     image: css.image,
+//     imagelabs: css.imagelabs,
+//   }
+//   const hbsToSend = template(replacements)
+
+//   const mailList = ['yantutilabs@outlook.com.br']
+
+// const mailList = [
+// 'analista.matriz@tutiplast.com.br',
+// 'qsb.matriz@tutiplast.com.br',
+// 'felipe.mazzieri@tutiplast.com.br',
+// 'sesmt@tutiplast.com.br',
+// 'cristioney.brito@tutiplast.com.br',
+// 'auzimar@tutiplast.com.br',
+// 'dornilson.borges@tutiplast.com.br',
+// ]
+
+//   const mailOptions = {
+//     from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
+//     to: mailList,
+//     subject: 'FIT em processo de Homologação',
+//     html: hbsToSend,
+//   }
+
+//   const info = await transporter.sendMail(mailOptions)
+//   console.log('Message sent: %s', info.messageId)
+//   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+// }
