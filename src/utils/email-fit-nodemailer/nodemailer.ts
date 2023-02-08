@@ -80,8 +80,13 @@ export class SendEmail {
     const hbsToSend = template(replacements)
 
     const mailList = [
-      'yantutilabs@outlook.com',
-      // 'rafael.railton@tutiplast.com.br',
+      'eng_tec@tutiplast.com',
+      'juci.alencar@tutiplast.com.br',
+      'analista.matriz@tutiplast.com.br',
+      'qsb.matriz@tutiplast.com.br',
+      'felipe.mazzieri@tutiplast.com.br',
+      'sesmt@tutiplast.com.br',
+      'cristioney.brito@tutiplast.com.br',
     ]
 
     const mailOptions = {
@@ -149,8 +154,13 @@ export class SendEmail {
     const hbsToSend = template(replacements)
 
     const mailList = [
-      'yantutilabs@outlook.com',
-      'rafael.railton@tutiplast.com.br',
+      'eng_tec@tutiplast.com',
+      'juci.alencar@tutiplast.com.br',
+      'analista.matriz@tutiplast.com.br',
+      'qsb.matriz@tutiplast.com.br',
+      'felipe.mazzieri@tutiplast.com.br',
+      'sesmt@tutiplast.com.br',
+      'cristioney.brito@tutiplast.com.br',
     ]
 
     const mailOptions = {
@@ -217,7 +227,15 @@ export class SendEmail {
     }
     const hbsToSend = template(replacements)
 
-    const mailList = ['yantutilabs@outlook.com']
+    const mailList = [
+      'eng_tec@tutiplast.com',
+      'juci.alencar@tutiplast.com.br',
+      'analista.matriz@tutiplast.com.br',
+      'qsb.matriz@tutiplast.com.br',
+      'felipe.mazzieri@tutiplast.com.br',
+      'sesmt@tutiplast.com.br',
+      'cristioney.brito@tutiplast.com.br',
+    ]
 
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
@@ -290,7 +308,15 @@ export class SendEmail {
       }
     })
 
-    const mailList = ['yantutilabs@outlook.com']
+    const mailList = [
+      'eng_tec@tutiplast.com',
+      'juci.alencar@tutiplast.com.br',
+      'analista.matriz@tutiplast.com.br',
+      'qsb.matriz@tutiplast.com.br',
+      'felipe.mazzieri@tutiplast.com.br',
+      'sesmt@tutiplast.com.br',
+      'cristioney.brito@tutiplast.com.br',
+    ]
 
     const mailOptions = {
       from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
