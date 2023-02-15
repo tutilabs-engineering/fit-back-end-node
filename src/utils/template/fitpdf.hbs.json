@@ -1,0 +1,205 @@
+{
+    "Workstation": [
+        {
+            "id": 27,
+            "workstation_name": "POSTO 01",
+            "img_layout_path": "b5e1ba7e5c41b093ef0c501b08219f98-Capturar.PNG",
+            "createdAt": "2023-01-20T15:48:00.209Z",
+            "updatedAt": "2023-01-20T15:48:00.209Z",
+            "fitId": 21,
+            "devices": [
+                {
+                    "id": 49,
+                    "description": "DISPOSITIVO DE ROBO DE MAQUINA INJETORA",
+                    "code": "XXXXX",
+                    "quantity": 1,
+                    "workstationId": 27
+                }
+            ],
+            "Image_final_product": [
+                {
+                    "id": 45,
+                    "img_path": "fa32c4b698f9935efd4c5964bdced5f4-Imagem3.png",
+                    "description": "PEÇA PADRÃO ",
+                    "workstationId": 27
+                }
+            ],
+            "Image_operation": [
+                {
+                    "id": 88,
+                    "img_path": "06f449443284e39ee6a4605e17a243dc-Imagem1.png",
+                    "description": "ROBÔ DEPOSITA AS PEÇAS NA RAMPA/ ESTEIRA",
+                    "workstationId": 27
+                },
+                {
+                    "id": 89,
+                    "img_path": "bd595498eb065a0b6d57fdeb3edb1505-Imagem3.png",
+                    "description": "REALIZAR INSPEÇÃO DAS PEÇAS CONFORME CONTROLE.",
+                    "workstationId": 27
+                },
+                {
+                    "id": 90,
+                    "img_path": "9692c4da88300a717221dfcfa5117427-Imagem4.png",
+                    "description": "CASO NECESSARIO RETIRAR ESSA REBARBA DA LATERAL COM AUXILIO DE ESTILETE OU ALICATE ATENÇÃO PARA NÃO DANIFICAR A PEÇA",
+                    "workstationId": 27
+                }
+            ],
+            "Image_package_description": [
+                {
+                    "id": 61,
+                    "img_path": "47194ad320ba2cbe4a218b1d73aa8357-Imagem7.png",
+                    "description": "ARMAZENAR 12 CAMADAS DE 33 PEÇAS, TOTALIZANDO 396 PEÇAS POR MONOBLOCO.",
+                    "workstationId": 27
+                },
+                {
+                    "id": 62,
+                    "img_path": "a5524c72fd5d2d0aff68595b172a224f-Imagem6.png",
+                    "description": "EMPILHAR 6 CAMADAS COM 5 MONOBLOCOS, PERFAZENDO O TOTAL DE DE 30 MONOBLOCOS POR PALLET",
+                    "workstationId": 27
+                }
+            ],
+            "materials": [
+                {
+                    "id": 53,
+                    "sap_code": "1.0.08.33.0001",
+                    "description": "MONOBLOCO PLASTICO PRETO",
+                    "quantity": "1/396",
+                    "workstationId": 27
+                },
+                {
+                    "id": 54,
+                    "sap_code": "1.0.08.36.0002",
+                    "description": "SEPARADOR PAP. 497X317",
+                    "quantity": "13/396",
+                    "workstationId": 27
+                },
+                {
+                    "id": 55,
+                    "sap_code": "1.0.08.35.0291",
+                    "description": "SACO PLASTICO 950X950X0,03",
+                    "quantity": "1/396",
+                    "workstationId": 27
+                },
+                {
+                    "id": 56,
+                    "sap_code": "1.0.08.35.0009",
+                    "description": "SACO MANTA COLAMINADO PEADM 37X52",
+                    "quantity": "13/396",
+                    "workstationId": 27
+                }
+            ],
+            "safety": [
+                {
+                    "id": 27,
+                    "helmet": false,
+                    "earplug": true,
+                    "safety_goggles": true,
+                    "safety_gloves": true,
+                    "safety_mask": false,
+                    "safety_boot": false,
+                    "outros": "",
+                    "workstationId": 27
+                }
+            ],
+            "specifics_requirements_client": [
+                {
+                    "id": 50,
+                    "description": "N/A",
+                    "workstationId": 27
+                }
+            ],
+            "used_tools": [
+                {
+                    "id": 27,
+                    "pliers": true,
+                    "box_cutter": true,
+                    "screen_printing": false,
+                    "outros": "",
+                    "workstationId": 27
+                }
+            ],
+            "fit": {
+                "id_fit": 21,
+                "code_mold": "MD013012",
+                "mold": "Mold",
+                "product_code": "03.013.013012.01-00",
+                "product_description": "COVER BOTTOM REMOCON",
+                "client": "SAMSUNG",
+                "process": "Injeção",
+                "date_fit": "2023-01-20T15:48:00.133Z",
+                "Attention_point_control": [
+                    {
+                        "id": 42,
+                        "requirements": "Empenamento",
+                        "specifications": "Isento de Empenamento",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100 % POR PEÇA ",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    },
+                    {
+                        "id": 43,
+                        "requirements": "Falha de injeção",
+                        "specifications": "Isento de Falha de Injeção",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100% POR PEÇA",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    },
+                    {
+                        "id": 44,
+                        "requirements": "Deformação",
+                        "specifications": "Isento de Deformação",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100% POR PEÇA",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    },
+                    {
+                        "id": 45,
+                        "requirements": "Fora de Tonalidade",
+                        "specifications": "Fora de Tonalidade",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100 % POR PEÇA",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    },
+                    {
+                        "id": 46,
+                        "requirements": "Espirrado",
+                        "specifications": "Isento de Espirrado",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100 % POR PEÇA\t",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    },
+                    {
+                        "id": 47,
+                        "requirements": "Canal Alto",
+                        "specifications": "Isento de Canal Alto",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100 % POR PEÇA",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    },
+                    {
+                        "id": 48,
+                        "requirements": "Rebarbas",
+                        "specifications": "Isento de Rebarba",
+                        "evaluation_technique": "Visual - Peça Padrão",
+                        "control_method": "RegistroInjet",
+                        "sample": "100 % POR PEÇA",
+                        "reaction_plan": "Segregar e comunicar o lider",
+                        "fitId": 21
+                    }
+                ]
+            }
+        }
+    ]
+}

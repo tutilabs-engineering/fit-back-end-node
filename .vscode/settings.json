@@ -4,5 +4,8 @@
   "eslint.workingDirectories": ["src"],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[handlebars]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
   }
 }

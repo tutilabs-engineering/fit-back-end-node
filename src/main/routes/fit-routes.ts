@@ -4,7 +4,9 @@ import { uploadFile } from '../middlewares/multer-file-config'
 import { adminAuth, adminAuthEngAnalist } from '../middlewares/auth-admin'
 import { adaptRoute } from '../adapters/express-route-adapter'
 import * as controller from '../factories/controllers'
+import { generatePDF } from '../../utils/template/generateFIT'
 export default (router: Router): void => {
+  router.get('/generate_pdf', generatePDF)
   router.post(
     '/signup',
     adminAuthEngAnalist,
