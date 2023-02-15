@@ -1,3 +1,4 @@
+import { FitMysqlRepository } from './../../infra/data-mysql/fit-mysql-repository'
 import { HomologationFit } from '../../domain/useCase/Homologation/homologation-fit'
 import { PrismaHelper } from '../../infra/data-mysql/prisma-helper'
 import { MissingParamError } from '../errors/missing-param-error'
@@ -5,6 +6,8 @@ import { badRequest, ok, serverError } from '../helpers/http-helper'
 import { Controller } from '../models/controller'
 import { HttpResponse } from '../models/http'
 import { Validation } from '../models/validation'
+import { MountPDF } from '../../utils/mountPDF/hbs-pdf'
+import { SendPDFtoFTP } from '../../utils/ftp/ftp'
 
 export class HomologationFitController implements Controller {
   constructor(
@@ -13,7 +16,11 @@ export class HomologationFitController implements Controller {
   ) {}
 
   async handle(request: HomologationFit.Params): Promise<HttpResponse> {
+    const mountPDF = new MountPDF()
+    const fitMySqlRepository = new FitMysqlRepository()
+    const sendPDFtoFTP = new SendPDFtoFTP()
     try {
+      const fit = await fitMySqlRepository.findByFit(request.params)
       const findHomologationJSON =
         await PrismaHelper.prisma.homologation.findFirst({
           select: {
@@ -60,6 +67,9 @@ export class HomologationFitController implements Controller {
       if (findHomologation.length === 4) {
         request.body = { findHomologation, status: 3 }
         await this.homolagtion.execute(request)
+        // TODO:  PDF enters here
+        await mountPDF.mountPDFfunction(fit)
+        await sendPDFtoFTP.sendPDFtoFTPfunction(fit.product_code)
         return ok({ message: 'Approval carried out successfully' })
       }
       request.body = { findHomologation, status: 1 }
