@@ -6,6 +6,8 @@ PrismaHelper.prisma
     const { setupApp } = await import('./config/app')
     const app = await setupApp()
 
+   
+
     app.listen(process.env.PORT_SERVER, () => {
       console.log(
         `Server running at http://localhost:${process.env.PORT_SERVER}`
