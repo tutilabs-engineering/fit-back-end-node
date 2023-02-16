@@ -57,6 +57,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
+    "seed": "node ./dist/main/seed.js",
     "build": "rimraf dist && tsc && copyfiles -u 1 src/utils/email-fit-nodemailer/assets/** ./dist/ && copyfiles -u 1 src/utils/email-fit-nodemailer/hbs/** ./dist/ ",
     "start": "yarn prisma generate && yarn prisma db push && yarn prisma db seed && node ./dist/main/server.js",
     "up": "yarn build && docker-compose up -d",

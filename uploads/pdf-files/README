@@ -1,0 +1,12 @@
+   //  Compressão de Imagens
+                // item["meta_layout"] = Buffer.from(await sharp(medalPath) // Executamos o SHARP na imagem que queremos comprimir
+                //     .resize({
+                //         height: 600, width: 600, fit: "contain", background: {
+                //             b: 255, g: 255, r: 255
+                //         }
+                //     }) //Redimensionamos para o tamanho (se não receber esse parâmetro, não redimensiona
+                //     .toFormat('webp') // Forçamos a conversão esse arquivo para webp
+                //     .webp({ // Comprimimos, setando uma qualidade
+                //         quality: 100
+                //     })
+                //     .toBuffer()).toString('base64')

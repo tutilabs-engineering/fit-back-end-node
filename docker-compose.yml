@@ -12,7 +12,7 @@ services:
   #     - fit
   db-mysql-fit:
     container_name: db-mysql-fit-container
-    image: mysql:8
+    image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 48713588ae6ae525eeb52447bb559944

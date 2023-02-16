@@ -8,17 +8,22 @@ import { HttpResponse } from '../models/http'
 import { Validation } from '../models/validation'
 import { MountPDF } from '../../utils/mountPDF/hbs-pdf'
 import { SendPDFtoFTP } from '../../utils/ftp/ftp'
+import Client from 'ftp'
+import { MountPortableDocumentFormat } from '../../utils/mountPDF/MountPortableDocumentFormat'
 
 export class HomologationFitController implements Controller {
   constructor(
     private readonly validation: Validation,
     private readonly homolagtion: HomologationFit
-  ) {}
+
+  ) { }
 
   async handle(request: HomologationFit.Params): Promise<HttpResponse> {
-    const mountPDF = new MountPDF()
+    // const mountPDF = new MountPDF()
     const fitMySqlRepository = new FitMysqlRepository()
     const sendPDFtoFTP = new SendPDFtoFTP()
+    const mountPortableDocumentFormat = new MountPortableDocumentFormat()
+
     try {
       const fit = await fitMySqlRepository.findByFit(request.params)
       const findHomologationJSON =
@@ -64,12 +69,36 @@ export class HomologationFitController implements Controller {
         comment: request.body.comment,
         status: request.body.status,
       })
+
       if (findHomologation.length === 4) {
         request.body = { findHomologation, status: 3 }
         await this.homolagtion.execute(request)
         // TODO:  PDF enters here
-        await mountPDF.mountPDFfunction(fit)
-        await sendPDFtoFTP.sendPDFtoFTPfunction(fit.product_code)
+        // await mountPDF.mountPDFfunction(fit)
+        try {
+          const pathFile = await mountPortableDocumentFormat.execute({
+            Attention_point_control: fit.Attention_point_control,
+            id: fit.id,
+            code_mold: fit.code_mold,
+            mold: fit.mold,
+            product_code: fit.product_code,
+            client: fit.client,
+            product_description: fit.product_description,
+            date: fit.date,
+            process: fit.process,
+            Controller_attention_point: fit.Attention_point_control,
+            Workstations: fit.Workstation,
+            Homologation: fit.Homologation
+          })
+          await sendPDFtoFTP.sendPDFtoFTPfunction(fit.product_code)
+
+
+        } catch (error) {
+          console.log({ error });
+
+
+        }
+
         return ok({ message: 'Approval carried out successfully' })
       }
       request.body = { findHomologation, status: 1 }

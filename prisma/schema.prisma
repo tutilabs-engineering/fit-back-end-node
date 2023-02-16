@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL_LOCAL")
+  url      = env("DATABASE_URL")
 }
 
 model Fit {
@@ -125,7 +125,7 @@ model Materials {
   id            Int         @id @default(autoincrement())
   sap_code      String
   description   String
-  quantity      Int
+  quantity      String
   workstationId Int
   workstation   Workstation @relation("Materials", fields: [workstationId], references: [id], onDelete: Cascade)
 

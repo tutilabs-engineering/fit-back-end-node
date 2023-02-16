@@ -1,4 +1,5 @@
 export type FitModel = {
+  Attention_point_control: any
   id: number
   code_mold: string
   mold: string
@@ -93,6 +94,7 @@ type package_description = [
 ]
 type Homologation = [
   {
+    user_created: any
     user_homologation: JSON
   },
   {
