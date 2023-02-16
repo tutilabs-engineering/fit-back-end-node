@@ -125,7 +125,7 @@ model Materials {
   id            Int         @id @default(autoincrement())
   sap_code      String
   description   String
-  quantity      Int
+  quantity      String
   workstationId Int
   workstation   Workstation @relation("Materials", fields: [workstationId], references: [id], onDelete: Cascade)
 
