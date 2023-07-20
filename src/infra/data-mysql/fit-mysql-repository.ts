@@ -307,10 +307,8 @@ export class FitMysqlRepository
         for (const values of Controller_attention_point) {
           await PrismaHelper.prisma.attention_point_control.upsert({
             update: {
-              control_method: values.control_method,
               evaluation_technique: values.evaluation_technique,
               reaction_plan: values.reaction_plan,
-              requirements: values.requirements,
               sample: values.sample,
               specifications: values.specifications,
             },
@@ -319,10 +317,8 @@ export class FitMysqlRepository
             },
             create: {
               fitId: fit.id,
-              control_method: values.control_method,
               evaluation_technique: values.evaluation_technique,
               reaction_plan: values.reaction_plan,
-              requirements: values.requirements,
               sample: values.sample,
               specifications: values.specifications,
             },
@@ -923,10 +919,8 @@ export class FitMysqlRepository
         for (const valuesControllerPoint of Controller_attention_point) {
           await PrismaHelper.prisma.attention_point_control.createMany({
             data: {
-              control_method: valuesControllerPoint.control_method,
               evaluation_technique: valuesControllerPoint.evaluation_technique,
               reaction_plan: valuesControllerPoint.evaluation_technique,
-              requirements: valuesControllerPoint.requirements,
               sample: valuesControllerPoint.sample,
               specifications: valuesControllerPoint.specifications,
               fitId: fit.id,

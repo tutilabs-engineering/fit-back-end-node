@@ -15,7 +15,6 @@ export type FitModel = {
 
 type Attention_point_control = {
   technician: string
-  control_method: string
   sample: string
   reaction_plan: string
 }
