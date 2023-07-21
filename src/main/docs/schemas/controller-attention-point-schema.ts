@@ -1,16 +1,10 @@
 export const controllerAttentionPoint = {
   type: 'object',
   properties: {
-    requirements: {
-      type: 'string',
-    },
     specifications: {
       type: 'string',
     },
     evaluation_technique: {
-      type: 'string',
-    },
-    control_method: {
       type: 'string',
     },
     sample: {
@@ -21,10 +15,8 @@ export const controllerAttentionPoint = {
     },
   },
   required: [
-    'requirements',
     'specifications',
     'evalutaion_technique',
-    'control_method',
     'sample',
     'reaction_plan',
   ],
