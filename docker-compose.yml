@@ -26,7 +26,7 @@ services:
       - fit
   api-fit:
     container_name: api-container-fit
-    image: node:14
+    image: node:18
     working_dir: /usr/src/api-node-fit
     restart: always
     env_file:
