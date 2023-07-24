@@ -7,7 +7,7 @@ import { Controller } from '../models/controller'
 import { HttpResponse } from '../models/http'
 import { Validation } from '../models/validation'
 // import { MountPDF } from '../../utils/mountPDF/hbs-pdf'
-import { SendPDFtoFTP } from '../../utils/ftp/ftp'
+//import { SendPDFtoFTP } from '../../utils/ftp/ftp'
 // import Client from 'ftp'
 // import { MountPortableDocumentFormat } from '../../utils/mountPDF/MountPortableDocumentFormat'
 
@@ -20,7 +20,7 @@ export class HomologationFitController implements Controller {
   async handle(request: HomologationFit.Params): Promise<HttpResponse> {
     // const mountPDF = new MountPDF()
     const fitMySqlRepository = new FitMysqlRepository()
-    const sendPDFtoFTP = new SendPDFtoFTP()
+  // const sendPDFtoFTP = new SendPDFtoFTP()
     // const mountPortableDocumentFormat = new MountPortableDocumentFormat()
 
     try {
@@ -89,7 +89,7 @@ export class HomologationFitController implements Controller {
           //   Workstations: fit.Workstation,
           //   Homologation: fit.Homologation,
           // })
-          await sendPDFtoFTP.sendPDFtoFTPfunction(fit.product_code)
+         // await sendPDFtoFTP.sendPDFtoFTPfunction(fit.product_code)
         } catch (error) {
           console.log({ error })
         }
