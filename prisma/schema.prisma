@@ -22,13 +22,14 @@ model Fit {
 }
 
 model Attention_point_control {
-  id                   Int    @id @default(autoincrement())
+  id                   Int     @id @default(autoincrement())
   specifications       String
   evaluation_technique String
   sample               String
   reaction_plan        String
+  ce                   String?
   fitId                Int
-  fit                  Fit    @relation(fields: [fitId], references: [id], onDelete: Cascade)
+  fit                  Fit     @relation(fields: [fitId], references: [id], onDelete: Cascade)
 
   @@index([fitId], map: "Attention_point_control_fitId_fkey")
 }
