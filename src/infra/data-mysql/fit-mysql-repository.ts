@@ -311,6 +311,7 @@ export class FitMysqlRepository
               reaction_plan: values.reaction_plan,
               sample: values.sample,
               specifications: values.specifications,
+              ce: values.ce,
             },
             where: {
               id: values.id ? values.id : 0,
@@ -321,6 +322,7 @@ export class FitMysqlRepository
               reaction_plan: values.reaction_plan,
               sample: values.sample,
               specifications: values.specifications,
+              ce: values.ce,
             },
           })
         }
@@ -923,6 +925,7 @@ export class FitMysqlRepository
               reaction_plan: valuesControllerPoint.evaluation_technique,
               sample: valuesControllerPoint.sample,
               specifications: valuesControllerPoint.specifications,
+              ce: valuesControllerPoint.ce,
               fitId: fit.id,
             },
           })

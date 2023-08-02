@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL_LOCAL")
+  url      = env("DATABASE_URL")
 }
 
 model Fit {
@@ -29,8 +29,9 @@ model Attention_point_control {
   control_method       String
   sample               String
   reaction_plan        String
+  ce                   String?
   fitId                Int
-  fit                  Fit    @relation(fields: [fitId], references: [id], onDelete: Cascade)
+  fit                  Fit     @relation(fields: [fitId], references: [id], onDelete: Cascade)
 
   @@index([fitId], map: "Attention_point_control_fitId_fkey")
 }

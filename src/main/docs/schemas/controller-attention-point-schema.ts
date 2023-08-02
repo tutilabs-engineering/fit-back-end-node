@@ -13,6 +13,9 @@ export const controllerAttentionPoint = {
     reaction_plan: {
       type: 'string',
     },
+    ce: {
+      type: 'string',
+    },
   },
   required: [
     'specifications',
