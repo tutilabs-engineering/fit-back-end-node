@@ -23,8 +23,10 @@ model Fit {
 
 model Attention_point_control {
   id                   Int    @id @default(autoincrement())
+  requirements         String
   specifications       String
   evaluation_technique String
+  control_method       String
   sample               String
   reaction_plan        String
   fitId                Int
