@@ -22,9 +22,11 @@ model Fit {
 }
 
 model Attention_point_control {
-  id                   Int     @id @default(autoincrement())
+  id                   Int    @id @default(autoincrement())
+  requirements         String
   specifications       String
   evaluation_technique String
+  control_method       String
   sample               String
   reaction_plan        String
   ce                   String?
@@ -41,7 +43,6 @@ model Workstation {
   createdAt                     DateTime                        @default(now())
   updatedAt                     DateTime                        @updatedAt
   fitId                         Int
-  fit                           Fit                             @relation(fields: [fitId], references: [id], onDelete: Cascade)
   devices                       Devices[]                       @relation("Devices")
   Image_final_product           Image_final_product[]
   Image_operation               Image_operation[]
@@ -50,6 +51,7 @@ model Workstation {
   safety                        Safety[]                        @relation("Safety")
   specifics_requirements_client Specifics_requirements_client[] @relation("Specifics_requirements_client")
   used_tools                    Used_tools[]                    @relation("Used_tools")
+  fit                           Fit                             @relation(fields: [fitId], references: [id], onDelete: Cascade)
 
   @@index([fitId], map: "Workstation_fitId_fkey")
 }
