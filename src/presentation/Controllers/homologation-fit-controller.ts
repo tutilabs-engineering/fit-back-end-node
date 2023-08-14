@@ -6,10 +6,7 @@ import { badRequest, ok, serverError } from '../helpers/http-helper'
 import { Controller } from '../models/controller'
 import { HttpResponse } from '../models/http'
 import { Validation } from '../models/validation'
-// import { MountPDF } from '../../utils/mountPDF/hbs-pdf'
-// import { SendPDFtoFTP } from '../../utils/ftp/ftp'
-// import Client from 'ftp'
-// import { MountPortableDocumentFormat } from '../../utils/mountPDF/MountPortableDocumentFormat'
+import { MountPortableDocumentFormat } from '../../utils/mountPDF/MountPortableDocumentFormat'
 
 export class HomologationFitController implements Controller {
   constructor(
@@ -18,10 +15,8 @@ export class HomologationFitController implements Controller {
   ) {}
 
   async handle(request: HomologationFit.Params): Promise<HttpResponse> {
-    // const mountPDF = new MountPDF()
     const fitMySqlRepository = new FitMysqlRepository()
-    // const sendPDFtoFTP = new SendPDFtoFTP()
-    // const mountPortableDocumentFormat = new MountPortableDocumentFormat()
+    const mountPortableDocumentFormat = new MountPortableDocumentFormat()
 
     try {
       const fit = await fitMySqlRepository.findByFit(request.params)
@@ -75,21 +70,8 @@ export class HomologationFitController implements Controller {
         // TODO:  PDF enters here
         // await mountPDF.mountPDFfunction(fit)
         try {
-          // const pathFile = await mountPortableDocumentFormat.execute({
-          //   Attention_point_control: fit.Attention_point_control,
-          //   id: fit.id,
-          //   code_mold: fit.code_mold,
-          //   mold: fit.mold,
-          //   product_code: fit.product_code,
-          //   client: fit.client,
-          //   product_description: fit.product_description,
-          //   date: fit.date,
-          //   process: fit.process,
-          //   Controller_attention_point: fit.Attention_point_control,
-          //   Workstations: fit.Workstation,
-          //   Homologation: fit.Homologation,
-          // })
-          // await sendPDFtoFTP.sendPDFtoFTPfunction(fit.product_code)
+          const token = request.accessToken.split(' ')[0] == "Bearer" ? request.accessToken : "Bearer " + request.accessToken
+          await mountPortableDocumentFormat.execute({id: fit.id, product_code: fit.product_code},token)
         } catch (error) {
           console.log({ error })
         }

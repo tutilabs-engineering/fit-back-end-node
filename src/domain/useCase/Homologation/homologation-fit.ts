@@ -8,7 +8,8 @@ export namespace HomologationFit {
       id: number
     }
     account: any
-    body: any
+    body: any,
+    accessToken: string
   }
   export type Result = Promise<void>
 }
