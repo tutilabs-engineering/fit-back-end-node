@@ -26,6 +26,14 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+interface AllFITOnApprovalPayload{
+  id: number,
+  product_code: string,
+  product_description: string,
+  code_mold: string,
+  client: string
+}
+
 export class SendEmail {
   async sendEmailNewFit(
     id: number,
@@ -102,6 +110,43 @@ export class SendEmail {
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
   }
 
+  async sendEmailAllFitOnApprovalDepartments(
+    fit: AllFITOnApprovalPayload[] 
+  ){
+    const filePath = path.join(__dirname, './hbs/all-on-approval.hbs')
+    const source = fs.readFileSync(filePath, 'utf-8').toString()
+    const template = handlebars.compile(source)
+    const replacements = {
+      fit,
+      all: css.all,
+      body: css.body,
+      table_th_td: css.table_th_td,
+      title: css.title,
+    }
+    const hbsToSend = template(replacements)
+
+    const mailList = [
+      'eng_tec@tutiplast.com',
+      'juci.alencar@tutiplast.com.br',
+      'analista.matriz@tutiplast.com.br',
+      'qsb.matriz@tutiplast.com.br',
+      'felipe.mazzieri@tutiplast.com.br',
+      'sesmt@tutiplast.com.br',
+      'cristioney.brito@tutiplast.com.br',
+    ]
+
+    const mailOptions = {
+      from: '"Tutilabs" <tutilabs@tutiplast.com.br>',
+      to: mailList,
+      subject: 'FITs em processo de Homologação',
+      text: 'FITs em processo de homologação aguardando a aprovação dos setores: SESMT, Produção, Qualidade\nlink: www.example.com',
+      html: hbsToSend,
+    }
+
+    const info = await transporter.sendMail(mailOptions)
+    console.log('Message sent: %s', info.messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+  }
   async sendEmailOnApprovalDepartments(
     id: number,
     product_code: string,

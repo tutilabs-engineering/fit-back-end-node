@@ -1,0 +1,54 @@
+<html lang='pt-BR'>
+
+<head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='stylesheet' href='styles.css' />
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap' rel='stylesheet' />
+</head>
+<style>
+    .table-content {
+        font-size: .7rem;
+        border-radius: 3px;
+        border: 1px solid #e4e4e4;
+        width: 100%;
+        text-align: center;
+    }
+
+    .table-content tr {
+        height: auto;
+    }
+
+    .table-content tr td {
+        font-size: .6rem;
+        border-top: 1px solid var(--gray);
+        padding: 4px;
+    }
+</style>
+
+<body style="{{body}} {{all}}">
+
+    <p>FITs em processo de homologação aguardando a aprovação dos setores: SESMT, Produção, Qualidade</p>
+    <a href="http://185.209.179.253:9007/" target="_blank" rel="noopener noreferrer">Homologar</a>
+    <table class="table-content">
+        <tr>
+            <th "{{all}} {{table_th_td}}">FIT</th>
+            <th "{{all}} {{table_th_td}}">Produto</th>
+            <th "{{all}} {{table_th_td}}">Cód. Produto</th>
+            <th "{{all}} {{table_th_td}}">Molde</th>
+            <th "{{all}} {{table_th_td}}">Cliente</th>
+        </tr>
+        {{#each fit}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.product_description}}</td>
+            <td>{{this.product_code}}</td>
+            <td>{{this.code_mold}}</td>
+            <td>{{this.client}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
