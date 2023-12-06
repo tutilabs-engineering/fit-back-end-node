@@ -8,18 +8,17 @@ const sendEmail = new SendEmail()
 
 export class FitMysqlRepository
   implements
-    repository.AddFitRepository,
-    repository.UpdateFitRepository,
-    repository.LoadAccountByTokenRepository,
-    repository.HomologationFitRepository,
-    repository.ListOnApprovalRepository,
-    repository.FindByFitRepository,
-    repository.FindFitByCodeRepository,
-    repository.ListHomologatedRepository,
-    repository.VersioningFitRepository,
-    repository.CancellationFitRepository,
-    repository.ListFitByCodeRepository
-{
+  repository.AddFitRepository,
+  repository.UpdateFitRepository,
+  repository.LoadAccountByTokenRepository,
+  repository.HomologationFitRepository,
+  repository.ListOnApprovalRepository,
+  repository.FindByFitRepository,
+  repository.FindFitByCodeRepository,
+  repository.ListHomologatedRepository,
+  repository.VersioningFitRepository,
+  repository.CancellationFitRepository,
+  repository.ListFitByCodeRepository {
   async add(request: useCase.AddFit.Params): Promise<useCase.AddFit.Result> {
     const {
       id_report_tryout,
@@ -248,6 +247,7 @@ export class FitMysqlRepository
     const Controller_attention_point = request.body.data
       ? isValidaController_attention_point
       : JSON.parse(request.body.Controller_attention_point)
+   
     await PrismaHelper.prisma.fit
       .update({
         data: {
@@ -328,523 +328,250 @@ export class FitMysqlRepository
         }
         //
         // Apagando wokstations deletadas
-        for (const values of JSON.parse(request.body.deleteWorks)) {
-          await PrismaHelper.prisma.workstation.deleteMany({
-            where: {
-              id: values.id,
-            },
-          })
-        }
+        // for (const values of JSON.parse(request.body.deleteWorks)) {
+        //   await PrismaHelper.prisma.workstation.deleteMany({
+        //     where: {
+        //       id: values.id,
+        //     },
+        //   })
+        // }
         //
+        // const newWorkstation = Workstations.filter((values: any) => {
+          
+        //   if(values.typeWorkstation === 'newForm') {
+        //     const obj = {
+        //       workstation_name: values.workstation_name,
+        //       img_layout_path: values.img_layout_path,
+        //       fitId: fit.id
+        //     }
+        //     return obj 
+        //   }
+        // })
+        //  console.log(newWorkstation)
 
-        const img_layout_path_new_files = request.files.filter(
-          (values: any) => values.fieldname === 'img_layout_path'
-        )
-        let countImgLayoutNew = 0
-        let countImgLayoutOld = 0
-        let img_path_layout
-        for (const [index, Workstationvalues] of Workstations.entries()) {
-          if (
-            typeof request.body.img_layout_path === 'string' &&
-            request.body.indexPostImgLayout === index.toString()
-          ) {
-            img_path_layout = request.body.img_layout_path
-          } else {
-            if (request.body.img_layout_path) {
-              if (request.body.indexPostImgLayout.includes(index.toString())) {
-                img_path_layout =
-                  request.body.img_layout_path[countImgLayoutOld]
-                countImgLayoutOld++
+        // await PrismaHelper.prisma.workstation.create({
+        //   data: {
+
+        //   }
+        // })
+        Workstations.forEach(async (workstation: any, indexWorkstation: number) => {
+          try {
+            const requestFilesFinalProduct = request.files.filter((values: any) => values.fieldname === `img_final_product_${indexWorkstation}`)
+            
+            const requestFilesOperation = request.files.filter((values: any) => values.fieldname === `img_operation_path_${indexWorkstation}`)
+          
+            const requestFilesPackageDescription = request.files.filter((values: any) => values.fieldname === `img_package_description_${indexWorkstation}`) 
+            // IMAGEM LAYOUT
+            const img_layout_path_new_files = request.files.filter(
+              (values: any) => values.fieldname === 'img_layout_path'
+            )
+            
+            await PrismaHelper.prisma.workstation.update({
+              data: {
+                img_layout_path: workstation.img_layout_path = img_layout_path_new_files[indexWorkstation].filename
+              },
+              where: {
+                id: workstation.id
               }
-            }
-          }
+            })
 
-          if (request.body.indexPostImgLayoutNew) {
-            if (request.body.indexPostImgLayoutNew.includes(index.toString())) {
-              img_path_layout = img_layout_path_new_files[countImgLayoutNew]
-              countImgLayoutNew++
-            }
-          }
-          const newWorkstation = await PrismaHelper.prisma.workstation.upsert({
-            update: {
-              workstation_name: Workstationvalues.workstation_name,
-              img_layout_path: img_path_layout.filename
-                ? img_path_layout.filename
-                : img_path_layout,
-            },
-            create: {
-              img_layout_path: img_path_layout.filename
-                ? img_path_layout.filename
-                : img_path_layout,
-              workstation_name: Workstationvalues.workstation_name,
-              fitId: fit.id,
-            },
-            where: {
-              id: Workstationvalues.id ? Workstationvalues.id : 0,
-            },
-          })
-          // limpando lista de dispositivos
-          if (Workstationvalues.id) {
-            await PrismaHelper.prisma.devices.deleteMany({
-              where: {
-                workstationId: Workstationvalues.id,
-              },
-            })
-          }
-          //
-          // atualizando lista de dispositivos
-          for (const valuesDevice of Workstationvalues.devices
-            ? Workstationvalues.devices
-            : Workstationvalues.Devices) {
-            await PrismaHelper.prisma.devices.upsert({
-              update: {
-                code: valuesDevice.code,
-                description: valuesDevice.description,
-                quantity: valuesDevice.quantity,
-              },
-              create: {
-                code: valuesDevice.code,
-                description: valuesDevice.description,
-                quantity: valuesDevice.quantity,
-                workstationId: newWorkstation.id,
-              },
-              where: {
-                id: valuesDevice.id ? valuesDevice.id : 0,
-              },
-            })
-          }
-          //
-          // atualizando ferramentas
-          await PrismaHelper.prisma.safety.upsert({
-            update: {
-              earplug: Workstationvalues.safety
-                ? Workstationvalues.safety[0].earplug
-                : Workstationvalues.Safety.earplug,
-              helmet: Workstationvalues.safety
-                ? Workstationvalues.safety[0].helmet
-                : Workstationvalues.Safety.helmet,
-              safety_boot: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_boot
-                : Workstationvalues.Safety.safety_boot,
-              safety_gloves: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_gloves
-                : Workstationvalues.Safety.safety_gloves,
-              safety_goggles: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_goggles
-                : Workstationvalues.Safety.safety_goggles,
-              safety_mask: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_mask
-                : Workstationvalues.Safety.safety_mask,
-              outros: Workstationvalues.safety
-                ? Workstationvalues.safety[0].outros
-                : Workstationvalues.Safety.outros,
-            },
-            create: {
-              earplug: Workstationvalues.safety
-                ? Workstationvalues.safety[0].earplug
-                : Workstationvalues.Safety.earplug,
-              helmet: Workstationvalues.safety
-                ? Workstationvalues.safety[0].helmet
-                : Workstationvalues.Safety.helmet,
-              safety_boot: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_boot
-                : Workstationvalues.Safety.safety_boot,
-              safety_gloves: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_gloves
-                : Workstationvalues.Safety.safety_gloves,
-              safety_goggles: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_goggles
-                : Workstationvalues.Safety.safety_goggles,
-              safety_mask: Workstationvalues.safety
-                ? Workstationvalues.safety[0].safety_mask
-                : Workstationvalues.Safety.safety_mask,
-              outros: Workstationvalues.safety
-                ? Workstationvalues.safety[0].outros
-                : Workstationvalues.Safety.outros,
-              workstationId: newWorkstation.id,
-            },
-            where: {
-              id: Workstationvalues.safety ? Workstationvalues.safety[0].id : 0,
-            },
-          })
 
-          // atualizando componentes de segurança
-          await PrismaHelper.prisma.used_tools.upsert({
-            update: {
-              box_cutter: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].box_cutter
-                : Workstationvalues.Used_tools.box_cutter,
-              pliers: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].pliers
-                : Workstationvalues.Used_tools.pliers,
-              screen_printing: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].screen_printing
-                : Workstationvalues.Used_tools.screen_printing,
-              outros: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].outros
-                : Workstationvalues.Used_tools.outros,
-            },
-            create: {
-              box_cutter: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].box_cutter
-                : Workstationvalues.Used_tools.box_cutter,
-              pliers: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].pliers
-                : Workstationvalues.Used_tools.pliers,
-              screen_printing: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].screen_printing
-                : Workstationvalues.Used_tools.screen_printing,
-              outros: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].outros
-                : Workstationvalues.Used_tools.outros,
-              workstationId: newWorkstation.id,
-            },
-            where: {
-              id: Workstationvalues.used_tools
-                ? Workstationvalues.used_tools[0].id
-                : 0,
-            },
-          })
-
-          // Limpando lista de materiais
-          if (Workstationvalues.id) {
-            await PrismaHelper.prisma.materials.deleteMany({
-              where: {
-                workstationId: Workstationvalues.id,
-              },
-            })
-          }
-          //
-          // atualizando lista de materiais
-          for (const valuesMaterials of Workstationvalues.materials) {
-            await PrismaHelper.prisma.materials.upsert({
-              update: {
-                sap_code: valuesMaterials.sap_code,
-                description: valuesMaterials.description,
-                quantity: valuesMaterials.quantity,
-              },
-              create: {
-                sap_code: valuesMaterials.sap_code,
-                description: valuesMaterials.description,
-                quantity: valuesMaterials.quantity,
-                workstationId: newWorkstation.id,
-              },
-              where: {
-                id: valuesMaterials.id ? valuesMaterials.id : 0,
-              },
-            })
-          }
-          //
-          // Limpando lista de requerimentos specificos de cliente
-          if (Workstationvalues.id) {
-            await PrismaHelper.prisma.specifics_requirements_client.deleteMany({
-              where: {
-                workstationId: Workstationvalues.id,
-              },
-            })
-          }
-          //
-          // atualizando lista de requerimentos especificos do cliente
-          for (const valuesSpecifics_requirements_client of Workstationvalues.specifics_requirements_client) {
-            await PrismaHelper.prisma.specifics_requirements_client.upsert({
-              update: {
-                description: valuesSpecifics_requirements_client.description,
-              },
-              create: {
-                description: valuesSpecifics_requirements_client.description,
-                workstationId: newWorkstation.id,
-              },
-              where: {
-                id: valuesSpecifics_requirements_client.id
-                  ? valuesSpecifics_requirements_client.id
-                  : 0,
-              },
-            })
-          }
-          //
-          // Update Images de Operação
-          if (Workstationvalues.id) {
-            await PrismaHelper.prisma.image_operation.deleteMany({
-              where: {
-                workstationId: Workstationvalues.id,
-              },
-            })
-          }
-          const find_img_operations = request.files.map((values: any) => {
-            if (values.fieldname === `img_operation_path_${index}`) {
-              return values.filename
-            }
-          })
-          const filter_img_operation_path = find_img_operations.filter(
-            (values: any) => values !== undefined
-          )
-          const workstation_Images_Operations_old: any[] = []
-          if (typeof request.body.img_operation === 'string') {
-            const array = request.body.img_operation.split(',', 4)
-            workstation_Images_Operations_old.push({
-              id: Number(array[0]),
-              filename: array[1],
-              description: array[2],
-              index: array[3],
-            })
-          } else {
-            if (request.body.img_operation) {
-              for (const img_operation of request.body.img_operation) {
-                const array = img_operation.split(',', 4)
-
-                workstation_Images_Operations_old.push({
-                  id: Number(array[0]),
-                  filename: array[1],
-                  description: array[2],
-                  index: array[3],
-                })
-              }
-            }
-          }
-          let workstation_Images_Operations_new
-          let workstation_Images_Operations_new_filter
-          let count = 0
-          if (filter_img_operation_path.length !== 0) {
-            const workImgOp = Workstations[index].Image_operation
-              ? Workstations[index].Image_operation
-              : Workstations[index].Images_operations
-            workstation_Images_Operations_new = workImgOp.map(
-              (values: any, index: number) => {
-                if (!values.id) {
-                  const ObjAssing = Object.assign({}, values, {
-                    filename: filter_img_operation_path[count],
-                  })
-                  count++
-                  return ObjAssing
+            // IMAGEM PRODUTO ACABADO
+            let count = 0;
+            const findNewImgFinalProduct = workstation.Image_final_product.map((element: any) => {
+              if (!element.id) {
+                const obj = {
+                  img_path: requestFilesFinalProduct[count].filename,
+                  description: element.description,
+                  workstationId: workstation.id
                 }
+                count++
+                return obj
               }
-            )
-            workstation_Images_Operations_new_filter =
-              workstation_Images_Operations_new.filter(
-                (values: any) => values !== undefined
-              )
-          }
-          const workstation_Images_OperationsPorPosto = []
-          for (const values of workstation_Images_Operations_old) {
-            if (Number(values.index) === index) {
-              workstation_Images_OperationsPorPosto.push(values)
-            }
-          }
-          const workstation_Images_Operations =
-            workstation_Images_Operations_new_filter
-              ? workstation_Images_OperationsPorPosto.concat(
-                  workstation_Images_Operations_new_filter
-                )
-              : workstation_Images_OperationsPorPosto
-          for (const valuesImageOperation of workstation_Images_Operations) {
-            await PrismaHelper.prisma.image_operation.upsert({
-              update: {
-                img_path: valuesImageOperation.filename,
-                description: valuesImageOperation.description,
-                id: valuesImageOperation.id,
-              },
-              create: {
-                description: valuesImageOperation.description,
-                img_path: valuesImageOperation.filename,
-                workstationId: newWorkstation.id,
-              },
-              where: {
-                id: valuesImageOperation.id ? valuesImageOperation.id : 0,
-              },
+              return element
             })
-          }
-          // Update Images Descrição de Embalagens
-          if (Workstationvalues.id) {
-            await PrismaHelper.prisma.image_package_description.deleteMany({
-              where: {
-                workstationId: Workstationvalues.id,
-              },
-            })
-          }
-          const find_img_package_description = request.files.map(
-            (values: any) => {
-              if (values.fieldname === `img_package_description_${index}`) {
-                return values.filename
-              }
-            }
-          )
-          const filter_img_package_description_path =
-            find_img_package_description.filter(
-              (values: any) => values !== undefined
-            )
-          const workstation_Images_package_description_old: any[] = []
-          if (typeof request.body.img_package_description === 'string') {
-            const array = request.body.img_package_description.split(',', 4)
-            workstation_Images_package_description_old.push({
-              id: Number(array[0]),
-              filename: array[1],
-              description: array[2],
-              index: array[3],
-            })
-          } else {
-            if (request.body.img_package_description) {
-              for (const img_package_description of request.body
-                .img_package_description) {
-                const array = img_package_description.split(',', 4)
-
-                workstation_Images_package_description_old.push({
-                  id: Number(array[0]),
-                  filename: array[1],
-                  description: array[2],
-                  index: array[3],
-                })
-              }
-            }
-          }
-          let workstation_Images_package_description_new
-          let workstation_Images_package_description_new_filter
-
-          if (filter_img_package_description_path.length !== 0) {
-            let count = 0
-            const workImgPd = Workstations[index].Image_package_description
-              ? Workstations[index].Image_package_description
-              : Workstations[index].Images_package_description
-            workstation_Images_package_description_new = workImgPd.map(
-              (values: any, index: number) => {
-                if (!values.id) {
-                  const ObjAssing = Object.assign({}, values, {
-                    filename: filter_img_package_description_path[count],
-                  })
-                  count++
-                  return ObjAssing
-                }
-              }
-            )
-            workstation_Images_package_description_new_filter =
-              workstation_Images_package_description_new.filter(
-                (values: any) => values !== undefined
-              )
-          }
-
-          const workstation_Images_package_descriptionPorPosto = []
-          for (const values of workstation_Images_package_description_old) {
-            if (Number(values.index) === index) {
-              workstation_Images_package_descriptionPorPosto.push(values)
-            }
-          }
-          const workstation_Images_package_description =
-            workstation_Images_package_description_new_filter
-              ? workstation_Images_OperationsPorPosto.concat(
-                  workstation_Images_package_description_new_filter
-                )
-              : workstation_Images_package_descriptionPorPosto
-          for (const valuesImgPackageDescription of workstation_Images_package_description) {
-            await PrismaHelper.prisma.image_package_description.upsert({
-              update: {
-                img_path: valuesImgPackageDescription.filename,
-                description: valuesImgPackageDescription.description,
-                id: valuesImgPackageDescription.id,
-              },
-              create: {
-                description: valuesImgPackageDescription.description,
-                img_path: valuesImgPackageDescription.filename,
-                workstationId: newWorkstation.id,
-              },
-              where: {
-                id: valuesImgPackageDescription.id
-                  ? valuesImgPackageDescription.id
-                  : 0,
-              },
-            })
-          }
-          // Update Imagens Produto Acabado
-          if (Workstationvalues.id) {
             await PrismaHelper.prisma.image_final_product.deleteMany({
               where: {
-                workstationId: Workstationvalues.id,
-              },
+                workstationId: workstation.id
+              }
             })
-          }
-          const find_img_final_product = request.files.map((values: any) => {
-            if (values.fieldname === `img_final_product_${index}`) {
-              return values.filename
+            await PrismaHelper.prisma.image_final_product.createMany({
+              data: findNewImgFinalProduct
+            })
+
+            // IMAGEM OPERAÇÕES
+            let count2 = 0;
+            const findNewImgOperation = workstation.Image_operation.map((element: any) => {
+              if (!element.id) {
+                const obj = {
+                  img_path: requestFilesOperation[count2].filename,
+                  description: element.description,
+                  workstationId: workstation.id
+                }
+                count2++
+                return obj
+              }
+              return element
+            })
+            await PrismaHelper.prisma.image_operation.deleteMany({
+              where: {
+                workstationId: workstation.id
+              }
+            })
+            await PrismaHelper.prisma.image_operation.createMany({
+              data: findNewImgOperation
+            })
+  
+            // IMAGENS EMBALAGENS
+            let count3 = 0;
+            const findNewImgPackageDescription = workstation.Image_package_description.map((element: any) => {
+              if (!element.id) {
+                const obj = {
+                  img_path: requestFilesPackageDescription[count3].filename,
+                  description: element.description,
+                  workstationId: workstation.id
+                }
+                count3++
+                return obj
+              }
+              return element
+            })
+            await PrismaHelper.prisma.image_package_description.deleteMany({
+              where: {
+                workstationId: workstation.id
+              }
+            })
+            await PrismaHelper.prisma.image_package_description.createMany({
+              data: findNewImgPackageDescription
+            })
+
+            // Devices
+            let count4 = 0;
+            const devices = workstation.devices.map((element: any) => {
+              if (!element.id) {
+                const obj = {
+                  description: element.description,
+                  code: element.code,
+                  quantity: element.quantity,
+                  workstationId: workstation.id
+                }
+                count4++
+                return obj
+              }
+              return element
+            })
+            await PrismaHelper.prisma.devices.deleteMany({
+              where: {
+                workstationId: workstation.id
+              }
+            })
+            await PrismaHelper.prisma.devices.createMany({
+              data: devices
+            })
+
+          // MATERIALS
+          let count5 = 0;
+          const materials = workstation.materials.map((element: any) => {
+            if (!element.id) {
+              const obj = {
+                sap_code: element.sap_code,
+                description: element.description,
+                quantity: element.quantity,
+                workstationId: workstation.id
+              }
+              count5++
+              return obj
+            }
+            return element
+          })
+          await PrismaHelper.prisma.materials.deleteMany({
+            where: {
+              workstationId: workstation.id
             }
           })
-          const filter_img_final_product_path = find_img_final_product.filter(
-            (values: any) => values !== undefined
-          )
-          const workstation_Images_final_product_old: any[] = []
-          if (typeof request.body.img_final_product === 'string') {
-            const array = request.body.img_final_product.split(',', 4)
-            workstation_Images_final_product_old.push({
-              id: Number(array[0]),
-              filename: array[1],
-              description: array[2],
-              index: array[3],
-            })
-          } else {
-            if (request.body.img_final_product) {
-              for (const img_final_product of request.body.img_final_product) {
-                const array = img_final_product.split(',', 4)
+          await PrismaHelper.prisma.materials.createMany({
+            data: materials
+          })
 
-                workstation_Images_final_product_old.push({
-                  id: Number(array[0]),
-                  filename: array[1],
-                  description: array[2],
-                  index: array[3],
-                })
+          // SPECIFICS REQUIREMENTS CLIENT
+          let count6 = 0;
+          const specificsRequirementsClient = workstation.specifics_requirements_client.map((element: any) => {
+            if (!element.id) {
+              const obj = {
+                description: element.description,
+                workstationId: workstation.id
               }
+              count6++
+              return obj
             }
-          }
-          let workstation_Images_Final_Porduct_new
-          let workstation_Images_Final_Product_new_filter
+            return element
+          })
+          await PrismaHelper.prisma.specifics_requirements_client.deleteMany({
+            where: {
+              workstationId: workstation.id
+            }
+          })
+          await PrismaHelper.prisma.specifics_requirements_client.createMany({
+            data: specificsRequirementsClient
+          })
 
-          if (filter_img_final_product_path.length !== 0) {
-            const workImgPf = Workstations[index].Image_final_product
-              ? Workstations[index].Image_final_product
-              : Workstations[index].Images_final_product
-            let count = 0
-            workstation_Images_Final_Porduct_new = workImgPf.map(
-              (values: any, index: number) => {
-                if (!values.id) {
-                  const ObjAssing = Object.assign({}, values, {
-                    filename: filter_img_final_product_path[count],
-                  })
-                  count++
-                  return ObjAssing
-                }
+          // USED TOOLS
+          let count7 = 0;
+          const usedTools = workstation.used_tools.map((element: any) => {
+            if (!element.id) {
+              const obj = {
+                pliers: element.pliers,
+                box_cutter: element.box_cutter,
+                screen_printing: element.screen_printing,
+                outros: element.outros,
+                workstationId: workstation.id
               }
-            )
-            workstation_Images_Final_Product_new_filter =
-              workstation_Images_Final_Porduct_new.filter(
-                (values: any) => values !== undefined
-              )
-          }
-          const workstation_Images_Final_ProductPorPosto = []
-          for (const values of workstation_Images_final_product_old) {
-            if (Number(values.index) === index) {
-              workstation_Images_Final_ProductPorPosto.push(values)
+              count7++
+              return obj
             }
+            return element
+          })
+          await PrismaHelper.prisma.used_tools.deleteMany({
+            where: {
+              workstationId: workstation.id
+            }
+          })
+          await PrismaHelper.prisma.used_tools.createMany({
+            data: usedTools
+          })
+
+          // SAFETY
+          let count8 = 0;
+          const safety = workstation.safety.map((element: any) => {
+            if (!element.id) {
+              const obj = {
+                helmet: element.helmet,
+                earplug: element.earplug,
+                safety_goggles: element.safety_goggles,
+                safety_gloves: element.safety_gloves,
+                safety_mask: element.safety_mask,
+                safety_boot: element.safety_boot,
+                outros: element.outros,
+                workstationId: workstation.id
+              }
+              count8++
+              return obj
+            }
+            return element
+          })
+          await PrismaHelper.prisma.safety.deleteMany({
+            where: {
+              workstationId: workstation.id
+            }
+          })
+          await PrismaHelper.prisma.safety.createMany({
+            data: safety
+          })
+          } catch (error) {
+            console.error(error)
           }
-          const workstation_Images_Final_Product =
-            workstation_Images_Final_Product_new_filter
-              ? workstation_Images_Final_ProductPorPosto.concat(
-                  workstation_Images_Final_Product_new_filter
-                )
-              : workstation_Images_Final_ProductPorPosto
-          for (const valuesImgFinalProduct of workstation_Images_Final_Product) {
-            await PrismaHelper.prisma.image_final_product.upsert({
-              update: {
-                img_path: valuesImgFinalProduct.filename,
-                description: valuesImgFinalProduct.description,
-                id: valuesImgFinalProduct.id,
-              },
-              create: {
-                description: valuesImgFinalProduct.description,
-                img_path: valuesImgFinalProduct.filename,
-                workstationId: newWorkstation.id,
-              },
-              where: {
-                id: valuesImgFinalProduct.id ? valuesImgFinalProduct.id : 0,
-              },
-            })
-          }
-        }
+
+        });
       })
       .catch((error) => console.error(error))
   }
@@ -1111,8 +838,8 @@ export class FitMysqlRepository
           const workstation_Images_Operations =
             workstation_Images_Operations_new_filter
               ? workstation_Images_OperationsPorPosto.concat(
-                  workstation_Images_Operations_new_filter
-                )
+                workstation_Images_Operations_new_filter
+              )
               : workstation_Images_OperationsPorPosto
           for (const valuesImageOperation of workstation_Images_Operations) {
             await PrismaHelper.prisma.image_operation.create({
@@ -1194,8 +921,8 @@ export class FitMysqlRepository
           const workstation_Images_package_description =
             workstation_Images_package_description_new_filter
               ? workstation_Images_OperationsPorPosto.concat(
-                  workstation_Images_package_description_new_filter
-                )
+                workstation_Images_package_description_new_filter
+              )
               : workstation_Images_package_descriptionPorPosto
           for (const valuesImgPackageDescription of workstation_Images_package_description) {
             await PrismaHelper.prisma.image_package_description.create({
@@ -1271,8 +998,8 @@ export class FitMysqlRepository
           const workstation_Images_Final_Product =
             workstation_Images_Final_Product_new_filter
               ? workstation_Images_Final_ProductPorPosto.concat(
-                  workstation_Images_Final_Product_new_filter
-                )
+                workstation_Images_Final_Product_new_filter
+              )
               : workstation_Images_Final_ProductPorPosto
           for (const valuesImgFinalProduct of workstation_Images_Final_Product) {
             await PrismaHelper.prisma.image_final_product.create({
@@ -1411,23 +1138,28 @@ export class FitMysqlRepository
   async listOnApproval(): Promise<
     repository.ListOnApprovalRepository.Result[]
   > {
-    const FitsOnApproval = await PrismaHelper.prisma.fit.findMany({
-      include: {
-        Homologation: {
-          where: {
-            statusId: 1,
+    try {
+      const FitsOnApproval = await PrismaHelper.prisma.fit.findMany({
+        include: {
+          Homologation: {
+            where: {
+              statusId: 1,
+            },
           },
         },
-      },
-      where: {
-        Homologation: {
-          some: {
-            statusId: 1,
+        where: {
+          Homologation: {
+            some: {
+              statusId: 1,
+            },
           },
         },
-      },
-    })
-    return FitsOnApproval
+      })
+      return FitsOnApproval
+    } catch (error) {
+      console.error(error)
+    }
+
   }
 
   async findByFit(fit: useCase.FindSpecificFit.Params): Promise<any> {

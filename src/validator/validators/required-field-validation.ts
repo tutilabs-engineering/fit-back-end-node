@@ -28,6 +28,7 @@ export class RequiredFieldValidation implements Validation {
     const workstations = Object.assign(header.body.Workstations)
     for (const workstation of workstations) {
       if (workstation.typeWorkstation === 'update') {
+
         if (workstation.used_tools === undefined) {
           return new MissingParamError(this.fieldName)
         } else if (workstation.safety === undefined) {
@@ -37,7 +38,7 @@ export class RequiredFieldValidation implements Validation {
         } else if (workstation.devices === undefined) {
           return new MissingParamError(this.fieldName)
         } else if (workstation.specifics_requirements_client === undefined) {
-          return new MissingParamError(this.fieldName)
+          workstation.specifics_requirements_client = 'Não possui';
         } else if (workstation.Image_operation === undefined) {
           return new MissingParamError(this.fieldName)
         } else if (workstation.Image_package_description === undefined) {
@@ -55,7 +56,7 @@ export class RequiredFieldValidation implements Validation {
         } else if (workstation.Devices === undefined) {
           return new MissingParamError(this.fieldName)
         } else if (workstation.specifics_requirements_client === undefined) {
-          return new MissingParamError(this.fieldName)
+          workstation.specifics_requirements_client = 'Não possui';
         } else if (workstation.Images_operations === undefined) {
           return new MissingParamError(this.fieldName)
         } else if (workstation.Images_package_description === undefined) {

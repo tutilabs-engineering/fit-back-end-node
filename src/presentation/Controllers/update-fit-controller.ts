@@ -19,7 +19,7 @@ export class UpdateFitControler implements Controller {
         console.error(error)
         return badRequest(error)
       }
-      await this.update.execute(request)
+       await this.update.execute(request)
       return ok({ message: 'Updated successfully' })
     } catch (error) {
       console.error(error)

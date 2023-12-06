@@ -17,15 +17,15 @@ export default (router: Router): void => {
   router.put(
     '/update/:id',
     adminAuthEngAnalist,
-    multer(uploadFile.getConfig).any(),
+     multer(uploadFile.getConfig).any(),
     adaptRoute(controller.makeUpdateFitController())
   )
-  router.put(
-    '/update/:id',
-    adminAuthEngAnalist,
-    multer(uploadFile.getConfig).any(),
-    adaptRoute(controller.makeUpdateFitController())
-  )
+  // router.put(
+  //   '/update/:id',
+  //   adminAuthEngAnalist,
+  //   multer(uploadFile.getConfig).any(),
+  //   adaptRoute(controller.makeUpdateFitController())
+  // )
   router.put(
     '/homologation/:id',
     adminAuth,
