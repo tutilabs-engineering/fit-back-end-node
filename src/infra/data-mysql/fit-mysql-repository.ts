@@ -336,23 +336,11 @@ export class FitMysqlRepository
         //   })
         // }
         //
-        // const newWorkstation = Workstations.filter((values: any) => {
-          
-        //   if(values.typeWorkstation === 'newForm') {
-        //     const obj = {
-        //       workstation_name: values.workstation_name,
-        //       img_layout_path: values.img_layout_path,
-        //       fitId: fit.id
-        //     }
-        //     return obj 
-        //   }
-        // })
-        //  console.log(newWorkstation)
-
-        // await PrismaHelper.prisma.workstation.create({
-        //   data: {
-
-        //   }
+        // const newWorkstations = Workstations.filter((values: any) => values.typeWorkstation === 'newForm')
+        // .map((values: any) => {return {workstation_name: values.workstation_name, img_layout_path: values.img_layout_path, fitId: fit.id}} )
+    
+        // await PrismaHelper.prisma.workstation.createMany({
+        //   data: newWorkstations
         // })
         Workstations.forEach(async (workstation: any, indexWorkstation: number) => {
           try {
@@ -365,17 +353,17 @@ export class FitMysqlRepository
             const img_layout_path_new_files = request.files.filter(
               (values: any) => values.fieldname === 'img_layout_path'
             )
+            if(workstation.typeWorkstation != 'newForm') {
+              await PrismaHelper.prisma.workstation.update({
+                data: {
+                  img_layout_path: (img_layout_path_new_files.length > 0) ? img_layout_path_new_files[0].filename : workstation.img_layout_path
+                },
+                where: {
+                  id: workstation.id
+                }
+              })
+            }
             
-            await PrismaHelper.prisma.workstation.update({
-              data: {
-                img_layout_path: workstation.img_layout_path = img_layout_path_new_files[indexWorkstation].filename
-              },
-              where: {
-                id: workstation.id
-              }
-            })
-
-
             // IMAGEM PRODUTO ACABADO
             let count = 0;
             const findNewImgFinalProduct = workstation.Image_final_product.map((element: any) => {

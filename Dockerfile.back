@@ -1,0 +1,16 @@
+FROM node:16 AS build
+
+WORKDIR /usr/app
+
+COPY . .
+RUN yarn
+RUN yarn build:prod
+
+FROM node:16-alpine
+
+WORKDIR /usr/app
+
+COPY --from=build /usr/app/ ./
+
+
+ENTRYPOINT [ "yarn","start:prod" ]

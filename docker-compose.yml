@@ -23,26 +23,25 @@ services:
     volumes:
       - ./db:/var/lib/mysql
     networks:
-      - fit
-  api-fit:
-    container_name: api-container-fit
-    image: node:18
-    working_dir: /usr/src/api-node-fit
+      - tutilabs
+  api-fit-mfs:
+    container_name: api-fit-mfs
+    build: 
+      context: .
+      dockerfile: Dockerfile.back
     restart: always
     env_file:
       - .env
     depends_on:
       - db-mysql-fit
-    command: bash -c "yarn --only=prod && yarn start"
+    # command: bash -c "yarn --only=prod && yarn start"
     volumes:
-      - ./dist/:/usr/src/api-node-fit/dist/
-      - ./package.json:/usr/src/api-node-fit/package.json
-      - ./prisma:/usr/src/api-node-fit/prisma
-      - ./uploads:/usr/src/api-node-fit/uploads
+      - ./uploads/:/usr/app/uploads
     ports:
       - '9006:9006'
     networks:
-      - fit
+      - tutilabs
 networks:
-  fit:
-    driver: bridge
+ tutilabs:
+  #  external: true
+   driver: bridge
