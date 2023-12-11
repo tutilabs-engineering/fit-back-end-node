@@ -247,7 +247,6 @@ export class FitMysqlRepository
     const Controller_attention_point = request.body.data
       ? isValidaController_attention_point
       : JSON.parse(request.body.Controller_attention_point)
-   
     await PrismaHelper.prisma.fit
       .update({
         data: {
@@ -326,44 +325,55 @@ export class FitMysqlRepository
             },
           })
         }
+      
+       
+
         //
         // Apagando wokstations deletadas
-        // for (const values of JSON.parse(request.body.deleteWorks)) {
-        //   await PrismaHelper.prisma.workstation.deleteMany({
-        //     where: {
-        //       id: values.id,
-        //     },
-        //   })
-        // }
+        for (const values of JSON.parse(request.body.deleteWorks)) {
+          await PrismaHelper.prisma.workstation.deleteMany({
+            where: {
+              id: values.id,
+            },
+          })
+        }
         //
-        // const newWorkstations = Workstations.filter((values: any) => values.typeWorkstation === 'newForm')
-        // .map((values: any) => {return {workstation_name: values.workstation_name, img_layout_path: values.img_layout_path, fitId: fit.id}} )
-    
-        // await PrismaHelper.prisma.workstation.createMany({
-        //   data: newWorkstations
-        // })
-        Workstations.forEach(async (workstation: any, indexWorkstation: number) => {
+        const newWorkstations = Workstations.filter((values: any) => values.typeWorkstation === 'newForm')
+        .map((values: any) => {
+          return {workstation_name: values.workstation_name, img_layout_path: values.img_layout_path, fitId: fit.id}} )
+         await PrismaHelper.prisma.workstation.createMany({
+          data: newWorkstations
+        })
+        const findByNewWorkstations = await PrismaHelper.prisma.workstation.findMany({
+          where: {
+            fitId: fit.id
+          }
+        })
+        const PutWorkstations = Workstations.map((values: any, index: number) => {
+          if(!values.id) {
+            return Object.assign({}, values, {id: findByNewWorkstations[index].id })
+          }
+          return values
+        })
+        PutWorkstations.forEach(async (workstation: any, indexWorkstation: number) => {
           try {
+            const requestFilesLayout = request.files.filter((values: any) => values.fieldname === `img_layout_path_${indexWorkstation}`)
             const requestFilesFinalProduct = request.files.filter((values: any) => values.fieldname === `img_final_product_${indexWorkstation}`)
             
             const requestFilesOperation = request.files.filter((values: any) => values.fieldname === `img_operation_path_${indexWorkstation}`)
           
             const requestFilesPackageDescription = request.files.filter((values: any) => values.fieldname === `img_package_description_${indexWorkstation}`) 
-            // IMAGEM LAYOUT
-            const img_layout_path_new_files = request.files.filter(
-              (values: any) => values.fieldname === 'img_layout_path'
-            )
-            if(workstation.typeWorkstation != 'newForm') {
-              await PrismaHelper.prisma.workstation.update({
-                data: {
-                  img_layout_path: (img_layout_path_new_files.length > 0) ? img_layout_path_new_files[0].filename : workstation.img_layout_path
-                },
-                where: {
-                  id: workstation.id
-                }
-              })
-            }
             
+            // IMAGEM LAYOUT
+            await PrismaHelper.prisma.workstation.update({
+              data: {
+                img_layout_path: (requestFilesLayout.length > 0) ? requestFilesLayout[0].filename : workstation.img_layout_path
+              },
+              where: {
+                id: workstation.id
+              }
+            })
+                   
             // IMAGEM PRODUTO ACABADO
             let count = 0;
             const findNewImgFinalProduct = workstation.Image_final_product.map((element: any) => {
